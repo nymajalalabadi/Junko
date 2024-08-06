@@ -1,13 +1,6 @@
 ﻿using Junko.Application.Services.Interfaces;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Junko.Domain.InterFaces;
+using System.Net.Mail;
 
 namespace Junko.Application.Services.Implementations
 {
