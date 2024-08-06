@@ -1,5 +1,6 @@
 ﻿using Junko.Domain.Entities.Account;
 using Junko.Domain.ViewModels.Account;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,12 @@ namespace Junko.Application.Services.Interfaces
         Task<bool> ActiveAccount(string activeCode);
 
         Task<bool> ResetPassword(ResetPasswordDTO reset);
+
+        Task<bool> ChangeUserPassword(ChangePasswordDTO changePass, long currentUserId);
+
+        Task<EditUserProfileDTO> GetProfileForEdit(long userId);
+
+        Task<EditUserProfileResult> EditUserProfile(EditUserProfileDTO profile, long userId, IFormFile avatarImage);
 
         #endregion
     }

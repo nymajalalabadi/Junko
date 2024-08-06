@@ -1,4 +1,5 @@
 ﻿using Junko.Application.Services.Interfaces;
+using Junko.Domain.Entities.Site;
 using Junko.Domain.Entities.SiteSetting;
 using Junko.Domain.InterFaces;
 using System;
@@ -31,6 +32,14 @@ namespace Junko.Application.Services.Implementations
 
         #endregion
 
+        #region slider
+
+        public async Task<List<Slider>> GetAllActiveSliders()
+        {
+            return await _siteSettingRepository.GetAllActiveSliders();
+        }
+
+        #endregion
     }
 
 }

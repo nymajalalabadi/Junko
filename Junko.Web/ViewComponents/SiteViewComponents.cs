@@ -42,6 +42,7 @@ namespace Junko.Web.ViewComponents
         }
 
         #endregion
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
             ViewBag.siteSetting = await _settingService.GetDefaultSiteSetting();
@@ -51,4 +52,30 @@ namespace Junko.Web.ViewComponents
     }
 
     #endregion
+
+    #region home sliders
+
+    public class HomeSliderViewComponent : ViewComponent
+    {
+        #region consractor
+
+        private readonly ISiteSettingService _settingService;
+
+        public HomeSliderViewComponent(ISiteSettingService settingService)
+        {
+            _settingService = settingService;
+        }
+
+        #endregion
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var sliders = await _settingService.GetAllActiveSliders();
+
+            return View("HomeSlider", sliders);
+        }
+    }
+
+    #endregion
+
 }

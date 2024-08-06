@@ -1,4 +1,5 @@
 ﻿using Junko.DataLayer.Context;
+using Junko.Domain.Entities.Site;
 using Junko.Domain.Entities.SiteSetting;
 using Junko.Domain.InterFaces;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,12 @@ namespace Junko.DataLayer.Repositories
         public async Task<SiteSetting?> GetDefaultSiteSetting()
         {
             return await _context.SiteSettings.SingleOrDefaultAsync(s => s.IsDefault && !s.IsDelete);
+        }
+
+        public async Task<List<Slider>> GetAllActiveSliders()
+        {
+            return await _context.Sliders.AsQueryable()
+               .Where(s => s.IsActive && !s.IsDelete).ToListAsync();
         }
     }
 }

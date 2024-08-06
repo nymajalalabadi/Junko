@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Junko.Domain.Entities.Contacts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,9 @@ namespace Junko.Domain.InterFaces
     {
         #region Methods
 
+        Task AddContactUs(ContactUs contactUs);
 
+        Task SaveChanges();
 
         #endregion
     }

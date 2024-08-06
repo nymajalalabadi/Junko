@@ -1,4 +1,5 @@
 ﻿using Junko.DataLayer.Context;
+using Junko.Domain.Entities.Contacts;
 using Junko.Domain.InterFaces;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,15 @@ namespace Junko.DataLayer.Repositories
 
         #region Methods
 
+        public async Task AddContactUs(ContactUs contactUs)
+        {
+            await _context.ContactUs.AddAsync(contactUs);
+        }
 
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
+        }
 
         #endregion
     }

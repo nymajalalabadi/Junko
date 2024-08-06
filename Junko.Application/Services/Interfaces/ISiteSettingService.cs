@@ -1,4 +1,5 @@
-﻿using Junko.Domain.Entities.SiteSetting;
+﻿using Junko.Domain.Entities.Site;
+using Junko.Domain.Entities.SiteSetting;
 
 namespace Junko.Application.Services.Interfaces
 {
@@ -9,6 +10,13 @@ namespace Junko.Application.Services.Interfaces
         Task<SiteSetting?> GetDefaultSiteSetting();
 
         #endregion
+
+        #region slider
+
+        Task<List<Slider>> GetAllActiveSliders();
+
+        #endregion
+
     }
 
 }

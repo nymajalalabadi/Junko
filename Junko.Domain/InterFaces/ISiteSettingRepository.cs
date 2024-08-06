@@ -1,4 +1,5 @@
-﻿using Junko.Domain.Entities.SiteSetting;
+﻿using Junko.Domain.Entities.Site;
+using Junko.Domain.Entities.SiteSetting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace Junko.Domain.InterFaces
         Task<EmailSetting?> GetDefaultEmail();
 
         Task<SiteSetting?> GetDefaultSiteSetting();
+
+        Task<List<Slider>> GetAllActiveSliders();
     }
 }

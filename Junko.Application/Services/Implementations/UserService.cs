@@ -3,6 +3,7 @@ using Junko.Application.Services.Interfaces;
 using Junko.Domain.Entities.Account;
 using Junko.Domain.InterFaces;
 using Junko.Domain.ViewModels.Account;
+using Microsoft.AspNetCore.Http;
 
 namespace Junko.Application.Services.Implementations
 {
@@ -154,6 +155,52 @@ namespace Junko.Application.Services.Implementations
             await _userRepository.SaveChanges();
 
             return true;
+        }
+
+        public async Task<bool> ChangeUserPassword(ChangePasswordDTO changePass, long currentUserId)
+        {
+            var user = await _userRepository.GetUserById(currentUserId);
+
+            if (user != null)
+            {
+                var newPassword = PasswordHelper.EncodePasswordMd5(changePass.NewPassword);
+
+                if (newPassword != user.Password)
+                {
+                    user.Password = newPassword;
+
+                    _userRepository.UpdateUser(user);
+                    await _userRepository.SaveChanges();
+
+                    return true;
+                }
+            }
+
+            return false;
+
+        }
+
+        public async Task<EditUserProfileDTO> GetProfileForEdit(long userId)
+        {
+            var user = await _userRepository.GetUserById(userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new EditUserProfileDTO
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Avatar = user.Avatar
+            };
+
+        }
+
+        public async Task<EditUserProfileResult> EditUserProfile(EditUserProfileDTO profile, long userId, IFormFile avatarImage)
+        {
+
         }
 
         #endregion
