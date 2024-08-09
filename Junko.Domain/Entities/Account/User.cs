@@ -67,6 +67,10 @@ namespace Junko.Domain.Entities.Account
 
         public ICollection<ContactUs> ContactUses { get; set; }
 
+        public ICollection<Ticket> Tickets { get; set; }
+
+        public ICollection<TicketMessage> TicketMessages { get; set; }
+
         #endregion
     }
 }

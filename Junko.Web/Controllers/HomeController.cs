@@ -1,4 +1,4 @@
-using GoogleReCaptcha.V3.Interface;
+﻿using GoogleReCaptcha.V3.Interface;
 using Junko.Application.Services.Interfaces;
 using Junko.Domain.ViewModels.ContactUs;
 using Junko.Web.PresentationExtensions;
@@ -44,7 +44,7 @@ namespace Junko.Web.Controllers
         {
             if (!await _captchaValidator.IsCaptchaPassedAsync(contact.Captcha))
             {
-                TempData[ErrorMessage] = "?? ????? ??? ????? ???";
+                TempData[ErrorMessage] = "پیام شما ارسال نشد";
                 return View(contact);
             }
 
@@ -54,7 +54,7 @@ namespace Junko.Web.Controllers
 
                 await _contactService.CreateContactUs(contact, HttpContext.GetUserIp(), User.GetUserId());
 
-                TempData[SuccessMessage] = "???? ??? ?? ?????? ????? ??";
+                TempData[SuccessMessage] = "پیام شما ارسال شد";
                 return RedirectToAction("ContactUs");
             }
 

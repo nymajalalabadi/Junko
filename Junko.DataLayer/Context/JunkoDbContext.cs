@@ -30,6 +30,10 @@ namespace Junko.DataLayer.Context
 
         public DbSet<ContactUs> ContactUs { get; set; }
 
+        public DbSet<Ticket> Tickets { get; set; }
+
+        public DbSet<TicketMessage> TicketMessages { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
