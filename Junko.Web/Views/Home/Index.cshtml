@@ -1,5 +1,8 @@
-﻿@{
+﻿@using Junko.Application.Extensions
+@using Junko.Domain.Entities.Site
+@{
     ViewData["Title"] = "صفحه ی اصلی";
+    var banners = ViewBag.banners as List<SiteBanner>;
 }
 
 
@@ -56,35 +59,30 @@
     </div>
 </section>
 <!--shipping area end-->
-<!--banner area start-->
-<div class="banner_area mb-40">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-3">
-                <div class="single_banner mb-30">
-                    <div class="banner_thumb">
-                        <a href="shop.html"><img src="/img/bg/banner1.jpg" alt=""></a>
+@if (banners != null && banners.Any(s => s.BannerPlacement == BannerPlacement.Home_1))
+{
+    <!--banner area start-->
+    <div class="banner_area mb-40">
+        <div class="container">
+            <div class="row">
+
+                @foreach (var banner in banners.Where(s => s.BannerPlacement == BannerPlacement.Home_1))
+                {
+                    <div class="@banner.ColSize">
+                        <div class="single_banner mb-30">
+                            <div class="banner_thumb">
+                                <a href="@banner.Url">
+                                    <img src="@banner.GetBannerMainImageAddress()" style="width: 100%">
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="single_banner mb-30">
-                    <div class="banner_thumb">
-                        <a href="shop.html"><img src="/img/bg/banner2.jpg" alt=""></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="single_banner mb-30">
-                    <div class="banner_thumb">
-                        <a href="shop.html"><img src="/img/bg/banner3.jpg" alt=""></a>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
-</div>
-<!--banner area end-->
+    <!--banner area end-->
+}
 <!--product area start-->
 <section class="product_area mb-46">
     <div class="container">
@@ -335,20 +333,18 @@
 <div class="banner_area mb-40">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <div class="single_banner mb-30">
-                    <div class="banner_thumb">
-                        <a href="shop.html"><img src="/img/bg/banner4.jpg" alt=""></a>
+            @foreach (var banner in banners.Where(s => s.BannerPlacement == BannerPlacement.Home_2))
+            {
+                <div class="@banner.ColSize">
+                    <div class="single_banner mb-30">
+                        <div class="banner_thumb">
+                            <a href="@banner.Url">
+                                <img src="@banner.GetBannerMainImageAddress()" style="width: 100%">
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="single_banner mb-30">
-                    <div class="banner_thumb">
-                        <a href="shop.html"><img src="/img/bg/banner5.jpg" alt=""></a>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </div>
@@ -949,20 +945,18 @@
 <div class="banner_area mb-40">
     <div class="container">
         <div class="row">
-            <div class="col-lg-9 col-md-9">
-                <div class="single_banner mb-30">
-                    <div class="banner_thumb">
-                        <a href="shop.html"><img src="/img/bg/banner6.jpg" alt=""></a>
+            @foreach (var banner in banners.Where(s => s.BannerPlacement == BannerPlacement.Home_3))
+            {
+                <div class="@banner.ColSize">
+                    <div class="single_banner mb-30">
+                        <div class="banner_thumb">
+                            <a href="@banner.Url">
+                                <img src="@banner.GetBannerMainImageAddress()" style="width: 100%">
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-3">
-                <div class="single_banner mb-30">
-                    <div class="banner_thumb">
-                        <a href="shop.html"><img src="/img/bg/banner7.jpg" alt=""></a>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </div>

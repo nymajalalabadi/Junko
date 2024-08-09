@@ -74,6 +74,7 @@ namespace Junko.DataLayer.Context
                 CopyRight = "nima jalalabadi",
                 FooterText = "nymasteam@gmail.com",
                 LastUpdateDate = date,
+                AboutUs = " هیچی",
                 MapScript = "null"
             });
 

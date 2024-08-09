@@ -41,5 +41,16 @@ namespace Junko.DataLayer.Repositories
             return await _context.Sliders.AsQueryable()
                .Where(s => s.IsActive && !s.IsDelete).ToListAsync();
         }
+
+        #region site banners
+
+        public async Task<List<SiteBanner>> GetSiteBannersByPlacement(List<BannerPlacement> placements)
+        {
+            return await _context.SiteBanners
+                .AsQueryable()
+                .Where(s => placements.Contains(s.BannerPlacement)).ToListAsync();
+        }
+
+        #endregion
     }
 }

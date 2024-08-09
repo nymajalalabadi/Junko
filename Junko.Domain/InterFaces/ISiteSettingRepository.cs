@@ -15,5 +15,11 @@ namespace Junko.Domain.InterFaces
         Task<SiteSetting?> GetDefaultSiteSetting();
 
         Task<List<Slider>> GetAllActiveSliders();
+
+        #region site banners
+
+        Task<List<SiteBanner>> GetSiteBannersByPlacement(List<BannerPlacement> placements);
+
+        #endregion
     }
 }

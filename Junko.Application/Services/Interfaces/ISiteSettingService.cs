@@ -17,6 +17,12 @@ namespace Junko.Application.Services.Interfaces
 
         #endregion
 
+        #region site banners
+
+        Task<List<SiteBanner>> GetSiteBannersByPlacement(List<BannerPlacement> placements);
+
+        #endregion
+
     }
 
 }

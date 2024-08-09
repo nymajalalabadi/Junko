@@ -4,6 +4,8 @@ using Junko.Domain.ViewModels.ContactUs;
 using Junko.Web.PresentationExtensions;
 using Microsoft.AspNetCore.Mvc;
 using Junko.Application.Extensions;
+using Junko.Application.Services.Implementations;
+using Junko.Domain.Entities.Site;
 
 namespace Junko.Web.Controllers
 {
@@ -13,11 +15,13 @@ namespace Junko.Web.Controllers
 
         private readonly IContactService _contactService;
         private readonly ICaptchaValidator _captchaValidator;
+        private readonly ISiteSettingService _siteSettingService;
 
-        public HomeController(IContactService contactService, ICaptchaValidator captchaValidator)
+        public HomeController(IContactService contactService, ICaptchaValidator captchaValidator, ISiteSettingService siteSettingService)
         {
             _contactService = contactService;
             _captchaValidator = captchaValidator;
+            _siteSettingService = siteSettingService;
         }
 
         #endregion
@@ -26,6 +30,14 @@ namespace Junko.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.banners = await _siteSettingService
+                .GetSiteBannersByPlacement(new List<BannerPlacement>
+                {
+                    BannerPlacement.Home_1,
+                    BannerPlacement.Home_2,
+                    BannerPlacement.Home_3
+                });
+
             return View();
         }
 
@@ -62,6 +74,19 @@ namespace Junko.Web.Controllers
         }
 
         #endregion
+
+        #region about us
+
+        [HttpGet("about-us")]
+        public async Task<IActionResult> AboutUs()
+        {
+            var siteSetting = await _siteSettingService.GetDefaultSiteSetting();
+
+            return View(siteSetting);
+        }
+
+        #endregion
+
 
     }
 }
