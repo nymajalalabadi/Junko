@@ -17,9 +17,9 @@ namespace Junko.Application.Services.Implementations
 
         #endregion
 
-        public async void SendEmail(string to, string subject, string body)
+        public void SendEmail(string to, string subject, string body)
         {
-            var defaultSiteEmail = await _siteSettingRepository.GetDefaultEmail();
+            var defaultSiteEmail = _siteSettingRepository.GetDefaultEmail();
 
             MailMessage mail = new MailMessage();
 

@@ -10,10 +10,10 @@ namespace Junko.Domain.ViewModels.Account
 {
     public class RegisterUserDTO : CaptchaViewModel
     {
-        [Display(Name = "تلفن همراه")]
+        [Display(Name = "ایمیل")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
-        public string Mobile { get; set; }
+        public string Email { get; set; }
 
         [Display(Name = "نام")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]

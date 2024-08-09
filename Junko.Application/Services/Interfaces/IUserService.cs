@@ -19,7 +19,9 @@ namespace Junko.Application.Services.Interfaces
 
         Task<LoginUserResult> GetUserForLogin(LoginUserDTO login);
 
-        Task<User> GetUserByMobile(string mobile);
+        Task<User?> GetUserByMobile(string mobile);
+
+        Task<User?> GetUserByEmail(string email);
 
         Task<ForgotPasswordResult> RecoverUserPassword(ForgotPasswordDTO forgot);
 

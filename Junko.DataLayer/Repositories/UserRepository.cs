@@ -26,6 +26,11 @@ namespace Junko.DataLayer.Repositories
             return await _context.Users.Where(u => !u.IsDelete).AnyAsync(s => s.Mobile.Equals(mobile));
         }
 
+        public async Task<bool> IsUserExistsByEmail(string email)
+        {
+            return await _context.Users.Where(u => !u.IsDelete).AnyAsync(s => s.Email.Equals(email));
+        }
+
         public async Task<IQueryable<User>> GetUserQuery()
         {
             return _context.Users.Where(u => !u.IsDelete).AsQueryable();

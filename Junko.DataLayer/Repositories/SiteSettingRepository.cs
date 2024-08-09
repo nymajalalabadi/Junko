@@ -24,9 +24,11 @@ namespace Junko.DataLayer.Repositories
 
         #endregion
 
-        public async Task<EmailSetting?> GetDefaultEmail()
+        public EmailSetting GetDefaultEmail()
         {
-            return await _context.EmailSettings.FirstOrDefaultAsync(s => !s.IsDelete && s.IsDefault);
+            var email = _context.EmailSettings.FirstOrDefault(s => !s.IsDelete && s.IsDefault);
+
+            return email;
         }
 
         public async Task<SiteSetting?> GetDefaultSiteSetting()

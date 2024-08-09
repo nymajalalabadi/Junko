@@ -32,13 +32,14 @@ namespace Junko.Web.Areas.User.Controllers
         {
             if (ModelState.IsValid)
             {
-                var res = await _userService.ChangeUserPassword(passwordDto, User.GetUserId());
+                var result = await _userService.ChangeUserPassword(passwordDto, User.GetUserId());
 
-                if (res)
+                if (result)
                 {
                     TempData[SuccessMessage] = "کلمه ی عبور شما تغییر یافت";
                     TempData[InfoMessage] = "لطفا جهت تکمیل فرایند تغییر کلمه ی عبور ، مجددا وارد سایت شوید";
                     await HttpContext.SignOutAsync();
+
                     return RedirectToAction("Login", "Account", new { area = "" });
                 }
                 else
@@ -93,7 +94,7 @@ namespace Junko.Web.Areas.User.Controllers
 
                     case EditUserProfileResult.Success:
                         TempData[SuccessMessage] = $"جناب {profile.FirstName} {profile.LastName}، پروفایل شما با موفقیت ویرایش شد";
-                        return RedirectToAction("EditProfile");
+                        return RedirectToAction("Dashboard", "Home");
                 }
             }
 

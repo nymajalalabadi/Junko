@@ -13,6 +13,8 @@ namespace Junko.Domain.InterFaces
 
         Task<bool> IsUserExistsByMobileNumber(string mobile);
 
+        Task<bool> IsUserExistsByEmail(string email);
+
         Task<IQueryable<User>> GetUserQuery();
 
         Task AddUser(User user);

@@ -1,9 +1,12 @@
-﻿using Junko.Application.Security;
+﻿using Junko.Application.Generators;
+using Junko.Application.Security;
 using Junko.Application.Services.Interfaces;
+using Junko.Application.Statics;
 using Junko.Domain.Entities.Account;
 using Junko.Domain.InterFaces;
 using Junko.Domain.ViewModels.Account;
 using Microsoft.AspNetCore.Http;
+using System.Reflection;
 
 namespace Junko.Application.Services.Implementations
 {
@@ -28,13 +31,13 @@ namespace Junko.Application.Services.Implementations
 
         public async Task<RegisterUserResult> RegisterUser(RegisterUserDTO register)
         {
-            if (!await _userRepository.IsUserExistsByMobileNumber(register.Mobile))
+            if (!await _userRepository.IsUserExistsByEmail(register.Email))
             {
                 var user = new User
                 {
                     FirstName = register.FirstName,
                     LastName = register.LastName,
-                    Mobile = register.Mobile,
+                    Email = register.Email,
                     Password = PasswordHelper.EncodePasswordMd5(register.Password),
                     MobileActiveCode = new Random().Next(10000, 999999).ToString(),
                     EmailActiveCode = Guid.NewGuid().ToString("N")
@@ -65,14 +68,14 @@ namespace Junko.Application.Services.Implementations
 
         public async Task<LoginUserResult> GetUserForLogin(LoginUserDTO login)
         {
-            var user = await _userRepository.GetUserByMobile(login.Mobile);
+            var user = await _userRepository.GetUserByEmail(login.Email);
 
             if (user == null)
             {
                 return LoginUserResult.NotFound;
             }
 
-            if (!user.IsMobileActive)
+            if (!user.IsEmailActive)
             {
                 return LoginUserResult.NotActivated;
             }
@@ -85,9 +88,21 @@ namespace Junko.Application.Services.Implementations
             return LoginUserResult.Success;
         }
 
-        public async Task<User> GetUserByMobile(string mobile)
+        public async Task<User?> GetUserByMobile(string mobile)
         {
             var user = await _userRepository.GetUserByMobile(mobile);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user;
+        }
+
+        public async Task<User?> GetUserByEmail(string email)
+        {
+            var user = await _userRepository.GetUserByEmail(email);
 
             if (user == null)
             {
@@ -129,7 +144,7 @@ namespace Junko.Application.Services.Implementations
 
             user.IsEmailActive = true;
 
-            user.EmailActiveCode = new Random().Next(1000000, 999999999).ToString();
+            user.EmailActiveCode = Guid.NewGuid().ToString("N");
 
             _userRepository.UpdateUser(user);
             await _userRepository.SaveChanges();
@@ -149,7 +164,7 @@ namespace Junko.Application.Services.Implementations
             string hashNewPassword = PasswordHelper.EncodePasswordMd5(reset.Password);
             user.Password = hashNewPassword;
 
-            user.EmailActiveCode = new Random().Next(1000000, 999999999).ToString();
+            user.EmailActiveCode = Guid.NewGuid().ToString("N");
 
             _userRepository.UpdateUser(user);
             await _userRepository.SaveChanges();
@@ -200,7 +215,35 @@ namespace Junko.Application.Services.Implementations
 
         public async Task<EditUserProfileResult> EditUserProfile(EditUserProfileDTO profile, long userId, IFormFile avatarImage)
         {
+            var user = await _userRepository.GetUserById(userId);
 
+            if (user == null) return EditUserProfileResult.NotFound;
+
+            if (user.IsBlocked)
+            {
+                return EditUserProfileResult.IsBlocked;
+            }
+
+            if (!user.IsMobileActive)
+            {
+                return EditUserProfileResult.IsNotActive;
+            }
+
+
+            if (avatarImage != null && avatarImage.IsImage())
+            {
+                var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(avatarImage.FileName);
+                avatarImage.AddImageToServer(imageName, SiteTools.UserAvatarOrigin, 100, 100, SiteTools.UserAvatarThumb, user.Avatar);
+                user.Avatar = imageName;
+            }
+
+            user.FirstName = profile.FirstName;
+            user.LastName = profile.LastName;
+
+            _userRepository.UpdateUser(user);
+            await _userRepository.SaveChanges();
+
+            return EditUserProfileResult.Success;
         }
 
         #endregion

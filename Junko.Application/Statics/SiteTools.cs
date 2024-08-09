@@ -8,11 +8,11 @@ namespace Junko.Application.Statics
 {
     public static class SiteTools
     {
-        #region MyRegion
+        #region default images
 
-        public static string DefaultImageName { get; set; } = "/img/slider/brand2.jpg";
+        public static string DefaultAvatar = "/img/defaults/avatar.jpg";
 
-        #endregion
+        #endregion 
 
         #region slider
 
@@ -23,6 +23,14 @@ namespace Junko.Application.Statics
         #region banner
 
         public static string BannerOrigin { get; set; } = "/img/bg/";
+
+        #endregion
+
+        #region user avatar
+
+        public static string UserAvatarOrigin { get; set; } = "/Content/Images/UserAvatar/origin/";
+
+        public static string UserAvatarThumb { get; set; } = "/Content/Images/UserAvatar/Thumb/";
 
         #endregion
     }

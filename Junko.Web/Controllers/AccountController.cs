@@ -109,11 +109,11 @@ namespace Junko.Web.Controllers
 
                     case LoginUserResult.Success:
 
-                        var user = await _userService.GetUserByMobile(login.Mobile);
+                        var user = await _userService.GetUserByEmail(login.Email);
 
                         var claims = new List<Claim>
                         {
-                            new Claim(ClaimTypes.Name, user.Mobile),
+                            new Claim(ClaimTypes.Name, user!.Email),
                             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
                         };
 
@@ -138,9 +138,10 @@ namespace Junko.Web.Controllers
 
         #region activate Email
 
-        public async Task<IActionResult> ActiveAccount(string activeCode)
+        [HttpGet("ActiveAccount/{EmailActiveCode}")]
+        public async Task<IActionResult> ActiveAccount(string EmailActiveCode)
         {
-            ViewBag.IsActive = await _userService.ActiveAccount(activeCode);
+            ViewBag.IsActive = await _userService.ActiveAccount(EmailActiveCode);
 
             return View();
         }
@@ -189,15 +190,18 @@ namespace Junko.Web.Controllers
 
         #region Reset Password
 
-        public ActionResult ResetPassword(string activeCode)
+        [HttpGet("ResetPassword/{EmailActiveCode}")]
+        public ActionResult ResetPassword(string EmailActiveCode)
         {
-            return View(new ResetPasswordDTO()
+            var model = new ResetPasswordDTO() 
             {
-                ActiveCode = activeCode
-            });
+                ActiveCode = EmailActiveCode
+            };
+
+            return View(model);
         }
 
-        [HttpPost]
+        [HttpPost("ResetPassword/{EmailActiveCode}")]
         public async Task<IActionResult> ResetPassword(ResetPasswordDTO reset)
         {
             if (!await _captchaValidator.IsCaptchaPassedAsync(reset.Captcha))

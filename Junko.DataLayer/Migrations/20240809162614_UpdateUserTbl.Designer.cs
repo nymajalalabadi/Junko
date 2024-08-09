@@ -4,6 +4,7 @@ using Junko.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Junko.DataLayer.Migrations
 {
     [DbContext(typeof(JunkoDbContext))]
-    partial class JunkoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240809162614_UpdateUserTbl")]
+    partial class UpdateUserTbl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +34,7 @@ namespace Junko.DataLayer.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Avatar")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -288,7 +292,7 @@ namespace Junko.DataLayer.Migrations
                             From = "nymasteam@gmail.com",
                             IsDefault = true,
                             IsDelete = false,
-                            LastUpdateDate = new DateTime(2024, 8, 9, 19, 58, 16, 919, DateTimeKind.Local).AddTicks(6098),
+                            LastUpdateDate = new DateTime(2024, 8, 9, 19, 56, 13, 370, DateTimeKind.Local).AddTicks(290),
                             Password = "fuqijttnofjradmh",
                             Port = 587,
                             SMTP = "smtp.gmail.com"

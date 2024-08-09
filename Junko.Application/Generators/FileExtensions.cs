@@ -25,7 +25,7 @@ namespace Junko.Application.Generators
             if (!Directory.Exists(originalPath))
                 Directory.CreateDirectory(originalPath);
 
-            if ((!string.IsNullOrEmpty(deletefileName)) && deletefileName != SiteTools.DefaultImageName)
+            if ((!string.IsNullOrEmpty(deletefileName)) && deletefileName != SiteTools.DefaultAvatar)
             {
                 if (File.Exists(originalPath + deletefileName))
                     File.Delete(originalPath + deletefileName);
@@ -64,7 +64,7 @@ namespace Junko.Application.Generators
             if (!Directory.Exists(originalPath))
                 Directory.CreateDirectory(originalPath);
 
-            if ((!string.IsNullOrEmpty(deletefileName)) && deletefileName != SiteTools.DefaultImageName)
+            if ((!string.IsNullOrEmpty(deletefileName)) && deletefileName != SiteTools.DefaultAvatar)
             {
                 if (File.Exists(originalPath + deletefileName))
                     File.Delete(originalPath + deletefileName);
@@ -78,7 +78,7 @@ namespace Junko.Application.Generators
 
         public static void DeleteImage(this string imageName, string originalPath, string? thumbPath)
         {
-            if ((string.IsNullOrEmpty(imageName)) || imageName == SiteTools.DefaultImageName) return;
+            if ((string.IsNullOrEmpty(imageName)) || imageName == SiteTools.DefaultAvatar) return;
             originalPath = Directory.GetCurrentDirectory() + "/wwwroot" + originalPath;
             thumbPath = Directory.GetCurrentDirectory() + "/wwwroot" + thumbPath;
 
@@ -92,7 +92,7 @@ namespace Junko.Application.Generators
 
         public static void DeleteImage(this string imageName, string originalPath)
         {
-            if ((string.IsNullOrEmpty(imageName)) || imageName == SiteTools.DefaultImageName) return;
+            if ((string.IsNullOrEmpty(imageName)) || imageName == SiteTools.DefaultAvatar) return;
             originalPath = Directory.GetCurrentDirectory() + "/wwwroot" + originalPath;
 
             if (File.Exists(originalPath + imageName))

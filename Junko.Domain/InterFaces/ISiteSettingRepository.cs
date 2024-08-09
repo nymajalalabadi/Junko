@@ -10,7 +10,7 @@ namespace Junko.Domain.InterFaces
 {
     public interface ISiteSettingRepository
     {
-        Task<EmailSetting?> GetDefaultEmail();
+        EmailSetting GetDefaultEmail();
 
         Task<SiteSetting?> GetDefaultSiteSetting();
 
