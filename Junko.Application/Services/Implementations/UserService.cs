@@ -224,7 +224,7 @@ namespace Junko.Application.Services.Implementations
                 return EditUserProfileResult.IsBlocked;
             }
 
-            if (!user.IsMobileActive)
+            if (!user.IsEmailActive)
             {
                 return EditUserProfileResult.IsNotActive;
             }
