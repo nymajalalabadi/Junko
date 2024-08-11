@@ -33,6 +33,12 @@ namespace Junko.Application.Statics
         public static string UserAvatarThumb { get; set; } = "/Content/Images/UserAvatar/Thumb/";
 
         #endregion
+
+        #region uploader
+
+        public static string UploadImage { get; set; } = "/img/upload/";
+
+        #endregion
     }
 
 }

@@ -28,4 +28,8 @@
     <ProjectReference Include="..\Junko.Loc\Junko.Loc.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\upload\" />
+  </ItemGroup>
+
 </Project>
