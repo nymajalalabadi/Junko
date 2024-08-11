@@ -160,6 +160,23 @@ namespace Junko.Application.Services.Implementations
             };
         }
 
+        public async Task<bool> CloseTicket(long ticketId)
+        {
+            var ticket = await _contactRepository.GetTicketById(ticketId);
+
+            if (ticket == null)
+            {
+                return false;
+            }
+
+            ticket!.TicketState = TicketState.Closed;
+
+            _contactRepository.UpdateTicket(ticket);
+            await _contactRepository.SaveChanges();
+
+            return true;
+        }
+
         #endregion
 
         #endregion

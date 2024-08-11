@@ -83,7 +83,7 @@ namespace Junko.DataLayer.Repositories
         {
             return await _context.TicketMessages
                 .Where(t => t.TicketId.Equals(ticketId) && !t.IsDelete)
-                .OrderByDescending(s => s.CreateDate)
+                .OrderBy(s => s.CreateDate)
                 .ToListAsync();
         }
 

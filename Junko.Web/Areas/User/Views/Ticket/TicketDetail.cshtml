@@ -42,9 +42,6 @@
                         <div class="tab-pane fade active show" id="account-details">
                             <h3>@ViewData["Title"] </h3>
 
-                            <partial name="_AnswerTicketPartial" model="@(new AnswerTicketDTO{Id = Model.Ticket.Id})" />
-
-                            <hr />
                             <ul class="messages" id="messages">
                                 @if (Model.TicketMessages != null && Model.TicketMessages.Any())
                                 {
@@ -66,6 +63,15 @@
                                     }
                                 }
                             </ul>
+
+                            <hr />
+
+                            @if (Model.Ticket.TicketState != TicketState.Closed)
+                            {
+                                <partial name="_AnswerTicketPartial" model="@(new AnswerTicketDTO{Id = Model.Ticket.Id})" />
+                            }
+
+                            <a asp-area="User" asp-controller="Ticket" asp-action="CloseTicket" asp-route-ticketId="@Model.Ticket.Id" class="btn btn-danger">بستن تیکت</a>
                         </div>
                     </div>
                 </div>

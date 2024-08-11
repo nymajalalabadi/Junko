@@ -10,10 +10,12 @@ namespace Junko.Web.ViewComponents
         #region consractor
 
         private readonly ISiteSettingService _settingService;
+        private readonly IUserService _userService;
 
-        public SiteHeaderViewComponent(ISiteSettingService settingService)
+        public SiteHeaderViewComponent(ISiteSettingService settingService, IUserService userService)
         {
             _settingService = settingService;
+            _userService = userService;
         }
 
         #endregion
@@ -21,6 +23,13 @@ namespace Junko.Web.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             ViewBag.siteSetting = await _settingService.GetDefaultSiteSetting();
+
+            ViewBag.user = await _userService.GetUserByEmail(User.Identity.Name);
+
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.user = await _userService.GetUserByEmail(User.Identity.Name);
+            }
 
             return View("SiteHeader");
         }

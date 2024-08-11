@@ -85,6 +85,26 @@ namespace Junko.Web.Areas.User.Controllers
 
         #endregion
 
+        #region Close Ticket
+
+        [HttpGet("CloseTicket/{ticketId}")]
+        public async Task<IActionResult> CloseTicket(long ticketId)
+        {
+            var result = await _contactService.CloseTicket(ticketId);
+
+            if (result)
+            {
+                TempData[SuccessMessage] = "تیکت شما با موفقیت بسته شد";
+            }
+            else
+            {
+                TempData[SuccessMessage] = "تیکت شما با مشکل رو به رو شد ";
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        #endregion
 
     }
 }

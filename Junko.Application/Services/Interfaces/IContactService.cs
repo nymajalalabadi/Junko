@@ -26,6 +26,8 @@ namespace Junko.Application.Services.Interfaces
 
         Task<TicketDetailDTO> GetTicketForShow(long ticketId, long userId);
 
+        Task<bool> CloseTicket(long ticketId);
+
         #endregion
 
         #endregion

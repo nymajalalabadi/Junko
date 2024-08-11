@@ -1,6 +1,9 @@
-﻿@using Junko.Domain.Entities.SiteSetting
+﻿@using Junko.Domain.Entities.Account
+@using Junko.Application.Extensions
+@using Junko.Domain.Entities.SiteSetting
 @{
     var siteSetting = ViewBag.siteSetting as SiteSetting;
+    var user = ViewBag.user as User;
 }
 
 <!--header area start-->
@@ -32,7 +35,7 @@
                         else
                         {
                             <ul>
-                                <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @User.Identity.Name، خوش آمدید </a></li>
+                                <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @user.GetUserShowName()، خوش آمدید  </a></li>
                                 <li><a asp-controller="Account" asp-action="LogOut"> خروج </a></li>
                             </ul>
                         }
@@ -250,7 +253,7 @@
                             else
                             {
                                 <ul>
-                                    <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @User.Identity.Name، خوش آمدید </a></li>
+                                    <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard">  @user.GetUserShowName()، خوش آمدید  </a></li>
                                     <li><a asp-controller="Account" asp-action="LogOut"> خروج </a></li>
                                 </ul>
                             }

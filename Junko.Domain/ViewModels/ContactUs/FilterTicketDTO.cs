@@ -14,7 +14,7 @@ namespace Junko.Domain.ViewModels.ContactUs
 
         public string? Title { get; set; }
 
-        public long? UserId { get; set; }
+        public long UserId { get; set; }
 
         public FilterTicketState? FilterTicketState { get; set; }
 
