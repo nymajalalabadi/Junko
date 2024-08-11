@@ -52,7 +52,7 @@
                                     {
                                         <li class="message @(message.SenderId == Model.Ticket.OwnerId ? "right" : "left") appeared">
                                             <div class="avatar">
-                                                <img src="@(SiteTools.DefaultAvatar)" alt="Alternate Text">
+                                                <img src="@(message.SenderId == Model.Ticket.OwnerId ? SiteTools.UserAvatarThumb + Model.Ticket.Owner.Avatar : SiteTools.DefaultAvatar )" alt="Alternate Text">
                                             </div>
                                             <div class="text_wrapper">
                                                 <div class="time">
