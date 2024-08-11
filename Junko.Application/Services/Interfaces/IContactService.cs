@@ -11,7 +11,19 @@ namespace Junko.Application.Services.Interfaces
     {
         #region Methods
 
+        #region ContactUs
+
         Task CreateContactUs(CreateContactUsDTO contact, string userIp, long? userId);
+
+        #endregion
+
+        #region Ticket
+
+        Task<AddTicketResult> AddUserTicket(AddTicketViewModel ticket, long userId);
+
+        Task<FilterTicketDTO> FilterTickets(FilterTicketDTO filter);
+
+        #endregion
 
         #endregion
     }

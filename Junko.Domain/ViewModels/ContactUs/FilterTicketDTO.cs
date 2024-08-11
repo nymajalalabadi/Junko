@@ -18,11 +18,11 @@ namespace Junko.Domain.ViewModels.ContactUs
 
         public FilterTicketState? FilterTicketState { get; set; }
 
+        public FilterTicketOrder? OrderBy { get; set; }
+
         public TicketSection? TicketSection { get; set; }
 
         public TicketPriority? TicketPriority { get; set; }
-
-        public FilterTicketOrder? OrderBy { get; set; }
 
         #endregion
     }

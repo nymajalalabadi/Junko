@@ -38,6 +38,7 @@ namespace Junko.Domain.Entities.Contacts
         #region relations
 
         public User Owner { get; set; }
+
         public ICollection<TicketMessage> TicketMessages { get; set; }
 
         #endregion
