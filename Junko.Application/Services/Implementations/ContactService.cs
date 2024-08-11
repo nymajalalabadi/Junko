@@ -45,7 +45,7 @@ namespace Junko.Application.Services.Implementations
 
         public async Task<AddTicketResult> AddUserTicket(AddTicketViewModel ticket, long userId)
         {
-            if (!string.IsNullOrEmpty(ticket.Text))
+            if (string.IsNullOrEmpty(ticket.Text))
             {
                 return AddTicketResult.Error;
             }

@@ -1,3 +1,4 @@
+﻿@using Junko.Application.Extensions
 ﻿@using Junko.Domain.ViewModels.ContactUs
 @model FilterTicketDTO
 @{
@@ -41,6 +42,8 @@
                                                 <th>کد تیکت</th>
                                                 <th>عنوان تیکت</th>
                                                 <th>وضعیت</th>
+                                                <th>بخش مورد نظر</th>
+                                                <th>اولویت</th>
                                                 <th>دستورات</th>
                                             </tr>
                                         </thead>
@@ -50,8 +53,24 @@
                                                 <tr>
                                                     <td>@ticket.Id</td>
                                                     <td>@ticket.Title</td>
-                                                    <td><span class="danger"></span></td>
-                                                    <td><a href="#" class="view">نمایش جزییات</a></td>
+                                                    <td>
+                                                        <span class="danger">
+                                                            @ticket.TicketState.GetEnumName()
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="success">
+                                                            @ticket.TicketSection.GetEnumName()
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="warning">
+                                                            @ticket.TicketPriority.GetEnumName()
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a asp-area="User" asp-controller="Ticket" asp-action="TicketDetail" asp-route-ticketId="@ticket.Id" class="view">نمایش جزییات</a>
+                                                    </td>
                                                 </tr>
                                             }
                                         </tbody>
@@ -69,4 +88,3 @@
         </div>
     </div>
 </section>
-

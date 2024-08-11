@@ -20,6 +20,7 @@ namespace Junko.Web.Areas.User.Controllers
 
         #region list
 
+        [HttpGet("tickets")]
         public async Task<IActionResult> Index(FilterTicketDTO filter)
         {
             filter.UserId = User.GetUserId(); 
