@@ -1,4 +1,5 @@
-﻿using Junko.Domain.ViewModels.ContactUs;
+﻿using Junko.Domain.Entities.Contacts;
+using Junko.Domain.ViewModels.ContactUs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,11 @@ namespace Junko.Application.Services.Interfaces
 
         #region Ticket
 
+        Task<FilterTicketDTO> FilterTickets(FilterTicketDTO filter);
+
         Task<AddTicketResult> AddUserTicket(AddTicketViewModel ticket, long userId);
 
-        Task<FilterTicketDTO> FilterTickets(FilterTicketDTO filter);
+        Task<TicketDetailDTO> GetTicketForShow(long ticketId, long userId);
 
         #endregion
 

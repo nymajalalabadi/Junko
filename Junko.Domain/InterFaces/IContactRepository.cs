@@ -36,6 +36,8 @@ namespace Junko.Domain.InterFaces
 
         Task<TicketMessage?> GetTicketMessageById(long ticketMessageId);
 
+        Task<List<TicketMessage>> GetTicketMessageByTicketId(long ticketId);
+
         void DeleteTicket(Ticket ticket);
 
         void DeleteTicketMessage(TicketMessage ticket);

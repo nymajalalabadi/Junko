@@ -69,12 +69,22 @@ namespace Junko.DataLayer.Repositories
 
         public async Task<Ticket?> GetTicketById(long ticketId)
         {
-            return await _context.Tickets.FirstOrDefaultAsync(t => t.Id.Equals(ticketId));
+            return await _context.Tickets
+                .Include(t => t.Owner)
+                .FirstOrDefaultAsync(t => t.Id.Equals(ticketId));
         }
 
         public async Task<TicketMessage?> GetTicketMessageById(long ticketMessageId)
         {
             return await _context.TicketMessages.FirstOrDefaultAsync(t => t.Id.Equals(ticketMessageId));
+        }
+
+        public async Task<List<TicketMessage>> GetTicketMessageByTicketId(long ticketId)
+        {
+            return await _context.TicketMessages
+                .Where(t => t.TicketId.Equals(ticketId) && !t.IsDelete)
+                .OrderByDescending(s => s.CreateDate)
+                .ToListAsync();
         }
 
         public void DeleteTicket(Ticket ticket)

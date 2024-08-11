@@ -68,6 +68,22 @@ namespace Junko.Web.Areas.User.Controllers
 
         #endregion
 
+        #region show ticket detail
+
+        [HttpGet("tickets/{ticketId}")]
+        public async Task<IActionResult> TicketDetail(long ticketId)
+        {
+            var ticket = await _contactService.GetTicketForShow(ticketId, User.GetUserId());
+
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+
+            return View(ticket);
+        }
+
+        #endregion
 
 
     }

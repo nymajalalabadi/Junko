@@ -3,6 +3,7 @@ using Junko.Domain.Entities.Contacts;
 using Junko.Domain.InterFaces;
 using Junko.Domain.ViewModels.ContactUs;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Sockets;
 
 namespace Junko.Application.Services.Implementations
 {
@@ -43,56 +44,11 @@ namespace Junko.Application.Services.Implementations
 
         #region Ticket
 
-        public async Task<AddTicketResult> AddUserTicket(AddTicketViewModel ticket, long userId)
-        {
-            if (string.IsNullOrEmpty(ticket.Text))
-            {
-                return AddTicketResult.Error;
-            }
-
-            // add ticket
-            var newTicket = new Ticket
-            {
-                OwnerId = userId,
-                Title = ticket.Title,
-                IsReadByOwner = true,
-                TicketPriority = ticket.TicketPriority,
-                TicketSection = ticket.TicketSection,
-                TicketState = TicketState.UnderProgress
-            };
-
-            await _contactRepository.AddTicket(newTicket);
-            await _contactRepository.SaveChanges();
-
-            // add ticket message
-            var newMessage = new TicketMessage
-            {
-                TicketId = newTicket.Id,
-                Text = ticket.Text,
-                SenderId = userId,
-            };
-
-            await _contactRepository.AddTicketMessage(newMessage);
-            await _contactRepository.SaveChanges();
-
-            return AddTicketResult.Success;
-        }
-
         public async Task<FilterTicketDTO> FilterTickets(FilterTicketDTO filter)
         {
             var query = await _contactRepository.GetTicketQuery();
 
             #region filter
-
-            if (filter.TicketSection != null)
-            {
-                query = query.Where(s => s.TicketSection == filter.TicketSection.Value);
-            }
-
-            if (filter.TicketPriority != null)
-            {
-                query = query.Where(s => s.TicketPriority == filter.TicketPriority.Value);
-            }
 
             if (filter.UserId != null && filter.UserId != 0)
             {
@@ -102,6 +58,16 @@ namespace Junko.Application.Services.Implementations
             if (!string.IsNullOrEmpty(filter.Title))
             {
                 query = query.Where(s => s.Title.Contains(filter.Title));
+            }
+
+            if (filter.TicketSection != null)
+            {
+                query = query.Where(s => s.TicketSection == filter.TicketSection.Value);
+            }
+
+            if (filter.TicketPriority != null)
+            {
+                query = query.Where(s => s.TicketPriority == filter.TicketPriority.Value);
             }
 
             #endregion
@@ -141,6 +107,57 @@ namespace Junko.Application.Services.Implementations
             #endregion
 
             return filter;
+        }
+
+        public async Task<AddTicketResult> AddUserTicket(AddTicketViewModel ticket, long userId)
+        {
+            if (string.IsNullOrEmpty(ticket.Text))
+            {
+                return AddTicketResult.Error;
+            }
+
+            // add ticket
+            var newTicket = new Ticket
+            {
+                OwnerId = userId,
+                Title = ticket.Title,
+                IsReadByOwner = true,
+                TicketPriority = ticket.TicketPriority,
+                TicketSection = ticket.TicketSection,
+                TicketState = TicketState.UnderProgress
+            };
+
+            await _contactRepository.AddTicket(newTicket);
+            await _contactRepository.SaveChanges();
+
+            // add ticket message
+            var newMessage = new TicketMessage
+            {
+                TicketId = newTicket.Id,
+                Text = ticket.Text,
+                SenderId = userId,
+            };
+
+            await _contactRepository.AddTicketMessage(newMessage);
+            await _contactRepository.SaveChanges();
+
+            return AddTicketResult.Success;
+        }
+
+        public async Task<TicketDetailDTO> GetTicketForShow(long ticketId, long userId)
+        {
+            var ticket = await _contactRepository.GetTicketById(ticketId);
+
+            if (ticket == null || ticket.OwnerId != userId)
+            {
+                return null;
+            }
+
+            return new TicketDetailDTO()
+            {
+                Ticket = ticket,
+                TicketMessages = await _contactRepository.GetTicketMessageByTicketId(ticketId)
+            };
         }
 
         #endregion
