@@ -12,10 +12,12 @@ namespace Junko.Application.Services.Implementations
         #region consractor
 
         private readonly IContactRepository _contactRepository;
+        private readonly IUserRepository _userRepository;
 
-        public ContactService(IContactRepository contactRepository)
+        public ContactService(IContactRepository contactRepository, IUserRepository userRepository)
         {
             _contactRepository = contactRepository;
+            _userRepository = userRepository;
         }
 
         #endregion
@@ -122,6 +124,7 @@ namespace Junko.Application.Services.Implementations
                 OwnerId = userId,
                 Title = ticket.Title,
                 IsReadByOwner = true,
+                IsReadByAdmin = false,
                 TicketPriority = ticket.TicketPriority,
                 TicketSection = ticket.TicketSection,
                 TicketState = TicketState.UnderProgress
@@ -158,6 +161,47 @@ namespace Junko.Application.Services.Implementations
                 Ticket = ticket,
                 TicketMessages = await _contactRepository.GetTicketMessageByTicketId(ticketId)
             };
+        }
+
+        public async Task<AnswerTicketResult> AnswerTicket(AnswerTicketDTO answer, long userId)
+        {
+            var ticket = await _contactRepository.GetTicketById(answer.Id);
+
+            var user = await _userRepository.GetUserById(userId);
+
+            if (user == null)
+            {
+                return AnswerTicketResult.NotFound;
+            }
+
+            if (ticket == null)
+            {
+                return AnswerTicketResult.NotFound;
+            }
+
+            if (ticket.OwnerId != user.Id && !user.IsAdmin)
+            {
+                return AnswerTicketResult.NotForUser;
+            }
+
+            var ticketMessage = new TicketMessage
+            {
+                TicketId = ticket.Id,
+                SenderId = userId,
+                Text = answer.Text
+            };
+
+            await _contactRepository.AddTicketMessage(ticketMessage);
+            await _contactRepository.SaveChanges();
+
+            ticket.IsReadByAdmin = false;
+            ticket.IsReadByOwner = true;
+
+            _contactRepository.UpdateTicket(ticket);
+            await _contactRepository.SaveChanges();
+
+            return AnswerTicketResult.Success;
+
         }
 
         public async Task<bool> CloseTicket(long ticketId)

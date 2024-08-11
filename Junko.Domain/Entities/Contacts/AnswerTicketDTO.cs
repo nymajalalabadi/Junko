@@ -15,4 +15,11 @@ namespace Junko.Domain.Entities.Contacts
         public string Text { get; set; }
     }
 
+    public enum AnswerTicketResult
+    {
+        NotForUser,
+        NotFound,
+        Success
+    }
+
 }

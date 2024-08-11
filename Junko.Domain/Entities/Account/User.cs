@@ -60,6 +60,7 @@ namespace Junko.Domain.Entities.Account
         [Display(Name = "بلاک شده / نشده")]
         public bool IsBlocked { get; set; }
 
+        public bool IsAdmin { get; set; }
 
         #endregion
 

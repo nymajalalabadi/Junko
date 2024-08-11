@@ -1,5 +1,6 @@
 ﻿using Junko.Application.Extensions;
 using Junko.Application.Services.Interfaces;
+using Junko.Domain.Entities.Contacts;
 using Junko.Domain.ViewModels.ContactUs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -84,6 +85,43 @@ namespace Junko.Web.Areas.User.Controllers
         }
 
         #endregion
+
+        #region answer ticket
+
+        [HttpPost("answer-ticket"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> AnswerTicket(AnswerTicketDTO answer)
+        {
+            if (string.IsNullOrEmpty(answer.Text))
+            {
+                TempData[ErrorMessage] = "لطفا متن پیام خود را وارد نمایید";
+            }
+
+            if (ModelState.IsValid)
+            {
+                var result = await _contactService.AnswerTicket(answer, User.GetUserId());
+
+                switch (result)
+                {
+                    case AnswerTicketResult.NotForUser:
+                        TempData[ErrorMessage] = "عدم دسترسی";
+                        TempData[InfoMessage] = "در صورت تکرار این مورد ، دسترسی شما به صورت کلی از سیستم قطع خواهد شد";
+                        return RedirectToAction("Index");
+
+                    case AnswerTicketResult.NotFound:
+                        TempData[WarningMessage] = "اطلاعات مورد نظر یافت نشد";
+                        return RedirectToAction("Index");
+
+                    case AnswerTicketResult.Success:
+                        TempData[SuccessMessage] = "اطلاعات مورد نظر با موفقیت ثبت شد";
+                        break;
+                }
+            }
+
+            return RedirectToAction("TicketDetail", "Ticket", new { area = "User", ticketId = answer.Id });
+        }
+
+        #endregion
+
 
         #region Close Ticket
 
