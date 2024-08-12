@@ -3,6 +3,7 @@ using Junko.Domain.Entities.Account;
 using Junko.Domain.Entities.Contacts;
 using Junko.Domain.Entities.Site;
 using Junko.Domain.Entities.SiteSetting;
+using Junko.Domain.Entities.Store;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,8 @@ namespace Junko.DataLayer.Context
         public DbSet<Ticket> Tickets { get; set; }
 
         public DbSet<TicketMessage> TicketMessages { get; set; }
+
+        public DbSet<Seller> Sellers { get; set; }
 
         #endregion
 
