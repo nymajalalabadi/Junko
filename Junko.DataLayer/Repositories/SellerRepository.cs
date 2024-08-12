@@ -32,6 +32,11 @@ namespace Junko.DataLayer.Repositories
                 .AsQueryable();
         }
 
+        public async Task<Seller?> GetSellerById(long id)
+        {
+            return await _context.Sellers.FirstOrDefaultAsync(s => s.Id == id);
+        }
+
         public async Task<bool> HasUnderProgressRequest(long userId)
         {
             return await _context.Sellers.AsQueryable()
@@ -41,6 +46,11 @@ namespace Junko.DataLayer.Repositories
         public async Task AddSeller(Seller seller)
         {
             await _context.Sellers.AddAsync(seller);
+        }
+
+        public void UpdateSeller(Seller seller)
+        {
+            _context.Sellers.Update(seller);
         }
 
         public async Task SaveChanges()

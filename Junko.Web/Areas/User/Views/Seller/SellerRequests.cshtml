@@ -1,4 +1,5 @@
-﻿@using Junko.Domain.ViewModels.Store
+﻿@using Junko.Application.Extensions
+@using Junko.Domain.ViewModels.Store
 @model FilterSellerDTO
 
 @{
@@ -42,6 +43,7 @@
                                             <th>نام فروشگاه</th>
                                             <th>ایمیل</th>
                                             <th>تلفن همراه</th>
+                                            <th>وضعیت فعلی</th>
                                             <th>دستورات</th>
                                         </tr>
                                     </thead>
@@ -53,7 +55,8 @@
                                                 <td>@seller.StoreName</td>
                                                 <td>@seller.Email</td>
                                                 <td>@seller.Mobile</td>
-                                                <td><a class="view">ویرایش</a></td>
+                                                <td>@seller.StoreAcceptanceState.GetEnumName()</td>
+                                                <td><a class="view" asp-area="User" asp-controller="Seller" asp-action="EditRequestSeller" asp-route-id="@seller.Id">ویرایش</a></td>
                                             </tr>
                                         }
                                     </tbody>

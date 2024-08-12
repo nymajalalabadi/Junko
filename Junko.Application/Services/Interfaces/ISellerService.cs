@@ -15,6 +15,10 @@ namespace Junko.Application.Services.Interfaces
 
         Task<RequestSellerResult> AddNewSellerRequest(RequestSellerDTO seller, long userId);
 
+        Task<EditRequestSellerDTO> GetRequestSellerForEdit(long id, long currentUserId);
+
+        Task<EditRequestSellerResult> EditRequestSeller(EditRequestSellerDTO request, long currentUserId);
+
         #endregion
     }
 }

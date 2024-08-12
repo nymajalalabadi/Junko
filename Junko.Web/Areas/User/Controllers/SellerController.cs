@@ -21,6 +21,21 @@ namespace Junko.Web.Areas.User.Controllers
 
         #region Actions
 
+        #region seller requests
+
+        [HttpGet("seller-requests")]
+        public async Task<IActionResult> SellerRequests(FilterSellerDTO filter)
+        {
+            filter.UserId = User.GetUserId();
+            filter.State = FilterSellerState.All;
+
+            var model = await _sellerService.FilterSellers(filter);
+
+            return View(model);
+        }
+
+        #endregion
+
         #region request seller
 
         [HttpGet("request-seller-panel")]
@@ -60,17 +75,42 @@ namespace Junko.Web.Areas.User.Controllers
 
         #endregion
 
-        #region seller requests
+        #region edit request
 
-        [HttpGet("seller-requests")]
-        public async Task<IActionResult> SellerRequests(FilterSellerDTO filter)
+        [HttpGet("edit-request-seller/{id}")]
+        public async Task<IActionResult> EditRequestSeller(long id)
         {
-            filter.UserId = User.GetUserId();
-            filter.State = FilterSellerState.All;
+            var requestSeller = await _sellerService.GetRequestSellerForEdit(id, User.GetUserId());
 
-            var model = await _sellerService.FilterSellers(filter);
+            if (requestSeller == null)
+            {
+                return NotFound();
+            }
 
-            return View(model);
+            return View(requestSeller);
+        }
+
+        [HttpPost("edit-request-seller/{id}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditRequestSeller(EditRequestSellerDTO request)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _sellerService.EditRequestSeller(request, User.GetUserId());
+
+                switch (result)
+                {
+                    case EditRequestSellerResult.NotFound:
+                        TempData[ErrorMessage] = "اطلاعات مورد نظر یافت نشد";
+                        break;
+
+                    case EditRequestSellerResult.Success:
+                        TempData[SuccessMessage] = "اطلاعات مورد نظر با موفقیت ویرایش شد";
+                        TempData[InfoMessage] = "فرآیند تایید اطلاعات از سر گرفته شد";
+                        return RedirectToAction("SellerRequests");
+                }
+            }
+
+            return View(request);
         }
 
         #endregion

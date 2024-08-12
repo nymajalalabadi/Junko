@@ -14,9 +14,13 @@ namespace Junko.Domain.InterFaces
 
         Task<IQueryable<Seller>> GetSellerQuery();
 
+        Task<Seller?> GetSellerById(long id);
+
         Task<bool> HasUnderProgressRequest(long userId);
 
         Task AddSeller(Seller seller);
+
+        void UpdateSeller(Seller seller);
 
         Task SaveChanges();
 

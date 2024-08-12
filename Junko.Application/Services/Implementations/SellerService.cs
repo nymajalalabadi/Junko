@@ -129,6 +129,46 @@ namespace Junko.Application.Services.Implementations
             return RequestSellerResult.Success;
         }
 
+        public async Task<EditRequestSellerDTO> GetRequestSellerForEdit(long id, long currentUserId)
+        {
+            var seller = await _sellerRepository.GetSellerById(id);
+
+            if (seller == null || seller.UserId != currentUserId)
+            {
+                return null;
+            }
+
+            return new EditRequestSellerDTO
+            {
+                Id = seller.Id,
+                Email = seller.Email,
+                Address = seller.Address,
+                StoreName = seller.StoreName
+            };
+
+        }
+
+        public async Task<EditRequestSellerResult> EditRequestSeller(EditRequestSellerDTO request, long currentUserId)
+        {
+            var seller = await _sellerRepository.GetSellerById(request.Id);
+
+            if (seller == null || seller.UserId != currentUserId)
+            {
+                return EditRequestSellerResult.NotFound;
+            }
+
+            seller.Email = request.Email;
+            seller.Mobile = request.Phone;
+            seller.Address = request.Address;
+            seller.StoreName = request.StoreName;
+            seller.StoreAcceptanceState = StoreAcceptanceState.UnderProgress;
+
+            _sellerRepository.UpdateSeller(seller);
+            await _sellerRepository.SaveChanges();
+
+            return EditRequestSellerResult.Success;
+        }
+
         #endregion
     }
 }
