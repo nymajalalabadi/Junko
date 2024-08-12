@@ -2,6 +2,7 @@
 using Junko.Domain.Entities.Store;
 using Junko.Domain.InterFaces;
 using Junko.Domain.ViewModels.Store;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +26,72 @@ namespace Junko.Application.Services.Implementations
 
         #endregion
 
-
         #region Methods
+
+        public async Task<FilterSellerDTO> FilterSellers(FilterSellerDTO filter)
+        {
+            var query = await _sellerRepository.GetSellerQuery();
+
+            #region filter
+
+            if (filter.UserId != 0 && filter.UserId != null)
+            {
+                query = query.Where(s => s.UserId.Equals(filter.UserId));
+            }
+
+            if (!string.IsNullOrEmpty(filter.StoreName))
+            {
+                query = query.Where(s => EF.Functions.Like(s.StoreName, $"%{filter.StoreName}%"));
+            }
+
+            if (!string.IsNullOrEmpty(filter.Email))
+            {
+                query = query.Where(s => EF.Functions.Like(s.Email, $"%{filter.Email}%"));
+            }
+
+            if (!string.IsNullOrEmpty(filter.Mobile))
+            {
+                query = query.Where(s => EF.Functions.Like(s.Mobile, $"%{filter.Mobile}%"));
+            }
+
+            if (!string.IsNullOrEmpty(filter.Address))
+            {
+                query = query.Where(s => EF.Functions.Like(s.Address, $"%{filter.Address}%"));
+            }
+
+            #endregion
+
+            #region state
+
+            switch (filter.State)
+            {
+                case FilterSellerState.All:
+                    query = query.Where(s => !s.IsDelete);
+                    break;
+
+                case FilterSellerState.Accepted:
+                    query = query.Where(s => s.StoreAcceptanceState == StoreAcceptanceState.Accepted && !s.IsDelete);
+                    break;
+
+                case FilterSellerState.UnderProgress:
+                    query = query.Where(s => s.StoreAcceptanceState == StoreAcceptanceState.UnderProgress && !s.IsDelete);
+                    break;
+
+                case FilterSellerState.Rejected:
+                    query = query.Where(s => s.StoreAcceptanceState == StoreAcceptanceState.Rejected && !s.IsDelete);
+                    break;
+            }
+
+            #endregion
+
+            #region Paging
+
+            await filter.SetPaging(query);
+
+            #endregion
+
+            return filter;
+        }
 
         public async Task<RequestSellerResult> AddNewSellerRequest(RequestSellerDTO seller, long userId)
         {

@@ -1,4 +1,5 @@
-﻿using Junko.Domain.Entities.Store;
+﻿using Junko.Domain.Entities.Account;
+using Junko.Domain.Entities.Store;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace Junko.Domain.InterFaces
     public interface ISellerRepository
     {
         #region Methods
+
+        Task<IQueryable<Seller>> GetSellerQuery();
 
         Task<bool> HasUnderProgressRequest(long userId);
 

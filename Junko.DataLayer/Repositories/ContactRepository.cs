@@ -39,7 +39,9 @@ namespace Junko.DataLayer.Repositories
 
         public async Task<IQueryable<Ticket>> GetTicketQuery()
         {
-            return _context.Tickets.Where(t => !t.IsDelete).AsQueryable();
+            return _context.Tickets
+                .Include(t => t.Owner)
+                .AsQueryable();
         }
 
         public async Task<IQueryable<TicketMessage>> GetTicketMessageQuery()

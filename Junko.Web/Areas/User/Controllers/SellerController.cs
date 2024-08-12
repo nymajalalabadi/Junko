@@ -21,6 +21,8 @@ namespace Junko.Web.Areas.User.Controllers
 
         #region Actions
 
+        #region request seller
+
         [HttpGet("request-seller-panel")]
         public IActionResult RequestSellerPanel()
         {
@@ -55,6 +57,25 @@ namespace Junko.Web.Areas.User.Controllers
 
             return View(requestSeller);
         }
+
+        #endregion
+
+        #region seller requests
+
+        [HttpGet("seller-requests")]
+        public async Task<IActionResult> SellerRequests(FilterSellerDTO filter)
+        {
+            filter.UserId = User.GetUserId();
+            filter.State = FilterSellerState.All;
+
+            var model = await _sellerService.FilterSellers(filter);
+
+            return View(model);
+        }
+
+        #endregion
+
+
         #endregion
     }
 }

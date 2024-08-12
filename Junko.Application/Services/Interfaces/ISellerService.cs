@@ -11,6 +11,8 @@ namespace Junko.Application.Services.Interfaces
     {
         #region Methods
 
+        Task<FilterSellerDTO> FilterSellers(FilterSellerDTO filter);
+
         Task<RequestSellerResult> AddNewSellerRequest(RequestSellerDTO seller, long userId);
 
         #endregion

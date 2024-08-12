@@ -25,6 +25,13 @@ namespace Junko.DataLayer.Repositories
 
         #region Methods
 
+        public async Task<IQueryable<Seller>> GetSellerQuery()
+        {
+            return _context.Sellers
+                .Include(s => s.User)
+                .AsQueryable();
+        }
+
         public async Task<bool> HasUnderProgressRequest(long userId)
         {
             return await _context.Sellers.AsQueryable()
