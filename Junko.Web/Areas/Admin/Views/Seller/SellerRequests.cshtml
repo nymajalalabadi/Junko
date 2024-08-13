@@ -80,7 +80,7 @@
                 <tbody>
                     @foreach (var seller in Model.Entities)
                     {
-                        <tr>
+                        <tr id="ajax-url-item-@seller.Id">
                             <td>
                                 @seller.Id
                             </td>
