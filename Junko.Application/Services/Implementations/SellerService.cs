@@ -180,6 +180,25 @@ namespace Junko.Application.Services.Implementations
             }
 
             sellerRequest.StoreAcceptanceState = StoreAcceptanceState.Accepted;
+            sellerRequest.StoreAcceptanceDescription = "اطلاعات پنل فروشندگی شما تایید شده است";
+
+            _sellerRepository.UpdateSeller(sellerRequest);
+            await _sellerRepository.SaveChanges();
+
+            return true;
+        }
+
+        public async Task<bool> RejectSellerRequest(RejectItemDTO reject)
+        {
+            var sellerRequest = await _sellerRepository.GetSellerById(reject.Id);
+
+            if (sellerRequest == null)
+            {
+                return false;
+            }
+
+            sellerRequest.StoreAcceptanceState = StoreAcceptanceState.Rejected;
+            sellerRequest.StoreAcceptanceDescription = reject.RejectMessage;
 
             _sellerRepository.UpdateSeller(sellerRequest);
             await _sellerRepository.SaveChanges();

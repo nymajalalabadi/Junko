@@ -31,6 +31,7 @@ namespace Junko.Web.Areas.Admin.Controllers
 
         #region accept seller request
 
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> AcceptSellerRequest(long requestId)
         {
             var result = await _sellerService.AcceptSellerRequest(requestId);
@@ -38,6 +39,23 @@ namespace Junko.Web.Areas.Admin.Controllers
             if (result)
             {
                 return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "درخواست مورد نظر با موفقیت تایید شد", null);
+            }
+
+            return JsonResponseStatus.SendStatus(JsonResponseStatusType.Danger, "اطلاعاتی با این مشخصات یافت نشد", null);
+        }
+
+        #endregion
+
+        #region reject seller request
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> RejectSellerRequest(RejectItemDTO reject)
+        {
+            var result = await _sellerService.RejectSellerRequest(reject);
+
+            if (result)
+            {
+                return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "درخواست مورد نظر با موفقیت رد شد شد", reject);
             }
 
             return JsonResponseStatus.SendStatus(JsonResponseStatusType.Danger, "اطلاعاتی با این مشخصات یافت نشد", null);

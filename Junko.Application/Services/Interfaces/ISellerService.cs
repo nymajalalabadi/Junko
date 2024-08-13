@@ -21,6 +21,8 @@ namespace Junko.Application.Services.Interfaces
 
         Task<bool> AcceptSellerRequest(long requestId);
 
+        Task<bool> RejectSellerRequest(RejectItemDTO reject);
+
         #endregion
     }
 }
