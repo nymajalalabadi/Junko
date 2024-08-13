@@ -1,0 +1,17 @@
+﻿@using Junko.Domain.ViewModels.Store
+@model RejectItemDTO
+
+<form id="Reject-seller-form" asp-area="Admin" asp-controller="Seller" asp-action="RejectSellerRequest"
+      data-ajax="true" data-method="post" data-ajax-begin="StartLoading('#LargeModalLabel')" data-ajax-complete="EndLoading('#LargeModalLabel')" data-ajax-success="OnSuccessRejectItem">
+
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label for="definpu">متن مورد نظر</label>
+        <textarea asp-for="RejectMessage" class="form-control" rows="10"></textarea>
+        <span asp-validation-for="RejectMessage" class="text-danger"></span>
+    </div>
+
+    <hr />
+
+    <button type="submit" class="btn btn-success btn-block">ثبت اطلاعات</button>
+</form>

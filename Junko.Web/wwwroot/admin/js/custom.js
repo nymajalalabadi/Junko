@@ -1,9 +1,4 @@
-﻿function FillPageId(pageId) {
-    $("#CurrentPage").val(pageId);
-    $("#filter-form").submit();
-}
-
-function ShowMessage(title, text, theme) {
+﻿function ShowMessage(title, text, theme) {
     window.createNotification({
         closeOnClick: true,
         displayCloseButton: false,
@@ -68,6 +63,13 @@ $(document).ready(function () {
     }
 });
 
+
+function FillPageId(pageId) {
+    $("#CurrentPage").val(pageId);
+    $("#filter-form").submit();
+}
+
+
 $('[ajax-url-button]').on('click', function (e) {
     e.preventDefault();
     var url = $(this).attr('href');
@@ -95,15 +97,3 @@ $('[ajax-url-button]').on('click', function (e) {
         }
     });
 });
-
-/////////modal
-
-function OnSuccessRejectItem(res) {
-    if (res.status === 'Success') {
-        ShowMessage('اعلان موفقیت', res.message);
-        $('#ajax-url-item-' + res.data.id).hide(300);
-        $('#reject-modal-' + res.data.id).modal('toggle');
-        $('#reject-modal-' + res.data.id).modal().hide();
-        $('.close').click();
-    }
-}

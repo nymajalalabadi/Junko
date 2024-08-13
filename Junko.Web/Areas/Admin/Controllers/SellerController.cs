@@ -22,6 +22,7 @@ namespace Junko.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> SellerRequests(FilterSellerDTO filter)
         {
+            filter.TakeEntity = 1;
             var model = await _sellerService.FilterSellers(filter);
 
             return View(model);
@@ -31,7 +32,6 @@ namespace Junko.Web.Areas.Admin.Controllers
 
         #region accept seller request
 
-        [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> AcceptSellerRequest(long requestId)
         {
             var result = await _sellerService.AcceptSellerRequest(requestId);
@@ -48,7 +48,18 @@ namespace Junko.Web.Areas.Admin.Controllers
 
         #region reject seller request
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpGet]
+        public  IActionResult RejectSeller(long id)
+        {
+            var model = new RejectItemDTO() 
+            { 
+                Id = id
+            };
+
+            return PartialView("_RejectSellerPartial", model);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> RejectSellerRequest(RejectItemDTO reject)
         {
             var result = await _sellerService.RejectSellerRequest(reject);

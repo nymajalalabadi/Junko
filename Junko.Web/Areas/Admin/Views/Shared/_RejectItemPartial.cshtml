@@ -1,9 +1,0 @@
-﻿@using Junko.Domain.ViewModels.Store
-@model RejectItemDTO
-
-<input type="hidden" asp-for="Id" />
-<div class="form-group">
-    <label for="definpu">متن مورد نظر</label>
-    <textarea asp-for="RejectMessage" class="form-control" rows="10"></textarea>
-    <span asp-validation-for="RejectMessage" class="text-danger"></span>
-</div>
