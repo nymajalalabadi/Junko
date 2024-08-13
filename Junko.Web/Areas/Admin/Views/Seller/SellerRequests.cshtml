@@ -1,0 +1,115 @@
+﻿@using Junko.Domain.ViewModels.Store
+@using Junko.Application.Extensions
+@model FilterSellerDTO
+@{
+    ViewData["Title"] = "درخواست های فروشندگی";
+}
+
+<div class="col-xs-4">
+    <div class="well with-header">
+        <div class="header bordered-sky">
+            فیلتر
+        </div>
+        <form asp-area="Admin" asp-controller="Seller" asp-action="SellerRequests" method="get" id="filter-form">
+            <input type="hidden" asp-for="CurrentPage" />
+            <div class="form-group">
+                <label>نام فروشگاه</label>
+                <input class="form-control" asp-for="StoreName">
+            </div>
+            <div class="form-group">
+                <label>ایمیل</label>
+                <input class="form-control" asp-for="Email">
+            </div>
+            <div class="form-group">
+                <label>تلفن همراه</label>
+                <input class="form-control" asp-for="Mobile">
+            </div>
+            <div class="form-group">
+                <label>آدرس فروشگاه</label>
+                <input class="form-control" asp-for="Address">
+            </div>
+            <hr />
+            <h4>وضعیت</h4>
+            <div class="control-group">
+                
+                @foreach (var item in Html.GetEnumSelectList<FilterSellerState>())
+                {
+                    <div class="radio">
+                        <label>
+                            <input type="radio" class="colored-blue" value="@item.Value" name="@nameof(Model.State)" @(Convert.ToInt32(item.Value) == Convert.ToInt32(Model.State) ? "checked" : "")>
+                            <span class="text">@item.Text</span>
+                        </label>
+                    </div>
+                }
+
+            </div>
+            <button type="submit" class="btn btn-success btn-block">فیلتر</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="col-xs-8">
+    <div class="well with-header with-footer">
+        <div class="header bordered-sky">
+            @ViewData["Title"]
+        </div>
+        @if (Model.Entities != null && Model.Entities.Any())
+        {
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            شناسه
+                        </th>
+                        <th>
+                            نام فروشگاه
+                        </th>
+                        <th>
+                            ایمیل
+                        </th>
+                        <th>
+                            وضعیت
+                        </th>
+                        <th>
+                            دستورات
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var seller in Model.Entities)
+                    {
+                        <tr>
+                            <td>
+                                @seller.Id
+                            </td>
+                            <td>
+                                @seller.StoreName
+                            </td>
+                            <td>
+                                @seller.Email
+                            </td>
+                            <td>
+                                @seller.StoreAcceptanceState.GetEnumName()
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <p>
+                    هیچ اطلاعاتی یافت نشد
+                </p>
+            </div>
+        }
+        <div class="footer">
+            <partial name="_AdminPagingPartial" model="@Model.GetPaging()" />
+        </div>
+    </div>
+</div>
+
