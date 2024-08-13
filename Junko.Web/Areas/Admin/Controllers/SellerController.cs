@@ -66,7 +66,7 @@ namespace Junko.Web.Areas.Admin.Controllers
 
             if (result)
             {
-                return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "درخواست مورد نظر با موفقیت رد شد شد", reject);
+                return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "درخواست مورد نظر با موفقیت رد شد", reject);
             }
 
             return JsonResponseStatus.SendStatus(JsonResponseStatusType.Danger, "اطلاعاتی با این مشخصات یافت نشد", null);

@@ -30,29 +30,6 @@
 
 }
 
-//function OnSuccessRejectItem(response) {
-//    if (response.status === "Danger") {
-//        swal({
-//            title: "خطا",
-//            text: response.message,
-//            icon: "error",
-//            button: "باشه"
-//        });
-//    }
-//    else {
-//        $("#LargeModal").modal("hide");
-//        $("#filter-form").submit();
-//        ShowMessage('اعلان موفقیت', response.message);
-//        $('#ajax-url-item-' + response.data.id).hide(300);
-//        swal({
-//            title: "اعلان",
-//            text: response.message,
-//            icon: "success",
-//            button: "باشه"
-//        });
-//    }
-//}
-
 function OnSuccessRejectItem(response)
 {
 
@@ -62,7 +39,6 @@ function OnSuccessRejectItem(response)
         ShowMessage('اعلان موفقیت', response.message);
         $('#filter-form').load(location.href + ' #filter-form');
         $('#ajax-url-item-' + response.data.id).hide(300);
-        $('.close').click();
     } else {
         swal({
             title: "خطا",
