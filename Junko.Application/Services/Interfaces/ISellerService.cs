@@ -19,6 +19,8 @@ namespace Junko.Application.Services.Interfaces
 
         Task<EditRequestSellerResult> EditRequestSeller(EditRequestSellerDTO request, long currentUserId);
 
+        Task<bool> AcceptSellerRequest(long requestId);
+
         #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿@using Junko.Domain.ViewModels.Store
+﻿@using Junko.Domain.Entities.Store
+@using Junko.Domain.ViewModels.Store
 @using Junko.Application.Extensions
 @model FilterSellerDTO
 @{
@@ -89,10 +90,23 @@
                             <td>
                                 @seller.Email
                             </td>
+                            @if (seller.StoreAcceptanceState == StoreAcceptanceState.Accepted)
+                            {
+                                <td class="success">
+                                    @seller.StoreAcceptanceState.GetEnumName()
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="danger">
+                                    @seller.StoreAcceptanceState.GetEnumName()
+                                </td>
+                            }
                             <td>
-                                @seller.StoreAcceptanceState.GetEnumName()
-                            </td>
-                            <td>
+                                @if (seller.StoreAcceptanceState != StoreAcceptanceState.Accepted)
+                                {
+                                    <a class="btn btn-success" ajax-url-button="@seller.Id" asp-area="Admin" asp-controller="Seller" asp-action="AcceptSellerRequest" asp-route-requestId="@seller.Id">تایید اطلاعات</a>
+                                }
                             </td>
                         </tr>
                     }

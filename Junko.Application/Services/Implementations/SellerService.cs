@@ -1,4 +1,5 @@
-﻿using Junko.Application.Services.Interfaces;
+﻿using Azure.Core;
+using Junko.Application.Services.Interfaces;
 using Junko.Domain.Entities.Store;
 using Junko.Domain.InterFaces;
 using Junko.Domain.ViewModels.Store;
@@ -167,6 +168,23 @@ namespace Junko.Application.Services.Implementations
             await _sellerRepository.SaveChanges();
 
             return EditRequestSellerResult.Success;
+        }
+
+        public async Task<bool> AcceptSellerRequest(long requestId)
+        {
+            var sellerRequest = await _sellerRepository.GetSellerById(requestId);
+
+            if (sellerRequest == null)
+            {
+                return false;
+            }
+
+            sellerRequest.StoreAcceptanceState = StoreAcceptanceState.Accepted;
+
+            _sellerRepository.UpdateSeller(sellerRequest);
+            await _sellerRepository.SaveChanges();
+
+            return true;
         }
 
         #endregion
