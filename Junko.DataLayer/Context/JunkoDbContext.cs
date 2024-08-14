@@ -1,6 +1,7 @@
 ﻿using Azure;
 using Junko.Domain.Entities.Account;
 using Junko.Domain.Entities.Contacts;
+using Junko.Domain.Entities.Products;
 using Junko.Domain.Entities.Site;
 using Junko.Domain.Entities.SiteSetting;
 using Junko.Domain.Entities.Store;
@@ -36,6 +37,12 @@ namespace Junko.DataLayer.Context
         public DbSet<TicketMessage> TicketMessages { get; set; }
 
         public DbSet<Seller> Sellers { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<ProductSelectedCategory> ProductSelectedCategories { get; set; }
+
+        public DbSet<ProductCategory> ProductCategories { get; set; }
 
         #endregion
 
