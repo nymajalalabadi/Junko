@@ -18,6 +18,8 @@ namespace Junko.Domain.InterFaces
 
         Task<bool> HasUnderProgressRequest(long userId);
 
+        Task<Seller?> GetLastActiveSellerByUserId(long userId);
+
         Task AddSeller(Seller seller);
 
         void UpdateSeller(Seller seller);

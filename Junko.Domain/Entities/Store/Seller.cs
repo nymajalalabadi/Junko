@@ -1,5 +1,6 @@
 ﻿using Junko.Domain.Entities.Account;
 using Junko.Domain.Entities.Common;
+using Junko.Domain.Entities.Products;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -50,6 +51,8 @@ namespace Junko.Domain.Entities.Store
         #region relations
 
         public User User { get; set; }
+
+        public ICollection<Product> Products { get; set; }
 
         #endregion
     }

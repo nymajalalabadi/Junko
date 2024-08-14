@@ -1,4 +1,5 @@
-﻿using Junko.Domain.ViewModels.Store;
+﻿using Junko.Domain.Entities.Store;
+using Junko.Domain.ViewModels.Store;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,9 @@ namespace Junko.Application.Services.Interfaces
         Task<bool> AcceptSellerRequest(long requestId);
 
         Task<bool> RejectSellerRequest(RejectItemDTO reject);
+
+        Task<Seller?> GetLastActiveSellerByUserId(long userId);
+
 
         #endregion
     }

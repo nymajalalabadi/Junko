@@ -206,6 +206,11 @@ namespace Junko.Application.Services.Implementations
             return true;
         }
 
+        public async Task<Seller?> GetLastActiveSellerByUserId(long userId)
+        {
+            return await _sellerRepository.GetLastActiveSellerByUserId(userId);
+        }
+
         #endregion
     }
 }

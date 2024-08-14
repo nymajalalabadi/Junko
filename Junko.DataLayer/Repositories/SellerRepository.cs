@@ -43,6 +43,13 @@ namespace Junko.DataLayer.Repositories
                 .AnyAsync(s => s.UserId == userId && s.StoreAcceptanceState == StoreAcceptanceState.UnderProgress);
         }
 
+        public async Task<Seller?> GetLastActiveSellerByUserId(long userId)
+        {
+            return await _context.Sellers.AsQueryable()
+                .OrderByDescending(s => s.CreateDate)
+                .FirstOrDefaultAsync(s => s.UserId == userId && s.StoreAcceptanceState == StoreAcceptanceState.Accepted);
+        }
+
         public async Task AddSeller(Seller seller)
         {
             await _context.Sellers.AddAsync(seller);

@@ -1,0 +1,16 @@
+﻿@using Junko.Domain.ViewModels.Products
+@model FilterProductDTO
+
+@{
+    ViewData["Title"] = "لیست محصولات";
+}
+
+@if (Model.Entities != null && Model.Entities.Any())
+{
+    <ul>
+        @foreach (var product in Model.Entities)
+        {
+            <li>@product.Title</li>
+        }
+    </ul>
+}
