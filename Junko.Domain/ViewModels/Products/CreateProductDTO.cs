@@ -35,7 +35,10 @@ namespace Junko.Domain.ViewModels.Products
         public bool IsActive { get; set; }
 
         public List<CreateProductColorDTO> ProductColors { get; set; }
+
         public List<CreateProductSizeDTO> ProductSizes { get; set; }
+
+        public List<long> SelectedCategories { get; set; }
     }
 
 }
