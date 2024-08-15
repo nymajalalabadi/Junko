@@ -1,20 +1,32 @@
-﻿using System;
+﻿using Junko.Domain.Entities.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Junko.Domain.ViewModels.Products
+namespace Junko.Domain.Entities.Products
 {
-    public class CreateProductColorDTO
+    public class ProductColor : BaseEntity
     {
+        #region properties
+
         [Display(Name = "رنگ")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         public string ColorName { get; set; }
 
+        [Display(Name = "قیمت")]
         public int? Price { get; set; }
+
+        #endregion
+
+        #region relations
+
+        public ICollection<ProductSelectedColorSize> ProductSelectedColorSizes { get; set; }
+
+        #endregion
     }
 
 }

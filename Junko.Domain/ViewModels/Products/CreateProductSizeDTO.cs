@@ -7,14 +7,11 @@ using System.Threading.Tasks;
 
 namespace Junko.Domain.ViewModels.Products
 {
-    public class CreateProductColorDTO
+    public class CreateProductSizeDTO
     {
-        [Display(Name = "رنگ")]
+        [Display(Name = "اندازه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
-        public string ColorName { get; set; }
-
-        public int? Price { get; set; }
+        public string Size { get; set; }
     }
-
 }

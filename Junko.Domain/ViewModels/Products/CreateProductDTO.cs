@@ -15,7 +15,12 @@ namespace Junko.Domain.ViewModels.Products
         public string Title { get; set; }
 
         [Display(Name = "قیمت محصول")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public int Price { get; set; }
+
+        [Display(Name = "تعداد محصول")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public int Count { get; set; }
 
         [Display(Name = "توضیحات کوتاه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -30,6 +35,7 @@ namespace Junko.Domain.ViewModels.Products
         public bool IsActive { get; set; }
 
         public List<CreateProductColorDTO> ProductColors { get; set; }
+        public List<CreateProductSizeDTO> ProductSizes { get; set; }
     }
 
 }

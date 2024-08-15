@@ -4,6 +4,7 @@ using Junko.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Junko.DataLayer.Migrations
 {
     [DbContext(typeof(JunkoDbContext))]
-    partial class JunkoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240815071705_AddProductColor")]
+    partial class AddProductColor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,9 +239,6 @@ namespace Junko.DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -351,10 +351,15 @@ namespace Junko.DataLayer.Migrations
                     b.Property<DateTime>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Price")
+                    b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductColor");
                 });
@@ -389,70 +394,6 @@ namespace Junko.DataLayer.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductSelectedCategories");
-                });
-
-            modelBuilder.Entity("Junko.Domain.Entities.Products.ProductSelectedColorSize", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("LastUpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("ProductColorId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ProductSizeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductColorId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("ProductSizeId");
-
-                    b.ToTable("ProductSelectedColorSize");
-                });
-
-            modelBuilder.Entity("Junko.Domain.Entities.Products.ProductSize", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("LastUpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductSize");
                 });
 
             modelBuilder.Entity("Junko.Domain.Entities.Site.SiteBanner", b =>
@@ -601,7 +542,7 @@ namespace Junko.DataLayer.Migrations
                             From = "nymasteam@gmail.com",
                             IsDefault = true,
                             IsDelete = false,
-                            LastUpdateDate = new DateTime(2024, 8, 15, 11, 17, 32, 792, DateTimeKind.Local).AddTicks(8080),
+                            LastUpdateDate = new DateTime(2024, 8, 15, 10, 47, 2, 638, DateTimeKind.Local).AddTicks(6488),
                             Password = "fuqijttnofjradmh",
                             Port = 587,
                             SMTP = "smtp.gmail.com"
@@ -802,6 +743,17 @@ namespace Junko.DataLayer.Migrations
                     b.Navigation("Parent");
                 });
 
+            modelBuilder.Entity("Junko.Domain.Entities.Products.ProductColor", b =>
+                {
+                    b.HasOne("Junko.Domain.Entities.Products.Product", "Product")
+                        .WithMany("ProductColors")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Junko.Domain.Entities.Products.ProductSelectedCategory", b =>
                 {
                     b.HasOne("Junko.Domain.Entities.Products.ProductCategory", "ProductCategory")
@@ -819,33 +771,6 @@ namespace Junko.DataLayer.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("ProductCategory");
-                });
-
-            modelBuilder.Entity("Junko.Domain.Entities.Products.ProductSelectedColorSize", b =>
-                {
-                    b.HasOne("Junko.Domain.Entities.Products.ProductColor", "ProductColor")
-                        .WithMany("ProductSelectedColorSizes")
-                        .HasForeignKey("ProductColorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Junko.Domain.Entities.Products.Product", "Product")
-                        .WithMany("ProductSelectedColorSizes")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Junko.Domain.Entities.Products.ProductSize", "ProductSize")
-                        .WithMany("ProductSelectedColorSizes")
-                        .HasForeignKey("ProductSizeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("ProductColor");
-
-                    b.Navigation("ProductSize");
                 });
 
             modelBuilder.Entity("Junko.Domain.Entities.Store.Seller", b =>
@@ -875,24 +800,14 @@ namespace Junko.DataLayer.Migrations
 
             modelBuilder.Entity("Junko.Domain.Entities.Products.Product", b =>
                 {
-                    b.Navigation("ProductSelectedCategories");
+                    b.Navigation("ProductColors");
 
-                    b.Navigation("ProductSelectedColorSizes");
+                    b.Navigation("ProductSelectedCategories");
                 });
 
             modelBuilder.Entity("Junko.Domain.Entities.Products.ProductCategory", b =>
                 {
                     b.Navigation("ProductSelectedCategories");
-                });
-
-            modelBuilder.Entity("Junko.Domain.Entities.Products.ProductColor", b =>
-                {
-                    b.Navigation("ProductSelectedColorSizes");
-                });
-
-            modelBuilder.Entity("Junko.Domain.Entities.Products.ProductSize", b =>
-                {
-                    b.Navigation("ProductSelectedColorSizes");
                 });
 
             modelBuilder.Entity("Junko.Domain.Entities.Store.Seller", b =>
