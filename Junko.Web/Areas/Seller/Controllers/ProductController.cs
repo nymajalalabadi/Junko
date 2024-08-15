@@ -37,8 +37,32 @@ namespace Junko.Web.Areas.Seller.Controllers
             return View(model);
         }
 
+        #endregion
+
+        #region create product
+
+        [HttpGet("create-product")]
+        public async Task<IActionResult> CreateProduct()
+        {
+            ViewBag.MainCategories = await _productService.GetAllProductCategoriesByParentId(null);
+
+            return View();
+        }
+
+        [HttpPost("create-product"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateProduct(CreateProductDTO product)
+        {
+            if (ModelState.IsValid)
+            {
+                // todo: create product
+            }
+
+            ViewBag.MainCategories = await _productService.GetAllProductCategoriesByParentId(null);
+            return View(product);
+        }
 
         #endregion
+
     }
 
 }

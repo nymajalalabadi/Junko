@@ -33,6 +33,20 @@ namespace Junko.DataLayer.Repositories
                 .AsQueryable();
         }
 
+        public async Task<List<ProductCategory>> GetAllProductCategories()
+        {
+            return await _context.ProductCategories.AsQueryable()
+                .Where(c => !c.IsDelete && c.IsActive)
+                .ToListAsync();
+        }
+
+        public async Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long parentId)
+        {
+            return await _context.ProductCategories.AsQueryable()
+                .Where(c => !c.IsDelete && c.IsActive && c.ParentId == parentId)
+                .ToListAsync();
+        }
+
         #endregion
     }
 }

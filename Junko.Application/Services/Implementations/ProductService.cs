@@ -80,6 +80,16 @@ namespace Junko.Application.Services.Implementations
             return filter;
         }
 
+        public async Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long? parentId)
+        {
+            if (parentId == null || parentId == 0)
+            {
+                return await _productRepository.GetAllProductCategories();
+            }
+
+            return await _productRepository.GetAllProductCategoriesByParentId(parentId ?? 0);
+        }
+
         #endregion
     }
 }

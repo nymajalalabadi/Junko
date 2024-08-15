@@ -1,16 +1,80 @@
-﻿@using Junko.Domain.ViewModels.Products
+﻿@using Junko.Application.Extensions
+@using Junko.Application.Statics
+@using Junko.Domain.ViewModels.Products
 @model FilterProductDTO
 
-@{
     ViewData["Title"] = "لیست محصولات";
 }
 
-@if (Model.Entities != null && Model.Entities.Any())
-{
-    <ul>
-        @foreach (var product in Model.Entities)
-        {
-            <li>@product.Title</li>
-        }
-    </ul>
-}
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li><a href="/">خانه</a></li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    @await Component.InvokeAsync("SellerSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade active show" id="account-details">
+                            <h3>@ViewData["Title"] </h3>
+                            <div class="table-responsive">
+                                @if (Model.Entities != null && Model.Entities.Any())
+                                {
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>تصویر</th>
+                                                <th>عنوان محصول</th>
+                                                <th>وضعیت</th>
+                                                <th>دستورات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var product in Model.Entities)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <img src="@(SiteTools.ProductThumbnailImage + product.ImageName)" width="75" />
+                                                    </td>
+                                                    <td>@product.Title</td>
+                                                    <td>
+                                                        <span class="danger">
+                                                            @product.ProductAcceptanceState.GetEnumName()
+                                                        </span>
+                                                    </td>
+                                                    <td><a asp-area="User" asp-controller="Ticket" asp-action="TicketDetail" asp-route-ticketId="@product.Id" class="view">نمایش جزییات</a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <partial name="_NoItemFound" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

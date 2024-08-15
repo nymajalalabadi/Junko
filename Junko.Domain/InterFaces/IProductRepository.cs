@@ -14,6 +14,9 @@ namespace Junko.Domain.InterFaces
 
         Task<IQueryable<Product>> GetProductQuery();
 
+        Task<List<ProductCategory>> GetAllProductCategories();
+
+        Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long parentId);
 
         #endregion
     }

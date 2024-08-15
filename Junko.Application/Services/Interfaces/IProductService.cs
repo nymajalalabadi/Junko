@@ -1,4 +1,5 @@
-﻿using Junko.Domain.ViewModels.Products;
+﻿using Junko.Domain.Entities.Products;
+using Junko.Domain.ViewModels.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace Junko.Application.Services.Interfaces
         #region Methods
 
         Task<FilterProductDTO> FilterProducts(FilterProductDTO filter);
+
+        Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long? parentId);
 
         #endregion
     }
