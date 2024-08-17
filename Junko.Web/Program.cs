@@ -3,6 +3,7 @@ using GoogleReCaptcha.V3.Interface;
 using Junko.DataLayer.Context;
 using Junko.Loc;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
@@ -24,6 +25,15 @@ builder.Services.AddDbContext<JunkoDbContext>(options =>
 #region LoC
 
 DependencyContainer.RejosterService(builder.Services);
+
+#endregion
+
+#region data protection
+
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(Directory.GetCurrentDirectory() + "\\wwwroot\\Auth\\"))
+    .SetApplicationName("Junko")
+    .SetDefaultKeyLifetime(TimeSpan.FromDays(30));
 
 #endregion
 
