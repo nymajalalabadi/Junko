@@ -44,7 +44,7 @@ namespace Junko.Web.Areas.Seller.Controllers
         [HttpGet("create-product")]
         public async Task<IActionResult> CreateProduct()
         {
-            ViewBag.MainCategories = await _productService.GetAllProductCategoriesByParentId(null);
+            ViewBag.Categories = await _productService.GetAllActiveProductCategories();
 
             return View();
         }
@@ -57,7 +57,7 @@ namespace Junko.Web.Areas.Seller.Controllers
                 // todo: create product
             }
 
-            ViewBag.MainCategories = await _productService.GetAllProductCategoriesByParentId(null);
+            ViewBag.Categories = await _productService.GetAllActiveProductCategories();
             return View(product);
         }
 

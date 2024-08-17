@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -34,6 +35,10 @@ namespace Junko.Domain.ViewModels.Products
         [Display(Name = "فعال / غیرفعال")]
         public bool IsActive { get; set; }
 
+        [Display(Name = "عکس اصلی")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public IFormFile AvatarImage { get; set; }
+
         public List<CreateProductColorDTO> ProductColors { get; set; }
 
         public List<CreateProductSizeDTO> ProductSizes { get; set; }
@@ -41,4 +46,9 @@ namespace Junko.Domain.ViewModels.Products
         public List<long> SelectedCategories { get; set; }
     }
 
+    public enum CreateProductResult
+    {
+        Success,
+        Error
+    }
 }

@@ -12,11 +12,23 @@ namespace Junko.Domain.InterFaces
     {
         #region Methods
 
+        #region Product
+
         Task<IQueryable<Product>> GetProductQuery();
+
+        Task AddProduct(Product product);
+
+        #endregion
+
+        #region Product Category
 
         Task<List<ProductCategory>> GetAllProductCategories();
 
         Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long parentId);
+
+        #endregion
+
+        Task SaveChanges();
 
         #endregion
     }

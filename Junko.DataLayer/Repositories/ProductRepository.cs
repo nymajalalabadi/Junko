@@ -25,6 +25,8 @@ namespace Junko.DataLayer.Repositories
 
         #region Methods
 
+        #region Product
+
         public async Task<IQueryable<Product>> GetProductQuery()
         {
             return _context.Products
@@ -33,10 +35,19 @@ namespace Junko.DataLayer.Repositories
                 .AsQueryable();
         }
 
+        public async Task AddProduct(Product product)
+        {
+            await _context.Products.AddAsync(product);
+        }
+
+        #endregion
+
+        #region Product Category
+
         public async Task<List<ProductCategory>> GetAllProductCategories()
         {
             return await _context.ProductCategories.AsQueryable()
-                .Where(c => !c.IsDelete && c.IsActive)
+                .Where(c => !c.IsDelete && c.IsActive && c.ParentId == null)
                 .ToListAsync();
         }
 
@@ -45,6 +56,13 @@ namespace Junko.DataLayer.Repositories
             return await _context.ProductCategories.AsQueryable()
                 .Where(c => !c.IsDelete && c.IsActive && c.ParentId == parentId)
                 .ToListAsync();
+        }
+
+        #endregion
+
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
         }
 
         #endregion

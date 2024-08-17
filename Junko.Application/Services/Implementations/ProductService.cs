@@ -1,4 +1,7 @@
-﻿using Junko.Application.Services.Interfaces;
+﻿using Junko.Application.Generators;
+using Junko.Application.Services.Interfaces;
+using Junko.Application.Statics;
+using Junko.Domain.Entities.Account;
 using Junko.Domain.Entities.Products;
 using Junko.Domain.InterFaces;
 using Junko.Domain.ViewModels.Products;
@@ -25,6 +28,8 @@ namespace Junko.Application.Services.Implementations
         #endregion
 
         #region Methods
+
+        #region product
 
         public async Task<FilterProductDTO> FilterProducts(FilterProductDTO filter)
         {
@@ -80,6 +85,44 @@ namespace Junko.Application.Services.Implementations
             return filter;
         }
 
+        public async Task<CreateProductResult> CreateProduct(CreateProductDTO product, long sellerId)
+        {
+            if (product.AvatarImage != null && product.AvatarImage.IsImage())
+            {
+                var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(product.AvatarImage.FileName);
+                product.AvatarImage.AddImageToServer(imageName, SiteTools.UserAvatarOrigin, 100, 100, SiteTools.ProductImage);
+
+                var newProduct = new Product
+                {
+                    Title = product.Title,
+                    Price = product.Price,
+                    ShortDescription = product.ShortDescription,
+                    Description = product.Description,
+                    IsActive = product.IsActive,
+                    SellerId = sellerId,
+                    Count = product.Count,
+                    ImageName = imageName,
+                };
+
+                await _productRepository.AddProduct(newProduct);
+                await _productRepository.SaveChanges();
+
+                // create product categories
+
+
+                // create product colors
+
+                return CreateProductResult.Success;
+            }
+
+            return CreateProductResult.Error;
+        }
+
+        #endregion
+
+
+        #region product categories
+
         public async Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long? parentId)
         {
             if (parentId == null || parentId == 0)
@@ -89,6 +132,13 @@ namespace Junko.Application.Services.Implementations
 
             return await _productRepository.GetAllProductCategoriesByParentId(parentId ?? 0);
         }
+
+        public async Task<List<ProductCategory>> GetAllActiveProductCategories()
+        {
+            return await _productRepository.GetAllProductCategories();
+        }
+
+        #endregion
 
         #endregion
     }
