@@ -66,3 +66,8 @@ $(document).ready(function () {
 });
 
 /////ckeditor
+
+function FillPageId(pageId) {
+    $("#CurrentPage").val(pageId);
+    $("#filter-form").submit();
+}
