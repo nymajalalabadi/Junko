@@ -1,6 +1,7 @@
 ﻿using Junko.Application.Extensions;
 using Junko.Application.Services.Interfaces;
 using Junko.Domain.ViewModels.Products;
+using Junko.Web.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Junko.Web.Areas.Seller.Controllers
@@ -23,7 +24,7 @@ namespace Junko.Web.Areas.Seller.Controllers
 
         #region list
 
-        [HttpGet("products")]
+        [HttpGet("products-list")]
         public async Task<IActionResult> Index(FilterProductDTO filter)
         {
             var seller = await _sellerService.GetLastActiveSellerByUserId(User.GetUserId());
@@ -59,6 +60,18 @@ namespace Junko.Web.Areas.Seller.Controllers
 
             ViewBag.Categories = await _productService.GetAllActiveProductCategories();
             return View(product);
+        }
+
+        #endregion
+
+        #region product categories
+
+        [HttpGet("product-categories/{parentId}")]
+        public async Task<IActionResult> GetProductCategoriesByParent(long parentId)
+        {
+            var categories = await _productService.GetAllProductCategoriesByParentId(parentId);
+
+            return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "اطلاعات دسته بندی ها", categories);
         }
 
         #endregion

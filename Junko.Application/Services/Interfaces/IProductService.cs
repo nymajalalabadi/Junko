@@ -22,7 +22,7 @@ namespace Junko.Application.Services.Interfaces
 
         #region product categories
 
-        Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long? parentId);
+        Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long parentId);
 
         Task<List<ProductCategory>> GetAllActiveProductCategories();
 

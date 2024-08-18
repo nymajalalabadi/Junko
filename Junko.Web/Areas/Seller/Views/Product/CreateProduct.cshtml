@@ -69,28 +69,27 @@
                                                 <img src="" id="imgPreview" class="border my-1 mx-auto d-block" width="120px" height="120px">
                                             </div>
                                             <hr />
-                                            @if (categories.Any() && categories != null )
+                                            @if (categories != null && categories.Any())
                                             {
                                                 @foreach (var category in categories.Where(s => s.ParentId == null))
                                                 {
                                                     <ul>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="@nameof(Model.SelectedCategories)" value="@category.Id" /> @category.Title
+                                                                <input type="checkbox" name="@nameof(Model.SelectedCategories)" value="@category.Id" main_category_checkbox="@category.Id" /> @category.Title
                                                             </label>
-                                                            @if (categories.Any(s => s.ParentId == category.Id))
-                                                            {
-                                                                <div>
 
-                                                                    @foreach (var subCategory in categories.Where(s => s.ParentId == category.Id))
-                                                                    {
-                                                                        <label>
-                                                                            <input type="checkbox" name="@nameof(Model.SelectedCategories)" value="@subCategory.Id" /> @subCategory.Title
-                                                                        </label>
-                                                                    }
-                                                                </div>
-                                                            }
+                                                            <div id="first_sub_categories_@category.Id">
+
+                                                                @foreach (var subCategory in categories.Where(s => s.ParentId == category.Id))
+                                                                {
+                                                                    @*<label>
+                                                        <input type="checkbox" name="@nameof(Model.SelectedCategories)" value="@subCategory.Id" /> @subCategory.Title
+                                                        </label>*@
+                                                                }
+                                                            </div>
                                                         </li>
+
                                                     </ul>
                                                     <hr />
                                                 }
@@ -113,6 +112,27 @@
 @section scripts
 {
     <partial name="_JqueryValidators" />
+
+    <script>
+        $("[main_category_checkbox]").on('change', function (e) {
+
+            var isChecked = $(this).is(':checked');
+
+            var selectedCategoryId = $(this).attr('main_category_checkbox');
+
+            if (isChecked) 
+            {
+                $('#sub_categories_' + selectedCategoryId).slideDown(300);
+            } 
+            else 
+            {
+                $('#sub_categories_' + selectedCategoryId).slideUp(300);
+                $('[parent-category-id="' + selectedCategoryId + '"]').prop('checked', false);
+            }
+        });
+    </script>
+
+
 
     <script>
         function readURL(input) {

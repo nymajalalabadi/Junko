@@ -123,14 +123,9 @@ namespace Junko.Application.Services.Implementations
 
         #region product categories
 
-        public async Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long? parentId)
+        public async Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long parentId)
         {
-            if (parentId == null || parentId == 0)
-            {
-                return await _productRepository.GetAllProductCategories();
-            }
-
-            return await _productRepository.GetAllProductCategoriesByParentId(parentId ?? 0);
+            return await _productRepository.GetAllProductCategoriesByParentId(parentId);
         }
 
         public async Task<List<ProductCategory>> GetAllActiveProductCategories()
