@@ -38,7 +38,7 @@
                             <div class="login">
                                 <div class="login_form_container">
                                     <div class="account_login_form">
-                                        <form asp-area="Seller" asp-controller="Product" asp-action="CreateProduct" enctype="multipart/form-data">
+                                        <form asp-area="Seller" asp-controller="Product" asp-action="CreateProduct" enctype="multipart/form-data" id="create_product_form">
                                             <label>نام محصول</label>
                                             <input asp-for="Title">
                                             <span class="text-danger" asp-validation-for="Title"></span>
@@ -105,6 +105,50 @@
                                                     <hr />
                                                 }
                                             }
+                                            <hr />
+
+                                            <label>رنگ محصول</label>
+                                            <input type="text" placeholder="رنگ محصول" id="product_color_name_input">
+
+                                            <label>قیمت مضاف رنگ محصول</label>
+                                            <input type="number" placeholder="قیمت مضاف رنگ محصول" id="product_color_price_input">
+
+                                            <button class="btn btn-success" id="add_color_button">افزودن رنگ</button>
+                                            <br />
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>نام رنگ</th>
+                                                            <th>قیمت</th>
+                                                            <th>دستورات</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="list_of_product_colors">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <hr />
+
+                                            <label>سایز محصول</label>
+                                            <input type="text" placeholder="سایز محصول" id="product_size_name_input">
+
+                                            <button class="btn btn-success" id="add_size_button">افزودن سایز</button>
+                                            <br />
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>سایز محصول</th>
+                                                            <th>دستورات</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="list_of_product_sizes">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
                                             <div class="save_button primary_btn default_button">
                                                 <button type="submit">افزودن</button>
                                             </div>
@@ -141,6 +185,40 @@
                 $('[parent-category-id="' + selectedCategoryId + '"]').prop('checked', false);
             }
         });
+    </script>
+    
+    <script>
+        $('#add_color_button').on('click',
+            function (e) 
+            {
+                e.preventDefault();
+                var colorName = $('#product_color_name_input').val();
+                var colorPrice = $('#product_color_price_input').val();
+                var currentColorsCount = $('#list_of_product_colors tr');
+                var index = currentColorsCount.length;
+                var colorNameNode = `<input type="hidden" value="${colorName}"  name="ProductColors[${index}].ColorName" >`;
+                var colorPriceNode = `<input type="hidden" value="${colorPrice}"  name="ProductColors[${index}].Price" >`;
+                $('#create_product_form').append(colorNameNode);
+                $('#create_product_form').append(colorPriceNode);
+
+                var colorTableNode = `<tr> <td> ${colorName} </td>  <td> ${colorPrice} </td>  <td></td>  </tr>`;
+                $('#list_of_product_colors').append(colorTableNode);
+            });
+    </script>
+
+    <script>
+        $('#add_size_button').on('click',
+            function (e) {
+                e.preventDefault();
+                var sizeName = $('#product_size_name_input').val();
+                var currentSizesCount = $('#list_of_product_sizes tr');
+                var index = currentSizesCount.length;
+                var sizeNameNode = `<input type="hidden" value="${sizeName}"  name="ProductSizes[${index}].Size" >`;
+                $('#create_product_form').append(sizeNameNode);
+
+                var sizeTableNode = `<tr> <td> ${sizeName} </td> <td> </td>  </tr>`;
+                $('#list_of_product_sizes').append(sizeTableNode);
+            });
     </script>
 
     <script>
