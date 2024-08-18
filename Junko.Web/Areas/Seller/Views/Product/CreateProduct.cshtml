@@ -79,13 +79,24 @@
                                                                 <input type="checkbox" name="@nameof(Model.SelectedCategories)" value="@category.Id" main_category_checkbox="@category.Id" /> @category.Title
                                                             </label>
 
-                                                            <div id="first_sub_categories_@category.Id">
+                                                            <div id="sub_categories_@category.Id" style="display: none">
 
                                                                 @foreach (var subCategory in categories.Where(s => s.ParentId == category.Id))
                                                                 {
-                                                                    @*<label>
-                                                        <input type="checkbox" name="@nameof(Model.SelectedCategories)" value="@subCategory.Id" /> @subCategory.Title
-                                                        </label>*@
+                                                                    <label>
+                                                                        <input type="checkbox" name="@nameof(Model.SelectedCategories)" value="@subCategory.Id" main_category_checkbox="@subCategory.Id" parent-category-id="@category.Id" /> @subCategory.Title
+                                                                    </label>
+
+                                                                    <div id="sub_categories_@subCategory.Id" style="display: none">
+
+                                                                        @foreach (var secondSubCategory in categories.Where(s => s.ParentId == subCategory.Id))
+                                                                        {
+                                                                            <label>
+                                                                                <input type="checkbox" name="@nameof(Model.SelectedCategories)" value="@secondSubCategory.Id" parent-category-id="@subCategory.Id" /> @secondSubCategory.Title
+                                                                            </label>
+                                                                        }
+
+                                                                    </div>
                                                                 }
                                                             </div>
                                                         </li>
@@ -131,8 +142,6 @@
             }
         });
     </script>
-
-
 
     <script>
         function readURL(input) {

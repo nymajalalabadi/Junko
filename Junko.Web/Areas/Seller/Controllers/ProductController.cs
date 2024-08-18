@@ -64,18 +64,6 @@ namespace Junko.Web.Areas.Seller.Controllers
 
         #endregion
 
-        #region product categories
-
-        [HttpGet("product-categories/{parentId}")]
-        public async Task<IActionResult> GetProductCategoriesByParent(long parentId)
-        {
-            var categories = await _productService.GetAllProductCategoriesByParentId(parentId);
-
-            return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "اطلاعات دسته بندی ها", categories);
-        }
-
-        #endregion
-
     }
 
 }
