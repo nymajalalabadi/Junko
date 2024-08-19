@@ -8,7 +8,10 @@ namespace Junko.Web.Areas.Seller.Controllers
     [Route("seller")]
     public class SellerBaseController : Controller 
     {
-
+        protected string ErrorMessage = "ErrorMessage";
+        protected string SuccessMessage = "SuccessMessage";
+        protected string InfoMessage = "InfoMessage";
+        protected string WarningMessage = "WarningMessage";
     }
 
 }

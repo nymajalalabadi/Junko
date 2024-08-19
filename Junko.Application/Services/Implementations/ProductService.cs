@@ -53,6 +53,10 @@ namespace Junko.Application.Services.Implementations
 
             switch (filter.FilterProductState)
             {
+                case FilterProductState.All:
+                    query = query.Where(s => s.IsActive);
+                    break;
+
                 case FilterProductState.Active:
                     query = query.Where(s => s.IsActive && s.ProductAcceptanceState == ProductAcceptanceState.Accepted);
                     break;
@@ -90,7 +94,7 @@ namespace Junko.Application.Services.Implementations
             if (product.AvatarImage != null && product.AvatarImage.IsImage())
             {
                 var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(product.AvatarImage.FileName);
-                product.AvatarImage.AddImageToServer(imageName, SiteTools.UserAvatarOrigin, 100, 100, SiteTools.ProductImage);
+                product.AvatarImage.AddImageToServer(imageName, SiteTools.ProductImage, 100, 100, SiteTools.ProductThumbImage);
 
                 var newProduct = new Product
                 {
@@ -100,7 +104,6 @@ namespace Junko.Application.Services.Implementations
                     Description = product.Description,
                     IsActive = product.IsActive,
                     SellerId = sellerId,
-                    Count = product.Count,
                     ImageName = imageName,
                 };
 
@@ -136,6 +139,7 @@ namespace Junko.Application.Services.Implementations
                     {
                         ColorName = color.ColorName,
                         Price = color.Price,
+                        ProductId = newProduct.Id
                     });
                 };
 
@@ -152,20 +156,14 @@ namespace Junko.Application.Services.Implementations
                 {
                     productSelectedSizes.Add(new ProductSize()
                     {
-                        Size = size.Size
+                        Size = size.Size,
+                        Count = size.Count,
+                        ProductId = newProduct.Id
                     });
                 }
 
                 await _productRepository.AddRangeProductSizes(productSelectedSizes);
                 await _productRepository.SaveChanges();
-
-                #endregion
-
-                #region Product Selected ColorSizes
-
-                var ProductSelectedColorSizes = new List<ProductSelectedColorSize>();
-
-
 
                 #endregion
 

@@ -4,6 +4,7 @@ using Junko.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Junko.DataLayer.Migrations
 {
     [DbContext(typeof(JunkoDbContext))]
-    partial class JunkoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240819190602_UpdateSizeProduct")]
+    partial class UpdateSizeProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -351,12 +354,7 @@ namespace Junko.DataLayer.Migrations
                     b.Property<int?>("Price")
                         .HasColumnType("int");
 
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductColors");
                 });
@@ -393,6 +391,43 @@ namespace Junko.DataLayer.Migrations
                     b.ToTable("ProductSelectedCategories");
                 });
 
+            modelBuilder.Entity("Junko.Domain.Entities.Products.ProductSelectedColorSize", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ProductColorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductSizeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductColorId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductSizeId");
+
+                    b.ToTable("ProductSelectedColorSizes");
+                });
+
             modelBuilder.Entity("Junko.Domain.Entities.Products.ProductSize", b =>
                 {
                     b.Property<long>("Id")
@@ -413,17 +448,12 @@ namespace Junko.DataLayer.Migrations
                     b.Property<DateTime>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Size")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductSizes");
                 });
@@ -574,7 +604,7 @@ namespace Junko.DataLayer.Migrations
                             From = "nymasteam@gmail.com",
                             IsDefault = true,
                             IsDelete = false,
-                            LastUpdateDate = new DateTime(2024, 8, 19, 23, 4, 56, 818, DateTimeKind.Local).AddTicks(3100),
+                            LastUpdateDate = new DateTime(2024, 8, 19, 22, 35, 59, 833, DateTimeKind.Local).AddTicks(1630),
                             Password = "fuqijttnofjradmh",
                             Port = 587,
                             SMTP = "smtp.gmail.com"
@@ -775,17 +805,6 @@ namespace Junko.DataLayer.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Junko.Domain.Entities.Products.ProductColor", b =>
-                {
-                    b.HasOne("Junko.Domain.Entities.Products.Product", "Product")
-                        .WithMany("ProductColors")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Junko.Domain.Entities.Products.ProductSelectedCategory", b =>
                 {
                     b.HasOne("Junko.Domain.Entities.Products.ProductCategory", "ProductCategory")
@@ -805,15 +824,31 @@ namespace Junko.DataLayer.Migrations
                     b.Navigation("ProductCategory");
                 });
 
-            modelBuilder.Entity("Junko.Domain.Entities.Products.ProductSize", b =>
+            modelBuilder.Entity("Junko.Domain.Entities.Products.ProductSelectedColorSize", b =>
                 {
+                    b.HasOne("Junko.Domain.Entities.Products.ProductColor", "ProductColor")
+                        .WithMany("ProductSelectedColorSizes")
+                        .HasForeignKey("ProductColorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Junko.Domain.Entities.Products.Product", "Product")
-                        .WithMany("ProductSizes")
+                        .WithMany("ProductSelectedColorSizes")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Junko.Domain.Entities.Products.ProductSize", "ProductSize")
+                        .WithMany("ProductSelectedColorSizes")
+                        .HasForeignKey("ProductSizeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Product");
+
+                    b.Navigation("ProductColor");
+
+                    b.Navigation("ProductSize");
                 });
 
             modelBuilder.Entity("Junko.Domain.Entities.Store.Seller", b =>
@@ -843,16 +878,24 @@ namespace Junko.DataLayer.Migrations
 
             modelBuilder.Entity("Junko.Domain.Entities.Products.Product", b =>
                 {
-                    b.Navigation("ProductColors");
-
                     b.Navigation("ProductSelectedCategories");
 
-                    b.Navigation("ProductSizes");
+                    b.Navigation("ProductSelectedColorSizes");
                 });
 
             modelBuilder.Entity("Junko.Domain.Entities.Products.ProductCategory", b =>
                 {
                     b.Navigation("ProductSelectedCategories");
+                });
+
+            modelBuilder.Entity("Junko.Domain.Entities.Products.ProductColor", b =>
+                {
+                    b.Navigation("ProductSelectedColorSizes");
+                });
+
+            modelBuilder.Entity("Junko.Domain.Entities.Products.ProductSize", b =>
+                {
+                    b.Navigation("ProductSelectedColorSizes");
                 });
 
             modelBuilder.Entity("Junko.Domain.Entities.Store.Seller", b =>

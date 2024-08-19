@@ -31,7 +31,7 @@ namespace Junko.Web.Areas.Seller.Controllers
 
             filter.SellerId = seller.Id;
 
-            filter.FilterProductState = FilterProductState.Active;
+            filter.FilterProductState = FilterProductState.All;
 
             var model = await _productService.FilterProducts(filter);
 
@@ -55,7 +55,24 @@ namespace Junko.Web.Areas.Seller.Controllers
         {
             if (ModelState.IsValid)
             {
-                // todo: create product
+                var seller = await _sellerService.GetLastActiveSellerByUserId(User.GetUserId());
+
+                var result = await _productService.CreateProduct(product, seller.Id);
+
+                switch (result)
+                {
+                    case CreateProductResult.HasNoImage:
+                        TempData[WarningMessage] = "لطفا تصویر محصول را وارد نمایید";
+                        break;
+
+                    case CreateProductResult.Error:
+                        TempData[ErrorMessage] = "عملیات ثبت محصول با خطا مواجه شد";
+                        break;
+
+                    case CreateProductResult.Success:
+                        TempData[SuccessMessage] = $"محصول مورد نظر با عنوان {product.Title} با موفقیت ثبت شد";
+                        return RedirectToAction("Index");
+                }
             }
 
             ViewBag.Categories = await _productService.GetAllActiveProductCategories();

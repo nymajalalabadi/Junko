@@ -139,8 +139,9 @@ $('#add_size_button').on('click', function (e)
     e.preventDefault();
 
     var sizeName = $('#product_size_name_input').val();
+    var countName = $('#product_count_name_input').val();
 
-    if (sizeName !== '')
+    if (sizeName !== '' && countName !== '')
     {
         var currentSizesCount = $('#list_of_product_sizes tr');
         var index = currentSizesCount.length; 
@@ -148,16 +149,21 @@ $('#add_size_button').on('click', function (e)
         var sizeNameNode =
             `<input type="hidden" value="${sizeName}" name="ProductSizes[${index}].Size" size-name-hidden-input="${index}">`;
 
+        var countNameNode =
+            `<input type="hidden" value="${countName}" name="ProductSizes[${index}].Count" count-name-hidden-input="${index}">`;
+
         $('#create_product_form').append(sizeNameNode);
+        $('#create_product_form').append(countNameNode);
 
         var sizeTableNode =
-            `<tr size-table-item="${index}"> <td> ${sizeName} </td> <td> <a class="btn btn-danger text-white" 
+            `<tr size-table-item="${index}"> <td> ${sizeName} </td> <td> ${countName}  </td> <td> <a class="btn btn-danger text-white" 
             onclick="removeProductSize(${index})">حذف</a> </td>  </tr>`;
 
         $('#list_of_product_sizes').append(sizeTableNode);
 
 
         $('#product_size_name_input').val('');
+        $('#product_count_name_input').val('');
     }
     else
     {
@@ -168,6 +174,7 @@ $('#add_size_button').on('click', function (e)
 function removeProductSize(index)
 {
     $('[size-name-hidden-input="' + index + '"]').remove();
+    $('[count-name-hidden-input="' + index + '"]').remove();
     $('[size-table-item="' + index + '"]').remove();
 }
 

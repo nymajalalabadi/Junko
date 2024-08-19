@@ -12,17 +12,22 @@ namespace Junko.Domain.Entities.Products
     {
         #region properties
 
+        public long ProductId { get; set; }
+
         [Display(Name = "اندازه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         public string Size { get; set; }
 
+        [Display(Name = "تعداد محصول")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public int Count { get; set; }
+
         #endregion
 
         #region relations
 
-        public ICollection<ProductSelectedColorSize> ProductSelectedColorSizes { get; set; }
-
+        public Product Product { get; set; }
 
         #endregion
     }

@@ -47,10 +47,6 @@
                                             <input asp-for="Price">
                                             <span class="text-danger" asp-validation-for="Price"></span>
                                             <br />
-                                            <label>تعداد محصول</label>
-                                            <input asp-for="Count">
-                                            <span class="text-danger" asp-validation-for="Count"></span>
-                                            <br />
                                             <label>توضیحات کوتاه محصول</label>
                                             <br />
                                             <textarea asp-for="ShortDescription" style="width: 100%" rows="10"></textarea>
@@ -132,6 +128,7 @@
 
                                             <label>سایز محصول</label>
                                             <input type="text" placeholder="سایز محصول" id="product_size_name_input">
+                                            <input type="text" placeholder="تعداد محصول" id="product_count_name_input">
 
                                             <button class="btn btn-success" id="add_size_button">افزودن سایز</button>
                                             <br />

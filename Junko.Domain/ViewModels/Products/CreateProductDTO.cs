@@ -14,10 +14,6 @@ namespace Junko.Domain.ViewModels.Products
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public int Price { get; set; }
 
-        [Display(Name = "تعداد محصول")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public int Count { get; set; }
-
         [Display(Name = "توضیحات کوتاه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(500, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]

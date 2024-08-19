@@ -28,7 +28,8 @@ namespace Junko.Domain.ViewModels.Products
         Accepted,
         Rejected,
         Active,
-        NotActive
+        NotActive, 
+        All
     }
 
 }

@@ -12,6 +12,8 @@ namespace Junko.Domain.Entities.Products
     {
         #region properties
 
+        public long ProductId { get; set; }
+
         [Display(Name = "رنگ")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
@@ -24,8 +26,8 @@ namespace Junko.Domain.Entities.Products
 
         #region relations
 
-        public ICollection<ProductSelectedColorSize> ProductSelectedColorSizes { get; set; }
-
+        public Product Product { get; set; }
+        
         #endregion
     }
 
