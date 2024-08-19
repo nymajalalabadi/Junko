@@ -47,7 +47,7 @@ namespace Junko.DataLayer.Repositories
         public async Task<List<ProductCategory>> GetAllProductCategories()
         {
             return await _context.ProductCategories.AsQueryable()
-                .Where(c => !c.IsDelete && c.IsActive && c.ParentId == null)
+                .Where(c => !c.IsDelete && c.IsActive)
                 .ToListAsync();
         }
 
