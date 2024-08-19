@@ -1,4 +1,5 @@
 ﻿using Junko.DataLayer.Context;
+using Junko.Domain.Entities.Account;
 using Junko.Domain.Entities.Products;
 using Junko.Domain.InterFaces;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +57,38 @@ namespace Junko.DataLayer.Repositories
             return await _context.ProductCategories.AsQueryable()
                 .Where(c => !c.IsDelete && c.IsActive && c.ParentId == parentId)
                 .ToListAsync();
+        }
+
+        public async Task AddRangeProductSelectedCategorys(List<ProductSelectedCategory> productSelectedCategories)
+        {
+            foreach (var productSelectedCategory in productSelectedCategories)
+            {
+                await _context.ProductSelectedCategories.AddAsync(productSelectedCategory);
+            }
+        }
+
+        #endregion
+
+        #region Product Color
+
+        public async Task AddRangeProductColors(List<ProductColor> productColors)
+        {
+            foreach (var color in productColors)
+            {
+                await _context.ProductColors.AddAsync(color);
+            }
+        }
+
+        #endregion
+
+        #region Product Size
+
+        public async Task AddRangeProductSizes(List<ProductSize> productSizes)
+        {
+            foreach (var size in productSizes)
+            {
+                await _context.ProductSizes.AddAsync(size);
+            }
         }
 
         #endregion

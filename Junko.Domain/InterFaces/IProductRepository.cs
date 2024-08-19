@@ -1,10 +1,4 @@
-﻿using Junko.Domain.Entities.Account;
-using Junko.Domain.Entities.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Junko.Domain.Entities.Products;
 
 namespace Junko.Domain.InterFaces
 {
@@ -25,6 +19,20 @@ namespace Junko.Domain.InterFaces
         Task<List<ProductCategory>> GetAllProductCategories();
 
         Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long parentId);
+
+        Task AddRangeProductSelectedCategorys(List<ProductSelectedCategory> productSelectedCategories);
+
+        #endregion
+
+        #region Product Color
+
+        Task AddRangeProductColors(List<ProductColor> productColors);
+
+        #endregion
+
+        #region Product Size
+
+        Task AddRangeProductSizes(List<ProductSize> productSizes);
 
         #endregion
 

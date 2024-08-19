@@ -107,15 +107,72 @@ namespace Junko.Application.Services.Implementations
                 await _productRepository.AddProduct(newProduct);
                 await _productRepository.SaveChanges();
 
-                // create product categories
+                #region create product categories
+
+                var productSelectedCategories = new List<ProductSelectedCategory>();
+
+                foreach (var categoryId in product.SelectedCategories)
+                {
+                    productSelectedCategories.Add(new ProductSelectedCategory()
+                    {
+                        ProductCategoryId = categoryId,
+                        ProductId = newProduct.Id
+                    });
+                }
+
+                await _productRepository.AddRangeProductSelectedCategorys(productSelectedCategories);
+                await _productRepository.SaveChanges();
+
+                #endregion
 
 
-                // create product colors
+                #region create product colors
+
+                var productSelectedColors = new List<ProductColor>();
+
+                foreach (var color in product.ProductColors)
+                {
+                    productSelectedColors.Add(new ProductColor()
+                    {
+                        ColorName = color.ColorName,
+                        Price = color.Price,
+                    });
+                };
+
+                await _productRepository.AddRangeProductColors(productSelectedColors);
+                await _productRepository.SaveChanges();
+
+                #endregion
+
+                #region create product sizes
+
+                var productSelectedSizes = new List<ProductSize>();
+
+                foreach (var size in product.ProductSizes)
+                {
+                    productSelectedSizes.Add(new ProductSize()
+                    {
+                        Size = size.Size
+                    });
+                }
+
+                await _productRepository.AddRangeProductSizes(productSelectedSizes);
+                await _productRepository.SaveChanges();
+
+                #endregion
+
+                #region Product Selected ColorSizes
+
+                var ProductSelectedColorSizes = new List<ProductSelectedColorSize>();
+
+
+
+                #endregion
 
                 return CreateProductResult.Success;
             }
 
-            return CreateProductResult.Error;
+            return CreateProductResult.HasNoImage;
         }
 
         #endregion
