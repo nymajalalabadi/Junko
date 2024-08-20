@@ -32,7 +32,6 @@
             <hr />
             <h4>وضعیت</h4>
             <div class="control-group">
-                
                 @foreach (var item in Html.GetEnumSelectList<FilterSellerState>())
                 {
                     <div class="radio">
@@ -42,7 +41,6 @@
                         </label>
                     </div>
                 }
-
             </div>
             <button type="submit" class="btn btn-success btn-block">فیلتر</button>
         </form>

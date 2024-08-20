@@ -2,6 +2,7 @@
 using Junko.Domain.ViewModels.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,12 +25,18 @@ namespace Junko.Domain.ViewModels.Products
 
     public enum FilterProductState
     {
+        [Display(Name = "همه")]
+        All,
+        [Display(Name = "در حال بررسی")]
         UnderProgress,
+        [Display(Name = "تایید شده")]
         Accepted,
+        [Display(Name = "رد شده")]
         Rejected,
+        [Display(Name = "فعال")]
         Active,
-        NotActive, 
-        All
+        [Display(Name = "غیر فعال")]
+        NotActive
     }
 
 }

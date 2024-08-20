@@ -33,6 +33,10 @@
                 </div>
                 <div class="col-sm-12 col-md-9 col-lg-9">
                     <!-- Tab panes -->
+                    <form asp-area="Seller" asp-controller="Product" asp-action="Index" id="filter-form" method="get">
+                        <input type="hidden" asp-for="CurrentPage" />
+                        <input type="hidden" asp-for="ProductTitle" />
+                    </form>
                     <div class="tab-content dashboard_content">
                         <div class="tab-pane fade active show" id="account-details">
                             <h3>@ViewData["Title"] </h3>
@@ -66,6 +70,7 @@
                                             }
                                         </tbody>
                                     </table>
+                                    <partial name="_PagingPartial" model="@Model.GetPaging()" />
                                 }
                                 else
                                 {

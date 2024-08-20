@@ -54,7 +54,6 @@ namespace Junko.Application.Services.Implementations
             switch (filter.FilterProductState)
             {
                 case FilterProductState.All:
-                    query = query.Where(s => s.IsActive);
                     break;
 
                 case FilterProductState.Active:
@@ -105,6 +104,7 @@ namespace Junko.Application.Services.Implementations
                     IsActive = product.IsActive,
                     SellerId = sellerId,
                     ImageName = imageName,
+                    ProductAcceptanceState = ProductAcceptanceState.UnderProgress
                 };
 
                 await _productRepository.AddProduct(newProduct);
