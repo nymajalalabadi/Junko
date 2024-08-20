@@ -105,16 +105,17 @@ $('#add_color_button').on('click', function (e)
         var index = currentColorsCount.length;
 
         var colorNameNode =
-            `<input type="hidden" value="${colorName}"  name="ProductColors[${index}].ColorName" color-name-hidden-input="${index}">`;
+            `<input type="hidden" value="${colorName}"  name="ProductColors[${index}].ColorName" color-name-hidden-input="${colorName}-${colorPrice}">`;
 
         var colorPriceNode =
-            `<input type="hidden" value="${colorPrice}"  name="ProductColors[${index}].Price"  color-price-hidden-input="${index}">`;
+            `<input type="hidden" value="${colorPrice}"  name="ProductColors[${index}].Price"color-price-hidden-input="${colorName}-${colorPrice}">`;
 
         $('#create_product_form').append(colorNameNode);
         $('#create_product_form').append(colorPriceNode);
 
         var colorTableNode =
-            `<tr color-table-item="${index}"> <td> ${colorName} </td>  <td> ${colorPrice} </td>  <td> <a class="btn btn-danger text-white" onclick="removeProductColor(${index})">حذف</a> </td>  </tr>`;
+            `<tr color-table-item="${colorName}-${colorPrice}"> <td> ${colorName} </td>  <td> ${colorPrice} </td>  <td> 
+            <a class="btn btn-danger text-white" onclick="removeProductColor('${colorName}-${colorPrice}')">حذف</a> </td>  </tr>`;
 
         $('#list_of_product_colors').append(colorTableNode);
 
@@ -147,17 +148,19 @@ $('#add_size_button').on('click', function (e)
         var index = currentSizesCount.length; 
 
         var sizeNameNode =
-            `<input type="hidden" value="${sizeName}" name="ProductSizes[${index}].Size" size-name-hidden-input="${index}">`;
+            `<input type="hidden" value="${sizeName}" name="ProductSizes[${index}].Size" 
+            size-name-hidden-input="${sizeName}-${countName}">`;
 
         var countNameNode =
-            `<input type="hidden" value="${countName}" name="ProductSizes[${index}].Count" count-name-hidden-input="${index}">`;
+            `<input type="hidden" value="${countName}" name="ProductSizes[${index}].Count" 
+            count-name-hidden-input="${sizeName}-${countName}">`;
 
         $('#create_product_form').append(sizeNameNode);
         $('#create_product_form').append(countNameNode);
 
         var sizeTableNode =
-            `<tr size-table-item="${index}"> <td> ${sizeName} </td> <td> ${countName}  </td> <td> <a class="btn btn-danger text-white" 
-            onclick="removeProductSize(${index})">حذف</a> </td>  </tr>`;
+            `<tr size-table-item="$${sizeName}-${countName}"> <td> ${sizeName} </td> <td> ${countName}  </td> <td> 
+            <a class="btn btn-danger text-white" onclick="removeProductSize('${sizeName}-${countName}')">حذف</a> </td>  </tr>`;
 
         $('#list_of_product_sizes').append(sizeTableNode);
 
