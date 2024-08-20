@@ -76,7 +76,7 @@
                                 @product.Title
                             </td>
                             <td>
-                                @product.Price
+                                @product.Price.ToString("#,0")
                             </td>
                             <td>
                                 @product.ProductAcceptanceState.GetEnumName()
@@ -89,7 +89,7 @@
 
                                 @if (product.ProductAcceptanceState != ProductAcceptanceState.Rejected)
                                 {
-                                    <a class="btn btn-danger" onclick="RejectProductModal('@product.Id')">ردکردن محصول</a>
+                                    <button class="btn btn-danger" onclick="RejectProductModal('@product.Id')">ردکردن محصول</button>
                                 }
                             </td>
                         </tr>
@@ -111,3 +111,7 @@
     </div>
 </div>
 
+@section scripts
+{
+    <partial name="_JqueryValidators" />
+}

@@ -1,5 +1,6 @@
 ﻿using Junko.Domain.Entities.Products;
 using Junko.Domain.ViewModels.Products;
+using Junko.Domain.ViewModels.Store;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace Junko.Application.Services.Interfaces
         Task<CreateProductResult> CreateProduct(CreateProductDTO product, long sellerId);
 
         Task<bool> AcceptSellerProduct(long productId);
+
+        Task<bool> RejectProductRequest(RejectItemDTO reject);
 
         #endregion
 

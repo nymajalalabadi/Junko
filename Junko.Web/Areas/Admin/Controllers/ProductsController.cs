@@ -1,5 +1,7 @@
-﻿using Junko.Application.Services.Interfaces;
+﻿using Junko.Application.Services.Implementations;
+using Junko.Application.Services.Interfaces;
 using Junko.Domain.ViewModels.Products;
+using Junko.Domain.ViewModels.Store;
 using Junko.Web.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,6 +47,32 @@ namespace Junko.Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region reject Product request
 
+        [HttpGet]
+        public async Task<IActionResult> RejectProduct(long id)
+        {
+            var model = new RejectItemDTO()
+            {
+                Id = id
+            };
+
+            return PartialView("_RejectProductPartial", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RejectProductRequest(RejectItemDTO reject)
+        {
+            var result = await _productService.RejectProductRequest(reject);
+
+            if (result)
+            {
+                return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "درخواست مورد نظر با موفقیت رد شد", reject);
+            }
+
+            return JsonResponseStatus.SendStatus(JsonResponseStatusType.Danger, "اطلاعاتی با این مشخصات یافت نشد", null);
+        }
+
+        #endregion
     }
 }

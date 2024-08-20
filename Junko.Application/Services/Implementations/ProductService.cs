@@ -1,10 +1,14 @@
-﻿using Junko.Application.Generators;
+﻿using Junko.Application.Convertor;
+using Junko.Application.Generators;
 using Junko.Application.Services.Interfaces;
 using Junko.Application.Statics;
+using Junko.DataLayer.Repositories;
 using Junko.Domain.Entities.Account;
 using Junko.Domain.Entities.Products;
+using Junko.Domain.Entities.Store;
 using Junko.Domain.InterFaces;
 using Junko.Domain.ViewModels.Products;
+using Junko.Domain.ViewModels.Store;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -183,8 +187,27 @@ namespace Junko.Application.Services.Implementations
             }
 
             product.ProductAcceptanceState = ProductAcceptanceState.Accepted;
+            product.ProductAcceptOrRejectDescription = $"محصول مورد نظر در تاریخ {DateTime.Now.ToShamsi()} مورد تایید سایت قرار گرفت";
 
             _productRepository.UpdateProduct(product);
+            await _productRepository.SaveChanges();
+
+            return true;
+        }
+
+        public async Task<bool> RejectProductRequest(RejectItemDTO reject)
+        {
+            var productRequest = await _productRepository.GetProductById(reject.Id);
+
+            if (productRequest == null)
+            {
+                return false;
+            }
+
+            productRequest.ProductAcceptanceState = ProductAcceptanceState.Rejected;
+            productRequest.ProductAcceptOrRejectDescription = reject.RejectMessage;
+
+            _productRepository.UpdateProduct(productRequest);
             await _productRepository.SaveChanges();
 
             return true;

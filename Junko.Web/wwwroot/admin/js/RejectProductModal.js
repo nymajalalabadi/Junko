@@ -1,8 +1,6 @@
-﻿
-function RejectSellerModal(id) {
-
+﻿function RejectProductModal(id) {
     $.ajax({
-        url: "/admin/seller/RejectSeller",
+        url: "/admin/Products/RejectProduct",
         type: "get",
         data: {
             id: id
@@ -31,11 +29,9 @@ function RejectSellerModal(id) {
 
 }
 
-function OnSuccessRejectItem(response)
-{
+function OnSuccessRejectProduct(response) {
 
-    if (response.status === 'Success')
-    {
+    if (response.status === 'Success') {
         $("#LargeModal").modal("hide");
         ShowMessage('اعلان موفقیت', response.message);
         $('#filter-form').load(location.href + ' #filter-form');
@@ -50,19 +46,3 @@ function OnSuccessRejectItem(response)
     }
 
 }
-
-function StartLoading(selector = 'body') {
-    $(selector).waitMe({
-        effect: 'bounce',
-        text: 'لطفا صبر کنید ...',
-        bg: 'rgba(255, 255, 255, 0.7)',
-        color: '#000'
-    });
-}
-
-function EndLoading(selector = 'body') {
-    $(selector).waitMe('hide');
-}
-
-
-
