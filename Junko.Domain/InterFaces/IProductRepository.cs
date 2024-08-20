@@ -10,6 +10,10 @@ namespace Junko.Domain.InterFaces
 
         Task<IQueryable<Product>> GetProductQuery();
 
+        Task<Product?> GetProductById(long id);
+
+        void UpdateProduct(Product product);    
+
         Task AddProduct(Product product);
 
         #endregion

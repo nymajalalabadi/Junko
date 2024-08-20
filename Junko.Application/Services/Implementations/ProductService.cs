@@ -173,6 +173,23 @@ namespace Junko.Application.Services.Implementations
             return CreateProductResult.HasNoImage;
         }
 
+        public async Task<bool> AcceptSellerProduct(long productId)
+        {
+            var product = await _productRepository.GetProductById(productId);
+
+            if (product == null)
+            {
+                return false;
+            }
+
+            product.ProductAcceptanceState = ProductAcceptanceState.Accepted;
+
+            _productRepository.UpdateProduct(product);
+            await _productRepository.SaveChanges();
+
+            return true;
+        }
+
         #endregion
 
 

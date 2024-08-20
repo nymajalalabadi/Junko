@@ -12,11 +12,13 @@ namespace Junko.Application.Services.Interfaces
     {
         #region Methods
 
-        #region FilterProducts
+        #region Products
 
         Task<FilterProductDTO> FilterProducts(FilterProductDTO filter);
 
         Task<CreateProductResult> CreateProduct(CreateProductDTO product, long sellerId);
+
+        Task<bool> AcceptSellerProduct(long productId);
 
         #endregion
 

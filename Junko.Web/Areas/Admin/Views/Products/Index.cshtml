@@ -84,12 +84,12 @@
                             <td>
                                 @if (product.ProductAcceptanceState != ProductAcceptanceState.Accepted)
                                 {
-                                    <a class="btn btn-success" ajax-url-button="@product.Id" asp-area="Admin" asp-controller="Seller" asp-action="AcceptSellerRequest" asp-route-requestId="@product.Id">تایید اطلاعات</a>
+                                    <a class="btn btn-success" ajax-url-button="@product.Id" asp-area="Admin" asp-controller="Products" asp-action="AcceptSellerProduct" asp-route-id="@product.Id">تایید اطلاعات</a>
                                 }
 
                                 @if (product.ProductAcceptanceState != ProductAcceptanceState.Rejected)
                                 {
-                                    <a class="btn btn-danger" data-toggle="modal" data-target=".reject-modal-@product.Id">ردکردن اطلاعات</a>
+                                    <a class="btn btn-danger" onclick="RejectProductModal('@product.Id')">ردکردن محصول</a>
                                 }
                             </td>
                         </tr>
@@ -111,29 +111,3 @@
     </div>
 </div>
 
-
-@*
-    @if (Model.Sellers != null && Model.Sellers.Any())
-    {
-        foreach (var seller in Model.Sellers)
-        {
-            <div class="modal fade reject-modal-@seller.Id" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title" id="myLargeModalLabel">رد کردن اطلاعات</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form asp-area="Admin" asp-controller="Seller" asp-action="RejectSellerRequest" asp-antiforgery="true" data-ajax="true" data-method="post" data-ajax-success="OnSuccessRejectItem">
-                                <partial name="_RejectItemPartial" model="@(new RejectItemDTO {Id = seller.Id})" />
-                                <hr />
-                                <button class="btn btn-danger" type="submit">رد کردن اطلاعات</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    }*@

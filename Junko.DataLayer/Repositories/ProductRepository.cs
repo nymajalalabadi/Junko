@@ -37,6 +37,16 @@ namespace Junko.DataLayer.Repositories
                 .AsQueryable();
         }
 
+        public async Task<Product?> GetProductById(long id)
+        {
+            return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public void UpdateProduct(Product product)
+        {
+            _context.Products.Update(product);
+        }
+
         public async Task AddProduct(Product product)
         {
             await _context.Products.AddAsync(product);
