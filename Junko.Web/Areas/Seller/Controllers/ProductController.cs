@@ -98,6 +98,31 @@ namespace Junko.Web.Areas.Seller.Controllers
             return View(product);
         }
 
+        [HttpPost("edit-product/{productId}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProduct(EditProductDTO product, IFormFile productImage)
+        {
+            if (ModelState.IsValid)
+            {
+                var res = await _productService.EditSellerProduct(product, User.GetUserId());
+
+                switch (res)
+                {
+                    case EditProductResult.NotForUser:
+                        TempData[ErrorMessage] = "در ویرایش اطلاعات خطایی رخ داد";
+                        break;
+                    case EditProductResult.NotFound:
+                        TempData[WarningMessage] = "اطلاعات وارد شده یافت نشد";
+                        break;
+                    case EditProductResult.Success:
+                        TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+                        return RedirectToAction("Index");
+                }
+            }
+
+            ViewBag.Categories = await _productService.GetAllActiveProductCategories();
+            return View(product);
+        }
+
         #endregion
     }
 }
