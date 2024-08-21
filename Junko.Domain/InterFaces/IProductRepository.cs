@@ -12,6 +12,8 @@ namespace Junko.Domain.InterFaces
 
         Task<Product?> GetProductById(long id);
 
+        Task<Product?> GetProductForEdit(long id);
+
         void UpdateProduct(Product product);    
 
         Task AddProduct(Product product);

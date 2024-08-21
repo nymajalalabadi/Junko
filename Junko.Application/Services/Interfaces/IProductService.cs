@@ -23,6 +23,8 @@ namespace Junko.Application.Services.Interfaces
 
         Task<bool> RejectProductRequest(RejectItemDTO reject);
 
+        Task<EditProductDTO> GetProductForEdit(long productId);
+
         #endregion
 
         #region product categories

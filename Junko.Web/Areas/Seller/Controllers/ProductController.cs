@@ -81,6 +81,14 @@ namespace Junko.Web.Areas.Seller.Controllers
 
         #endregion
 
-    }
+        #region edit product
 
+        [HttpGet("edit-product/{productId}")]
+        public async Task<IActionResult> EditProduct(long productId)
+        {
+            return View();
+        }
+
+        #endregion
+    }
 }

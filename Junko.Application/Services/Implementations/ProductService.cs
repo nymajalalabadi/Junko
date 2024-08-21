@@ -213,6 +213,39 @@ namespace Junko.Application.Services.Implementations
             return true;
         }
 
+        public async Task<EditProductDTO> GetProductForEdit(long productId)
+        {
+            var product = await _productRepository.GetProductForEdit(productId);
+
+            if (product == null)
+            {
+                return null;
+            }
+
+            return new EditProductDTO()
+            {
+                Id = product.Id,
+                Description = product.Description,
+                Title = product.Title,
+                ShortDescription = product.ShortDescription,
+                ImageName = product.ImageName,
+                IsActive = product.IsActive,
+                Price= product.Price,
+                ProductColors = product.ProductColors.Select(c => new CreateProductColorDTO()
+                {
+                    Price = c.Price,
+                    ColorName = c.ColorName,
+                }).ToList(),
+                ProductSizes = product.ProductSizes.Select(s => new CreateProductSizeDTO()
+                {
+                    Size = s.Size,
+                    Count = s.Count
+                }).ToList(),
+                SelectedCategories = product.ProductSelectedCategories.Where(s => s.ProductId == product.Id)
+                .Select(c => c.ProductCategoryId).ToList(),
+            };
+        }
+
         #endregion
 
 
