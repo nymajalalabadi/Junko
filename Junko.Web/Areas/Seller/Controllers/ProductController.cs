@@ -86,7 +86,16 @@ namespace Junko.Web.Areas.Seller.Controllers
         [HttpGet("edit-product/{productId}")]
         public async Task<IActionResult> EditProduct(long productId)
         {
-            return View();
+            var product = await _productService.GetProductForEdit(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Categories = await _productService.GetAllActiveProductCategories();
+
+            return View(product);
         }
 
         #endregion
