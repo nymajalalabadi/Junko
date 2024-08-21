@@ -246,6 +246,101 @@ namespace Junko.Application.Services.Implementations
             };
         }
 
+        public async Task<EditProductResult> EditSellerProduct(EditProductDTO product, long userId)
+        {
+            var currentProduct = await _productRepository.GetProductForEdit(product.Id);
+
+            if (currentProduct == null)
+            {
+                return EditProductResult.NotFound;
+            }
+
+            if (currentProduct.Seller.UserId != userId)
+            {
+                return EditProductResult.NotForUser;
+            }
+
+            currentProduct.Title = product.Title;
+            currentProduct.ShortDescription = product.ShortDescription;
+            currentProduct.Description = product.Description;
+            currentProduct.IsActive = product.IsActive;
+            currentProduct.Price = product.Price;
+
+            if (product.AvatarImage != null)
+            {
+                var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(product.AvatarImage.FileName);
+                product.AvatarImage.AddImageToServer(imageName, SiteTools.ProductImage, 100, 100, SiteTools.ProductThumbImage, currentProduct.ImageName);
+
+                currentProduct.ImageName = imageName;
+            }
+
+            _productRepository.UpdateProduct(currentProduct);
+
+            #region selected product categories
+
+            await _productRepository.RemoveAllProductSelectedCategories(currentProduct.Id);
+
+            var productSelectedCategories = new List<ProductSelectedCategory>();
+
+            foreach (var categoryId in product.SelectedCategories)
+            {
+                productSelectedCategories.Add(new ProductSelectedCategory()
+                {
+                    ProductCategoryId = categoryId,
+                    ProductId = currentProduct.Id
+                });
+            }
+
+            await _productRepository.AddRangeProductSelectedCategorys(productSelectedCategories);
+            await _productRepository.SaveChanges();
+
+            #endregion
+
+            #region color product
+
+            await _productRepository.RemoveAllProductSelectedColors(currentProduct.Id);
+
+            var productSelectedColors = new List<ProductColor>();
+
+            foreach (var color in product.ProductColors)
+            {
+                productSelectedColors.Add(new ProductColor()
+                {
+                    ColorName = color.ColorName,
+                    Price = color.Price,
+                    ProductId = currentProduct.Id
+                });
+            }
+
+            await _productRepository.AddRangeProductColors(productSelectedColors);
+            await _productRepository.SaveChanges();
+
+            #endregion
+
+            #region size product
+
+            await _productRepository.RemoveAllProductSelectedSizes(currentProduct.Id);
+
+            var productSelectedSizes = new List<ProductSize>();
+
+            foreach (var size in product.ProductSizes)
+            {
+                productSelectedSizes.Add(new ProductSize()
+                {
+                    Size = size.Size,
+                    Count = size.Count,
+                    ProductId = currentProduct.Id
+                });
+            }
+
+            await _productRepository.AddRangeProductSizes(productSelectedSizes);
+            await _productRepository.SaveChanges();
+
+            #endregion
+
+            return EditProductResult.Success;
+        }
+
         #endregion
 
 

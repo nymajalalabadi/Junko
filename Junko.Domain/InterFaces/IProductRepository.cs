@@ -28,17 +28,23 @@ namespace Junko.Domain.InterFaces
 
         Task AddRangeProductSelectedCategorys(List<ProductSelectedCategory> productSelectedCategories);
 
+        Task RemoveAllProductSelectedCategories(long productId);
+
         #endregion
 
         #region Product Color
 
         Task AddRangeProductColors(List<ProductColor> productColors);
 
+        Task RemoveAllProductSelectedColors(long productId);
+
         #endregion
 
         #region Product Size
 
         Task AddRangeProductSizes(List<ProductSize> productSizes);
+
+        Task RemoveAllProductSelectedSizes(long productId);
 
         #endregion
 

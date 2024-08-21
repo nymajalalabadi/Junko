@@ -1,6 +1,7 @@
 ﻿using Junko.Domain.Entities.Products;
 using Junko.Domain.ViewModels.Products;
 using Junko.Domain.ViewModels.Store;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace Junko.Application.Services.Interfaces
         Task<bool> RejectProductRequest(RejectItemDTO reject);
 
         Task<EditProductDTO> GetProductForEdit(long productId);
+
+        Task<EditProductResult> EditSellerProduct(EditProductDTO product, long userId);
 
         #endregion
 

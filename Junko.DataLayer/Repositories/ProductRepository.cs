@@ -45,6 +45,7 @@ namespace Junko.DataLayer.Repositories
         public async Task<Product?> GetProductForEdit(long id)
         {
             return await _context.Products
+                .Include (p => p.Seller)
                 .Include (p => p.ProductColors)
                 .Include (p => p.ProductSizes)
                 .Include(p => p.ProductSelectedCategories).ThenInclude(p => p.ProductCategory)
@@ -85,6 +86,18 @@ namespace Junko.DataLayer.Repositories
             {
                 await _context.ProductSelectedCategories.AddAsync(productSelectedCategory);
             }
+
+        }
+
+        public async Task RemoveAllProductSelectedCategories(long productId)
+        {
+            var productSelectedCategories = await _context.ProductSelectedCategories.AsQueryable()
+                .Where(s => s.ProductId == productId).ToListAsync();
+
+            foreach (var selected in productSelectedCategories)
+            {
+                _context.ProductSelectedCategories.Remove(selected);
+            }
         }
 
         #endregion
@@ -99,6 +112,17 @@ namespace Junko.DataLayer.Repositories
             }
         }
 
+        public async Task RemoveAllProductSelectedColors(long productId)
+        {
+            var productSelectedColors = await _context.ProductColors.AsQueryable()
+                .Where(s => s.ProductId == productId).ToListAsync();
+
+            foreach (var productColor in productSelectedColors)
+            {
+                _context.ProductColors.Remove(productColor);
+            }
+        }
+
         #endregion
 
         #region Product Size
@@ -108,6 +132,17 @@ namespace Junko.DataLayer.Repositories
             foreach (var size in productSizes)
             {
                 await _context.ProductSizes.AddAsync(size);
+            }
+        }
+
+        public async Task RemoveAllProductSelectedSizes(long productId)
+        {
+            var productSelectedSizes = await _context.ProductSizes.AsQueryable()
+                .Where(s => s.ProductId == productId).ToListAsync();
+
+            foreach (var productSize in productSelectedSizes)
+            {
+                _context.ProductSizes.Remove(productSize);
             }
         }
 
