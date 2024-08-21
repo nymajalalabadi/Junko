@@ -1,5 +1,6 @@
 ﻿@using Junko.Application.Extensions
 @using Junko.Application.Statics
+@using Junko.Domain.Entities.Products
 @using Junko.Domain.ViewModels.Products
 @model FilterProductDTO
 
@@ -63,6 +64,13 @@
                                                     <td>
                                                         <span class="danger">
                                                             @product.ProductAcceptanceState.GetEnumName()
+                                                            @if (product.ProductAcceptanceState == ProductAcceptanceState.Rejected)
+                                                            {
+                                                                <hr />
+                                                                <div class="text-danger">
+                                                                    @Html.Raw(product.ProductAcceptOrRejectDescription)
+                                                                </div>
+                                                            }
                                                         </span>
                                                     </td>
                                                     <td><a asp-area="User" asp-controller="Ticket" asp-action="TicketDetail" asp-route-ticketId="@product.Id" class="view">نمایش جزییات</a></td>

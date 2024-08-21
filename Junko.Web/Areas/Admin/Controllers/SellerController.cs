@@ -22,7 +22,7 @@ namespace Junko.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> SellerRequests(FilterSellerDTO filter)
         {
-            filter.TakeEntity = 1;
+            filter.TakeEntity = 5;
             var model = await _sellerService.FilterSellers(filter);
 
             return View(model);
