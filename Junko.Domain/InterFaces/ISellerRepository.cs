@@ -20,6 +20,8 @@ namespace Junko.Domain.InterFaces
 
         Task<Seller?> GetLastActiveSellerByUserId(long userId);
 
+        Task<bool> HasUserAnyActiveSellerPanel(long userId);
+
         Task AddSeller(Seller seller);
 
         void UpdateSeller(Seller seller);

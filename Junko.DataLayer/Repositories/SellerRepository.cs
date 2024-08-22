@@ -50,6 +50,13 @@ namespace Junko.DataLayer.Repositories
                 .FirstOrDefaultAsync(s => s.UserId == userId && s.StoreAcceptanceState == StoreAcceptanceState.Accepted);
         }
 
+        public async Task<bool> HasUserAnyActiveSellerPanel(long userId)
+        {
+            return await _context.Sellers.AsQueryable()
+                .OrderByDescending(s => s.CreateDate)
+                .AnyAsync(s => s.UserId == userId && s.StoreAcceptanceState == StoreAcceptanceState.Accepted);
+        }
+
         public async Task AddSeller(Seller seller)
         {
             await _context.Sellers.AddAsync(seller);

@@ -26,6 +26,7 @@ namespace Junko.Application.Services.Interfaces
 
         Task<Seller?> GetLastActiveSellerByUserId(long userId);
 
+        Task<bool> HasUserAnyActiveSellerPanel(long userId);
 
         #endregion
     }

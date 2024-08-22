@@ -211,6 +211,18 @@ namespace Junko.Application.Services.Implementations
             return await _sellerRepository.GetLastActiveSellerByUserId(userId);
         }
 
+        public async Task<bool> HasUserAnyActiveSellerPanel(long userId)
+        {
+            var user = await _userRepository.GetUserById(userId);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            return await _sellerRepository.HasUserAnyActiveSellerPanel(userId);
+        }
+
         #endregion
     }
 }

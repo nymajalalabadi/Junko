@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Junko.Web.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Junko.Web.Areas.Seller.Controllers
@@ -6,6 +7,7 @@ namespace Junko.Web.Areas.Seller.Controllers
     [Authorize]
     [Area("Seller")]
     [Route("seller")]
+    [CheckSellerStateAttribute]
     public class SellerBaseController : Controller 
     {
         protected string ErrorMessage = "ErrorMessage";
