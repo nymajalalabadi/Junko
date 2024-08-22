@@ -33,7 +33,6 @@ namespace Junko.Domain.ViewModels.Products
         public string ImageName { get; set; }
 
         [Display(Name = "عکس اصلی")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public IFormFile? AvatarImage { get; set; }
 
         public List<CreateProductColorDTO> ProductColors { get; set; }

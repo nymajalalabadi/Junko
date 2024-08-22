@@ -99,7 +99,7 @@ namespace Junko.Web.Areas.Seller.Controllers
         }
 
         [HttpPost("edit-product/{productId}"), ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditProduct(EditProductDTO product, IFormFile productImage)
+        public async Task<IActionResult> EditProduct(EditProductDTO product)
         {
             if (ModelState.IsValid)
             {
