@@ -220,7 +220,7 @@ namespace Junko.Application.Services.Implementations
                 return false;
             }
 
-            return await _sellerRepository.HasUserAnyActiveSellerPanel(userId);
+            return await _sellerRepository.HasUserAnyActiveSellerPanel(user.Id);
         }
 
         #endregion
