@@ -1,4 +1,5 @@
-﻿using Junko.Application.Services.Interfaces;
+﻿using Junko.Application.Services.Implementations;
+using Junko.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Junko.Web.ViewComponents
@@ -11,11 +12,13 @@ namespace Junko.Web.ViewComponents
 
         private readonly ISiteSettingService _settingService;
         private readonly IUserService _userService;
+        private readonly IProductService _productService;
 
-        public SiteHeaderViewComponent(ISiteSettingService settingService, IUserService userService)
+        public SiteHeaderViewComponent(ISiteSettingService settingService, IUserService userService, IProductService productService)
         {
             _settingService = settingService;
             _userService = userService;
+            _productService = productService;
         }
 
         #endregion
@@ -30,6 +33,8 @@ namespace Junko.Web.ViewComponents
             {
                 ViewBag.user = await _userService.GetUserByEmail(User.Identity.Name);
             }
+
+            ViewBag.ProductCategories = await _productService.GetAllActiveProductCategories();
 
             return View("SiteHeader");
         }

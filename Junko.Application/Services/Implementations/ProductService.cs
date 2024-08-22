@@ -265,6 +265,7 @@ namespace Junko.Application.Services.Implementations
             currentProduct.Description = product.Description;
             currentProduct.IsActive = product.IsActive;
             currentProduct.Price = product.Price;
+            currentProduct.ProductAcceptanceState = ProductAcceptanceState.UnderProgress;
 
             if (product.AvatarImage != null)
             {
