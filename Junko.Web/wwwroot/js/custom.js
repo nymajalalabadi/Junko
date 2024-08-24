@@ -104,23 +104,33 @@ $('#add_color_button').on('click', function (e)
         var currentColorsCount = $('#list_of_product_colors tr');
         var index = currentColorsCount.length;
 
-        var colorNameNode =
-            `<input type="hidden" value="${colorName}"  name="ProductColors[${index}].ColorName" color-name-hidden-input="${colorName}-${colorPrice}">`;
+        var isExistsSelectedColor = $('[color-name-hidden-input][value="' + colorName + '"]');
 
-        var colorPriceNode =
-            `<input type="hidden" value="${colorPrice}"  name="ProductColors[${index}].Price"color-price-hidden-input="${colorName}-${colorPrice}">`;
+        if (isExistsSelectedColor)
+        {
+            var colorNameNode =
+                `<input type="hidden" value="${colorName}"  name="ProductColors[${index}].ColorName" color-name-hidden-input="${colorName}-${colorPrice}">`;
 
-        $('#create_product_form').append(colorNameNode);
-        $('#create_product_form').append(colorPriceNode);
+            var colorPriceNode =
+                `<input type="hidden" value="${colorPrice}"  name="ProductColors[${index}].Price"color-price-hidden-input="${colorName}-${colorPrice}">`;
 
-        var colorTableNode =
-            `<tr color-table-item="${colorName}-${colorPrice}"> <td> ${colorName} </td>  <td> ${colorPrice} </td>  <td> 
+            $('#create_product_form').append(colorNameNode);
+            $('#create_product_form').append(colorPriceNode);
+
+            var colorTableNode =
+                `<tr color-table-item="${colorName}-${colorPrice}"> <td> ${colorName} </td>  <td> ${colorPrice} </td>  <td> 
             <a class="btn btn-danger text-white" onclick="removeProductColor('${colorName}-${colorPrice}')">حذف</a> </td>  </tr>`;
 
-        $('#list_of_product_colors').append(colorTableNode);
+            $('#list_of_product_colors').append(colorTableNode);
 
-        $('#product_color_name_input').val('');
-        $('#product_color_price_input').val('');
+            $('#product_color_name_input').val('');
+            $('#product_color_price_input').val('');
+        }
+        else
+        {
+            ShowMessage('اخطار', 'رنگ وارد شده تکراری می باشد', 'warning');
+            $('#product_color_name_input').val('').focus();
+        }
     }
     else
     {
@@ -133,6 +143,25 @@ function removeProductColor(index)
     $('[color-name-hidden-input="' + index + '"]').remove();
     $('[color-price-hidden-input="' + index + '"]').remove();
     $('[color-table-item="' + index + '"]').remove();
+
+    reOrderProductColorHiddenInputs();
+}
+
+function reOrderProductColorHiddenInputs()
+{
+    var hiddenColors = $('[color-name-hidden-input]');
+
+    $.each(hiddenColors, function (index, value)
+    {
+        var hiddenColor = $(value);
+
+        var colorPrice = $(value).attr('color-name-hidden-input');
+
+        var hiddenPrice = $('[color-price-hidden-input="' + colorPrice + '"]');
+
+        $(hiddenColor).attr('name', 'ProductColors[' + index + '].ColorName')
+        $(hiddenPrice).attr('name', 'ProductColors[' + index + '].Price');
+    });
 }
 
 $('#add_size_button').on('click', function (e)
@@ -147,26 +176,35 @@ $('#add_size_button').on('click', function (e)
         var currentSizesCount = $('#list_of_product_sizes tr');
         var index = currentSizesCount.length; 
 
-        var sizeNameNode =
-            `<input type="hidden" value="${sizeName}" name="ProductSizes[${index}].Size" 
+        var isExistsSelectedSize = $('[size-name-hidden-input][value="' + sizeName + '"]');
+
+        if (isExistsSelectedSize)
+        {
+            var sizeNameNode =
+                `<input type="hidden" value="${sizeName}" name="ProductSizes[${index}].Size" 
             size-name-hidden-input="${sizeName}-${countName}">`;
 
-        var countNameNode =
-            `<input type="hidden" value="${countName}" name="ProductSizes[${index}].Count" 
+            var countNameNode =
+                `<input type="hidden" value="${countName}" name="ProductSizes[${index}].Count" 
             count-name-hidden-input="${sizeName}-${countName}">`;
 
-        $('#create_product_form').append(sizeNameNode);
-        $('#create_product_form').append(countNameNode);
+            $('#create_product_form').append(sizeNameNode);
+            $('#create_product_form').append(countNameNode);
 
-        var sizeTableNode =
-            `<tr size-table-item="$${sizeName}-${countName}"> <td> ${sizeName} </td> <td> ${countName}  </td> <td> 
+            var sizeTableNode =
+                `<tr size-table-item="$${sizeName}-${countName}"> <td> ${sizeName} </td> <td> ${countName}  </td> <td> 
             <a class="btn btn-danger text-white" onclick="removeProductSize('${sizeName}-${countName}')">حذف</a> </td>  </tr>`;
 
-        $('#list_of_product_sizes').append(sizeTableNode);
+            $('#list_of_product_sizes').append(sizeTableNode);
 
 
-        $('#product_size_name_input').val('');
-        $('#product_count_name_input').val('');
+            $('#product_size_name_input').val('');
+            $('#product_count_name_input').val('');
+        }
+        else {
+            ShowMessage('اخطار', 'رنگ وارد شده تکراری می باشد', 'warning');
+            $('#product_size_name_input').val('').focus();
+        }
     }
     else
     {
@@ -179,6 +217,25 @@ function removeProductSize(index)
     $('[size-name-hidden-input="' + index + '"]').remove();
     $('[count-name-hidden-input="' + index + '"]').remove();
     $('[size-table-item="' + index + '"]').remove();
+
+    reOrderProductSizeHiddenInputs();
+}
+
+function reOrderProductSizeHiddenInputs()
+{
+    var hiddenSizes = $('[size-name-hidden-input]');
+
+    $.each(hiddenSizes, function (index, value)
+    {
+        var hiddenSize = $(value);
+
+        var sizeCount = $(value).attr('size-name-hidden-input');
+
+        var hiddenCount = $('[count-name-hidden-input="' + sizeCount + '"]');
+
+        $(hiddenSize).attr('name', 'ProductSizes[' + index + '].Size')
+        $(hiddenCount).attr('name', 'ProductSizes[' + index + '].Count');
+    });
 }
 
 ///////create Product
