@@ -106,7 +106,7 @@ $('#add_color_button').on('click', function (e)
 
         var isExistsSelectedColor = $('[color-name-hidden-input][value="' + colorName + '"]');
 
-        if (isExistsSelectedColor)
+        if (isExistsSelectedColor.length === 0)
         {
             var colorNameNode =
                 `<input type="hidden" value="${colorName}"  name="ProductColors[${index}].ColorName" color-name-hidden-input="${colorName}-${colorPrice}">`;
@@ -178,7 +178,7 @@ $('#add_size_button').on('click', function (e)
 
         var isExistsSelectedSize = $('[size-name-hidden-input][value="' + sizeName + '"]');
 
-        if (isExistsSelectedSize)
+        if (isExistsSelectedSize.length === 0)
         {
             var sizeNameNode =
                 `<input type="hidden" value="${sizeName}" name="ProductSizes[${index}].Size" 
@@ -201,7 +201,8 @@ $('#add_size_button').on('click', function (e)
             $('#product_size_name_input').val('');
             $('#product_count_name_input').val('');
         }
-        else {
+        else
+        {
             ShowMessage('اخطار', 'رنگ وارد شده تکراری می باشد', 'warning');
             $('#product_size_name_input').val('').focus();
         }
