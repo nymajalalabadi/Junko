@@ -20,6 +20,14 @@ namespace Junko.Domain.InterFaces
 
         #endregion
 
+        #region product gallery
+
+        Task<List<ProductGallery>> GetAllProductGalleries(long productId);
+
+        Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long userId);
+
+        #endregion
+
         #region Product Category
 
         Task<List<ProductCategory>> GetAllProductCategories();

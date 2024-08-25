@@ -48,6 +48,8 @@ namespace Junko.DataLayer.Context
 
         public DbSet<ProductSize> ProductSizes { get; set; }
 
+        public DbSet<ProductGallery> ProductGalleries { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

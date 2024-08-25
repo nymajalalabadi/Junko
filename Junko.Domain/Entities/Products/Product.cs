@@ -59,6 +59,8 @@ namespace Junko.Domain.Entities.Products
 
         public ICollection<ProductSize> ProductSizes { get; set; }
 
+        public ICollection<ProductGallery> ProductGalleries { get; set; }
+
         #endregion
     }
 

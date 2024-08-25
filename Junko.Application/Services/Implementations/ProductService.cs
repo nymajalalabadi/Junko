@@ -344,6 +344,19 @@ namespace Junko.Application.Services.Implementations
 
         #endregion
 
+        #region product gallery
+
+        public async Task<List<ProductGallery>> GetAllProductGalleries(long productId)
+        {
+            return await _productRepository.GetAllProductGalleries(productId);
+        }
+
+        public async Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long userId)
+        {
+            return await _productRepository.GetAllProductGalleriesInSellerPanel(productId, userId);
+        }
+
+        #endregion
 
         #region product categories
 

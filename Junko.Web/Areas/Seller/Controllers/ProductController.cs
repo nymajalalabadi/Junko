@@ -124,5 +124,22 @@ namespace Junko.Web.Areas.Seller.Controllers
         }
 
         #endregion
+
+        #region product galleries
+
+        #region list
+
+        [HttpGet("product-galleries/{id}")]
+        public async Task<IActionResult> GetProductGalleries(long id)
+        {
+            var model = await _productService.GetAllProductGalleriesInSellerPanel(id, User.GetUserId());
+
+            return View(model);
+        }
+
+        #endregion
+
+        #endregion
+
     }
 }

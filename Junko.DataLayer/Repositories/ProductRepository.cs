@@ -64,6 +64,23 @@ namespace Junko.DataLayer.Repositories
 
         #endregion
 
+        #region product gallery
+
+        public async Task<List<ProductGallery>> GetAllProductGalleries(long productId)
+        {
+            return await _context.ProductGalleries.Where(g => g.ProductId.Equals(productId)).ToListAsync();
+        }
+
+        public async Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long userId)
+        {
+            return await _context.ProductGalleries
+                .Include(g => g.Product)
+                .Where(g => g.ProductId.Equals(productId) && g.Product.SellerId == userId)
+                .ToListAsync();
+        }
+
+        #endregion
+
         #region Product Category
 
         public async Task<List<ProductCategory>> GetAllProductCategories()
