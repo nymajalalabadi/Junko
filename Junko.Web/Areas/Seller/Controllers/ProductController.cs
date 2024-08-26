@@ -132,6 +132,8 @@ namespace Junko.Web.Areas.Seller.Controllers
         [HttpGet("product-galleries/{id}")]
         public async Task<IActionResult> GetProductGalleries(long id)
         {
+            ViewBag.productId = id;
+
             var model = await _productService.GetAllProductGalleriesInSellerPanel(id, User.GetUserId());
 
             return View(model);

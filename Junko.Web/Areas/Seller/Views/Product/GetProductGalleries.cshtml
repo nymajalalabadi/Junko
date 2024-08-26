@@ -1,0 +1,83 @@
+﻿@using Junko.Domain.Entities.Products
+@using Junko.Application.Statics
+@model List<Junko.Domain.Entities.Products.ProductGallery>
+
+@{
+    ViewData["Title"] = "گالری تصاویر محصول";
+
+    var productId = ViewBag.productId as Product;
+}
+
+<div class="breadcrumbs_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb_content">
+                    <ul>
+                        <li>
+                            <a href="/">خانه</a>
+                        </li>
+                        <li>@ViewData["Title"]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="main_content_area">
+    <div class="container">
+        <div class="account_dashboard">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                    @await Component.InvokeAsync("SellerSidebar")
+                </div>
+                <div class="col-sm-12 col-md-9 col-lg-9">
+                    <!-- Tab panes -->
+                    <div class="tab-content dashboard_content">
+                        <div class="tab-pane fade active show" id="account-details">
+                            <h3>@ViewData["Title"] </h3>
+                            <a asp-area="Seller" asp-controller="Product" asp-action="CreateProductGallery" asp-route-productId="@ViewBag.productId">ثبت تصویر جدید</a>
+                            <div class="table-responsive">
+                                @if (Model != null && Model.Any())
+                                {
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>تصویر</th>
+                                                <th>اولویت نمایش</th>
+                                                <th>دستورات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var gallery in Model)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <img src="@(SiteTools.ProductImage + gallery.ImageName)" width="75" />
+                                                    </td>
+                                                    <td>
+                                                        @gallery.ImageName
+                                                    </td>
+                                                    <td>
+                                                        <a asp-area="Seller" asp-controller="Product" asp-action="EditProduct" asp-route-productId="@gallery.Id" class="view">ویرایش محصول</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <partial name="_NoItemFound" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
