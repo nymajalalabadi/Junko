@@ -342,6 +342,11 @@ namespace Junko.Application.Services.Implementations
             return EditProductResult.Success;
         }
 
+        public async Task<Product?> GetProductBySellerOwnerId(long productId, long userId)
+        {
+            return await _productRepository.GetProductByUserId(productId, userId);
+        }
+
         #endregion
 
         #region product gallery

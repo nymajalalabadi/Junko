@@ -1,6 +1,6 @@
 ﻿@using Junko.Domain.Entities.Products
 @using Junko.Application.Statics
-@model List<Junko.Domain.Entities.Products.ProductGallery>
+@model List<ProductGallery>
 
 @{
     ViewData["Title"] = "گالری تصاویر محصول";
@@ -38,7 +38,7 @@
                     <div class="tab-content dashboard_content">
                         <div class="tab-pane fade active show" id="account-details">
                             <h3>@ViewData["Title"] </h3>
-                            <a asp-area="Seller" asp-controller="Product" asp-action="CreateProductGallery" asp-route-productId="@ViewBag.productId">ثبت تصویر جدید</a>
+                            <a asp-area="Seller" asp-controller="Product" asp-action="CreateProductGallery" asp-route-productId="@productId">ثبت تصویر جدید</a>
                             <div class="table-responsive">
                                 @if (Model != null && Model.Any())
                                 {

@@ -28,6 +28,8 @@ namespace Junko.Application.Services.Interfaces
 
         Task<EditProductResult> EditSellerProduct(EditProductDTO product, long userId);
 
+        Task<Product?> GetProductBySellerOwnerId(long productId, long userId);
+
         #endregion
 
         #region product gallery

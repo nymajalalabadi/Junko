@@ -141,6 +141,25 @@ namespace Junko.Web.Areas.Seller.Controllers
 
         #endregion
 
+        #region Create Product Gallery
+
+        [HttpGet("create-product-gallery/{productId}")]
+        public async Task<IActionResult> CreateProductGallery(long productId)
+        {
+            var product = await _productService.GetProductBySellerOwnerId(productId, User.GetUserId());
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.product = product;
+
+            return View();
+        }
+
+        #endregion
+
         #endregion
 
     }

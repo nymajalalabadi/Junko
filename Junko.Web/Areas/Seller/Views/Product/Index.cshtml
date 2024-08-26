@@ -74,7 +74,8 @@
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        <a asp-area="Seller" asp-controller="Product" asp-action="EditProduct" asp-route-productId="@product.Id" class="view">ویرایش محصول</a>
+                                                        <a asp-area="Seller" asp-controller="Product" asp-action="EditProduct" asp-route-productId="@product.Id" class="btn btn-warning">ویرایش محصول</a>
+                                                        <a asp-area="Seller" asp-controller="Product" asp-action="GetProductGalleries" asp-route-id="@product.Id" class="btn btn-info">گالری تصاویر</a>
                                                     </td>
                                                 </tr>
                                             }
