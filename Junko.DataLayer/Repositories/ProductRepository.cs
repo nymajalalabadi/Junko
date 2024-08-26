@@ -81,8 +81,8 @@ namespace Junko.DataLayer.Repositories
         public async Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long userId)
         {
             return await _context.ProductGalleries
-                .Include(g => g.Product)
-                .Where(g => g.ProductId.Equals(productId) && g.Product.SellerId == userId)
+                .Include(g => g.Product).ThenInclude(p => p.Seller)
+                .Where(g => g.ProductId.Equals(productId) && g.Product.Seller.UserId == userId)
                 .ToListAsync();
         }
 

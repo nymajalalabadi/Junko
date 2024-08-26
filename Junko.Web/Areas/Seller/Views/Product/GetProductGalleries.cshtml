@@ -4,8 +4,6 @@
 
 @{
     ViewData["Title"] = "گالری تصاویر محصول";
-
-    var productId = ViewBag.productId as Product;
 }
 
 <div class="breadcrumbs_area">
@@ -38,7 +36,7 @@
                     <div class="tab-content dashboard_content">
                         <div class="tab-pane fade active show" id="account-details">
                             <h3>@ViewData["Title"] </h3>
-                            <a asp-area="Seller" asp-controller="Product" asp-action="CreateProductGallery" asp-route-productId="@productId">ثبت تصویر جدید</a>
+                            <a asp-area="Seller" asp-controller="Product" asp-action="CreateProductGallery" asp-route-productId="@ViewBag.productId">ثبت تصویر جدید</a>
                             <div class="table-responsive">
                                 @if (Model != null && Model.Any())
                                 {
@@ -55,10 +53,10 @@
                                             {
                                                 <tr>
                                                     <td>
-                                                        <img src="@(SiteTools.ProductImage + gallery.ImageName)" width="75" />
+                                                        <img src="@(SiteTools.ProductGalleryThumbImage + gallery.ImageName)" width="75" />
                                                     </td>
                                                     <td>
-                                                        @gallery.ImageName
+                                                        @gallery.DisplayPriority
                                                     </td>
                                                     <td>
                                                         <a asp-area="Seller" asp-controller="Product" asp-action="EditProduct" asp-route-productId="@gallery.Id" class="view">ویرایش محصول</a>
