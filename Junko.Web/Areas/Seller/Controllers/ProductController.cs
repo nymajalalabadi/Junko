@@ -158,6 +158,45 @@ namespace Junko.Web.Areas.Seller.Controllers
             return View();
         }
 
+        [HttpPost("create-product-gallery/{productId}")]
+        public async Task<IActionResult> CreateProductGallery(long productId, CreateProductGalleryDTO gallery)
+        {
+            if (ModelState.IsValid)
+            {
+                var seller = await _sellerService.GetLastActiveSellerByUserId(User.GetUserId());
+
+                var result = await _productService.CreateProductGallery(gallery, productId, seller!.Id);
+
+                switch (result)
+                {
+                    case CreateProductGalleryResult.ImageIsNull:
+                        TempData[WarningMessage] = "تصویر مربوطه را وارد نمایید";
+                        break;
+                    case CreateProductGalleryResult.NotForUserProduct:
+                        TempData[ErrorMessage] = "محصول مورد نظر در لیست محصولات شما یافت نشد";
+                        break;
+                    case CreateProductGalleryResult.ProductNotFound:
+                        TempData[WarningMessage] = "محصول مورد نظر یافت نشد";
+                        break;
+                    case CreateProductGalleryResult.Success:
+                        TempData[SuccessMessage] = "عملیات ثبت گالری محصول با موفقیت انجام شد";
+                        return RedirectToAction("GetProductGalleries", "Product", new { id = productId });
+                }
+            }
+
+            var product = await _productService.GetProductBySellerOwnerId(productId, User.GetUserId());
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.product = product;
+
+            return View(gallery);
+        }
+
+
         #endregion
 
         #endregion

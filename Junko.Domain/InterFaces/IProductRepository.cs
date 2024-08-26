@@ -28,6 +28,8 @@ namespace Junko.Domain.InterFaces
 
         Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long userId);
 
+        Task AddProductGallery(ProductGallery productGallery);
+
         #endregion
 
         #region Product Category

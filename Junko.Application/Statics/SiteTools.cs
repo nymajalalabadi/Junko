@@ -43,6 +43,14 @@ namespace Junko.Application.Statics
 
         #endregion
 
+        #region products Gallery
+
+        public static string ProductGalleryImage { get; set; } = "/content/images/product-gallery/origin/";
+
+
+        public static string ProductGalleryThumbImage { get; set; } = "/content/images/product-gallery/thumb/";
+
+        #endregion
 
         #region uploader
 

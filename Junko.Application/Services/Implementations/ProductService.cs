@@ -361,6 +361,43 @@ namespace Junko.Application.Services.Implementations
             return await _productRepository.GetAllProductGalleriesInSellerPanel(productId, userId);
         }
 
+        public async Task<CreateProductGalleryResult> CreateProductGallery(CreateProductGalleryDTO gallery, long productId, long sellerId)
+        {
+            var product = await _productRepository.GetProductById(productId);
+
+            if (product == null)
+            {
+                return CreateProductGalleryResult.ProductNotFound;
+            }
+
+            if (product.SellerId != sellerId)
+            {
+                return CreateProductGalleryResult.NotForUserProduct;
+            }
+
+            if (gallery.AvatarImage == null || !gallery.AvatarImage.IsImage())
+            {
+                return CreateProductGalleryResult.ImageIsNull;
+            }
+
+            var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(gallery.AvatarImage.FileName);
+
+            gallery.AvatarImage.AddImageToServer(imageName, SiteTools.ProductGalleryImage, 100, 100,
+                SiteTools.ProductGalleryThumbImage);
+
+            var productGallery = new ProductGallery()
+            {
+                ProductId = productId,
+                ImageName = imageName,
+                DisplayPriority = gallery.DisplayPriority
+            };
+
+            await _productRepository.AddProductGallery(productGallery);
+            await _productRepository.SaveChanges();
+
+            return CreateProductGalleryResult.Success;
+        }
+
         #endregion
 
         #region product categories

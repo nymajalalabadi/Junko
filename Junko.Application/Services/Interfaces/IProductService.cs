@@ -38,6 +38,8 @@ namespace Junko.Application.Services.Interfaces
 
         Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long userId);
 
+        Task<CreateProductGalleryResult> CreateProductGallery(CreateProductGalleryDTO gallery, long productId, long sellerId);
+
         #endregion
 
         #region product categories

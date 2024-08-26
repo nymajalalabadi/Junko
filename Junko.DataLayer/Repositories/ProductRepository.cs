@@ -86,6 +86,11 @@ namespace Junko.DataLayer.Repositories
                 .ToListAsync();
         }
 
+        public async Task AddProductGallery(ProductGallery productGallery)
+        {
+            await _context.ProductGalleries.AddAsync(productGallery);
+        }
+
         #endregion
 
         #region Product Category
