@@ -174,12 +174,15 @@ namespace Junko.Web.Areas.Seller.Controllers
                     case CreateProductGalleryResult.ImageIsNull:
                         TempData[WarningMessage] = "تصویر مربوطه را وارد نمایید";
                         break;
+
                     case CreateProductGalleryResult.NotForUserProduct:
                         TempData[ErrorMessage] = "محصول مورد نظر در لیست محصولات شما یافت نشد";
                         break;
+
                     case CreateProductGalleryResult.ProductNotFound:
                         TempData[WarningMessage] = "محصول مورد نظر یافت نشد";
                         break;
+
                     case CreateProductGalleryResult.Success:
                         TempData[SuccessMessage] = "عملیات ثبت گالری محصول با موفقیت انجام شد";
                         return RedirectToAction("GetProductGalleries", "Product", new { id = productId });
@@ -232,9 +235,11 @@ namespace Junko.Web.Areas.Seller.Controllers
                     case EditProductGalleryResult.ProductNotFound:
                         TempData[WarningMessage] = "اطلاعات مورد نظر یافت نشد";
                         break;
+
                     case EditProductGalleryResult.NotForUserProduct:
                         TempData[ErrorMessage] = "این اطلاعات برای شما غیر قابل دسترس می باشد";
                         break;
+
                     case EditProductGalleryResult.Success:
                         TempData[SuccessMessage] = "اطلاعات مورد نظر با موفقیت ویرایش شد";
                         return RedirectToAction("GetProductGalleries", "Product", new { id = productId });
