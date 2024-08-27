@@ -175,16 +175,16 @@
                 </div>
                 <!--shop toolbar end-->
                 <div class="row shop_wrapper grid_3">
-                    @if (Model.Products != null && Model.Products.Any())
+                    @if (Model.Entities != null && Model.Entities.Any())
                     {
-                        foreach (var product in Model.Products)
+                        foreach (var product in Model.Entities)
                         {
                             <div class="col-md-4 col-sm-6 col-lg-4">
                                 <article class="single_product">
                                     <figure>
                                         <div class="product_thumb">
-                                            <a class="primary_img" href="product-details.html"><img src="@(PathExtension.ProductImage + product.ImageName)" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="@(PathExtension.ProductImage + product.ImageName)" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="@(SiteTools.ProductImage + product.ImageName)" alt=""></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="@(SiteTools.ProductImage + product.ImageName)" alt=""></a>
                                             <div class="label_product">
                                                 <span class="label_sale">فروش</span>
                                             </div>
