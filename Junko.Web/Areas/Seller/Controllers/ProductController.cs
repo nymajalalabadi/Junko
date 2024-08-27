@@ -185,6 +185,7 @@ namespace Junko.Web.Areas.Seller.Controllers
 
                     case CreateProductGalleryResult.Success:
                         TempData[SuccessMessage] = "عملیات ثبت گالری محصول با موفقیت انجام شد";
+
                         return RedirectToAction("GetProductGalleries", "Product", new { id = productId });
                 }
             }
@@ -200,7 +201,6 @@ namespace Junko.Web.Areas.Seller.Controllers
 
             return View(gallery);
         }
-
 
         #endregion
 
@@ -242,6 +242,7 @@ namespace Junko.Web.Areas.Seller.Controllers
 
                     case EditProductGalleryResult.Success:
                         TempData[SuccessMessage] = "اطلاعات مورد نظر با موفقیت ویرایش شد";
+
                         return RedirectToAction("GetProductGalleries", "Product", new { id = productId });
                 }
             }
