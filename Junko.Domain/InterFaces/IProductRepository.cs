@@ -24,11 +24,15 @@ namespace Junko.Domain.InterFaces
 
         #region product gallery
 
+        Task<ProductGallery?> GetGalleryById(long galleryId, long sellerId);
+
         Task<List<ProductGallery>> GetAllProductGalleries(long productId);
 
-        Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long userId);
+        Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long sellerId);
 
         Task AddProductGallery(ProductGallery productGallery);
+
+        void UpdateProductGallery(ProductGallery productGallery);
 
         #endregion
 

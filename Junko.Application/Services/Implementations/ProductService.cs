@@ -230,7 +230,7 @@ namespace Junko.Application.Services.Implementations
                 ShortDescription = product.ShortDescription,
                 ImageName = product.ImageName,
                 IsActive = product.IsActive,
-                Price= product.Price,
+                Price = product.Price,
                 ProductColors = product.ProductColors.Select(c => new CreateProductColorDTO()
                 {
                     Price = c.Price,
@@ -356,9 +356,9 @@ namespace Junko.Application.Services.Implementations
             return await _productRepository.GetAllProductGalleries(productId);
         }
 
-        public async Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long userId)
+        public async Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long sellerId)
         {
-            return await _productRepository.GetAllProductGalleriesInSellerPanel(productId, userId);
+            return await _productRepository.GetAllProductGalleriesInSellerPanel(productId, sellerId);
         }
 
         public async Task<CreateProductGalleryResult> CreateProductGallery(CreateProductGalleryDTO gallery, long productId, long sellerId)
@@ -396,6 +396,54 @@ namespace Junko.Application.Services.Implementations
             await _productRepository.SaveChanges();
 
             return CreateProductGalleryResult.Success;
+        }
+
+        public async Task<EditProductGalleryDTO> GetProductGalleryForEdit(long galleryId, long sellerId)
+        {
+            var currentGallery = await _productRepository.GetGalleryById(galleryId, sellerId);
+
+            if (currentGallery == null)
+            {
+                return null;
+            }
+
+            return new EditProductGalleryDTO
+            {
+                ImageName = currentGallery.ImageName,
+                DisplayPriority = currentGallery.DisplayPriority
+            };
+        }
+
+        public async Task<EditProductGalleryResult> EditProductGallery(long galleryId, long sellerId, EditProductGalleryDTO gallery)
+        {
+            var currentGallery = await _productRepository.GetGalleryById(galleryId, sellerId);
+
+            if (currentGallery == null)
+            {
+                return EditProductGalleryResult.ProductNotFound;
+            }
+
+            if (currentGallery.Product.SellerId != sellerId)
+            {
+                return EditProductGalleryResult.NotForUserProduct;
+            }
+
+            if (gallery.Image != null && gallery.Image.IsImage())
+            {
+                var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(gallery.Image.FileName);
+
+                gallery.Image.AddImageToServer(imageName, SiteTools.ProductGalleryImage, 100, 100,
+                     SiteTools.ProductGalleryThumbImage, currentGallery.ImageName);
+
+                currentGallery.ImageName = imageName;
+            }
+
+            currentGallery.DisplayPriority = gallery.DisplayPriority;
+
+            _productRepository.UpdateProductGallery(currentGallery);
+            await _productRepository.SaveChanges();
+
+            return EditProductGalleryResult.Success;
         }
 
         #endregion

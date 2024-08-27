@@ -1,7 +1,10 @@
-﻿@model Junko.Domain.ViewModels.Products.CreateProductGalleryDTO
+﻿@using Junko.Application.Statics
+@model Junko.Domain.ViewModels.Products.EditProductGalleryDTO
 @{
-    ViewData["Title"] = "ثبت گالری جدید برای " + ViewBag.product.Title;
+    ViewData["Title"] = "ویرایش تصویر";
 }
+
+
 
 <div class="breadcrumbs_area">
     <div class="container">
@@ -12,9 +15,7 @@
                         <li>
                             <a href="/">خانه</a>
                         </li>
-                        <li>
-                            @ViewData["Title"]
-                        </li>
+                        <li>@ViewData["Title"]</li>
                     </ul>
                 </div>
             </div>
@@ -38,17 +39,23 @@
                             <div class="login">
                                 <div class="login_form_container">
                                     <div class="account_login_form">
-                                        <form asp-area="Seller" asp-controller="Product" asp-action="CreateProductGallery" enctype="multipart/form-data" id="create_product_form">
+                                        <form asp-area="Seller" asp-controller="Product" asp-action="EditProductGallery" enctype="multipart/form-data" id="create_product_form">
+                                            <input type="hidden" asp-for="ImageName" />
                                             <label>اولویت نمایش</label>
                                             <input asp-for="DisplayPriority">
                                             <span class="text-danger" asp-validation-for="DisplayPriority"></span>
+
                                             <br />
                                             <div class="col-md-6">
-                                                <input type="file" asp-for="AvatarImage" id="Avatar" accept=".png,.jpeg" />
-                                                <img src="" id="imgPreview" class="border my-1 mx-auto d-block" width="120px" height="120px">
+                                                <input type="file" asp-for="Image" id="Avatar" accept=".png,.jpeg" />
+                                                <span class="text-danger" asp-validation-for="Image"></span>
                                             </div>
+                                            <div class="col-md-12">
+                                                <img src="@(SiteTools.ProductGalleryThumbImage + Model.ImageName)" id="imgPreview" width="120px" height="120px" alt="Alternate Text" />
+                                            </div>
+
                                             <div class="save_button primary_btn default_button">
-                                                <button type="submit">افزودن</button>
+                                                <button type="submit">ویرایش</button>
                                             </div>
                                         </form>
                                     </div>
@@ -64,8 +71,7 @@
 
 
 
-@section scripts 
-{
+@section scripts {
     <partial name="_JqueryValidators" />
 
     <script>

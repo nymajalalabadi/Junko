@@ -73,22 +73,35 @@ namespace Junko.DataLayer.Repositories
 
         #region product gallery
 
+        public async Task<ProductGallery?> GetGalleryById(long galleryId, long sellerId)
+        {
+            return await _context.ProductGalleries
+                .Include(g => g.Product)
+                .FirstOrDefaultAsync(p => p.Id == galleryId && p.Product.SellerId == sellerId);
+        }
+
         public async Task<List<ProductGallery>> GetAllProductGalleries(long productId)
         {
             return await _context.ProductGalleries.Where(g => g.ProductId.Equals(productId)).ToListAsync();
         }
 
-        public async Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long userId)
+        public async Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long sellerId)
         {
             return await _context.ProductGalleries
-                .Include(g => g.Product).ThenInclude(p => p.Seller)
-                .Where(g => g.ProductId.Equals(productId) && g.Product.Seller.UserId == userId)
+                .Include(g => g.Product)
+                .OrderBy(g => g.DisplayPriority)
+                .Where(g => g.ProductId.Equals(productId) && g.Product.SellerId == sellerId)
                 .ToListAsync();
         }
 
         public async Task AddProductGallery(ProductGallery productGallery)
         {
             await _context.ProductGalleries.AddAsync(productGallery);
+        }
+
+        public void UpdateProductGallery(ProductGallery productGallery)
+        {
+            _context.ProductGalleries.Update(productGallery);
         }
 
         #endregion

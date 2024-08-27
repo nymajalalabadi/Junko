@@ -36,9 +36,13 @@ namespace Junko.Application.Services.Interfaces
 
         Task<List<ProductGallery>> GetAllProductGalleries(long productId);
 
-        Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long userId);
+        Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long sellerId);
 
         Task<CreateProductGalleryResult> CreateProductGallery(CreateProductGalleryDTO gallery, long productId, long sellerId);
+
+        Task<EditProductGalleryDTO> GetProductGalleryForEdit(long galleryId, long sellerId);
+
+        Task<EditProductGalleryResult> EditProductGallery(long galleryId, long sellerId, EditProductGalleryDTO gallery);
 
         #endregion
 

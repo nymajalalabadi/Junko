@@ -134,7 +134,9 @@ namespace Junko.Web.Areas.Seller.Controllers
         {
             ViewBag.productId = id;
 
-            var model = await _productService.GetAllProductGalleriesInSellerPanel(id, User.GetUserId());
+            var seller = await _sellerService.GetLastActiveSellerByUserId(User.GetUserId());
+
+            var model = await _productService.GetAllProductGalleriesInSellerPanel(id, seller!.Id);
 
             return View(model);
         }
@@ -198,6 +200,51 @@ namespace Junko.Web.Areas.Seller.Controllers
 
 
         #endregion
+
+        #region Edit Product Gallery
+
+        [HttpGet("product_{productId}/edit-product-gallery/{galleryId}")]
+        public async Task<IActionResult> EditProductGallery(long productId, long galleryId)
+        {
+            var seller = await _sellerService.GetLastActiveSellerByUserId(User.GetUserId());
+
+            var mainGallery = await _productService.GetProductGalleryForEdit(galleryId, seller.Id);
+
+            if (mainGallery == null)
+            {
+                return NotFound();
+            }
+
+            return View(mainGallery);
+        }
+
+        [HttpPost("product_{productId}/edit-product-gallery/{galleryId}")]
+        public async Task<IActionResult> EditProductGallery(long productId, long galleryId, EditProductGalleryDTO gallery)
+        {
+            if (ModelState.IsValid)
+            {
+                var seller = await _sellerService.GetLastActiveSellerByUserId(User.GetUserId());
+
+                var result = await _productService.EditProductGallery(galleryId, seller!.Id, gallery);
+
+                switch (result)
+                {
+                    case EditProductGalleryResult.ProductNotFound:
+                        TempData[WarningMessage] = "اطلاعات مورد نظر یافت نشد";
+                        break;
+                    case EditProductGalleryResult.NotForUserProduct:
+                        TempData[ErrorMessage] = "این اطلاعات برای شما غیر قابل دسترس می باشد";
+                        break;
+                    case EditProductGalleryResult.Success:
+                        TempData[SuccessMessage] = "اطلاعات مورد نظر با موفقیت ویرایش شد";
+                        return RedirectToAction("GetProductGalleries", "Product", new { id = productId });
+                }
+            }
+            return View(gallery);
+        }
+
+        #endregion
+
 
         #endregion
 
