@@ -674,9 +674,15 @@
 	});
 
 	/*---widget sub categories---*/
-	$(".widget_sub_categories > a").on("click", function () {
+	/*$(".widget_sub_categories > a").on("click", function () {
 		$(this).toggleClass('active');
 		$('.widget_dropdown_categories').slideToggle('medium');
+	});*/
+
+	$('[category-dropdown-button]').on('click', function () {
+		$(this).toggleClass('active');
+		var categoryId = $(this).attr('category-dropdown-button');
+		$('[category-dropdown-list="' + categoryId + '"]').slideToggle('medium');
 	});
 
 	/*---addClass/removeClass categories---*/
