@@ -24,6 +24,8 @@ namespace Junko.Web.Controllers
         {
             var products = await _productService.FilterProducts(filter);
 
+            ViewBag.ProductCategories = await _productService.GetAllActiveProductCategories();
+
             return View(products);
         }
 

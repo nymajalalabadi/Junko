@@ -19,6 +19,7 @@ namespace Junko.Domain.ViewModels.Products
 
         public FilterProductState FilterProductState { get; set; }
 
+        public List<long> SelectedProductCategories { get; set; }
 
         #endregion
     }

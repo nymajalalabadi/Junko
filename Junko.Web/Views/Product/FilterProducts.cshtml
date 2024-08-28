@@ -1,7 +1,10 @@
 ﻿@using Junko.Application.Statics
+@using Junko.Domain.Entities.Products
 @model Junko.Domain.ViewModels.Products.FilterProductDTO
 @{
     ViewData["Title"] = "فیلتر محصولات";
+    var productCategories = ViewBag.ProductCategories as List<ProductCategory>;
+
 }
 
 <div class="breadcrumbs_area">
@@ -30,21 +33,29 @@
                     <div class="widget_inner">
                         <div class="widget_list widget_categories">
                             <h2>دسته های محصولات</h2>
-                            <ul>
-                                <li><a href="#">دوربین عکاسی و فیلمبرداری</a></li>
-                                <li class="widget_sub_categories">
-                                    <a href="javascript:void(0)">کامپیوتر و شبکه</a>
-                                    <ul class="widget_dropdown_categories">
-                                        <li><a href="#">کامپیوتر</a></li>
-                                        <li><a href="#">ابزار شبکه</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">بازی و کنسول</a></li>
-                                <li><a href="#">هدفون و اسپیکر</a></li>
-                                <li><a href="#">فیلم و بازی ویدئویی</a></li>
-                                <li><a href="#">گوشی هوشمند</a> </li>
-                                <li><a href="#">بدون دسته</a></li>
-                            </ul>
+                            @if (productCategories != null && productCategories.Any())
+                            {
+                                <ul>
+                                    @foreach (var mainCategory in productCategories.Where(s => s.ParentId == null))
+                                    {
+                                        <li class="widget_sub_categories">
+                                            <a href="javascript:void(0)" category-dropdown-button="@mainCategory.Id">
+                                                @mainCategory.Title
+                                            </a>
+
+                                            @if (productCategories.Any(s => s.ParentId == mainCategory.Id))
+                                            {
+                                                <ul class="widget_dropdown_categories" category-dropdown-list="@mainCategory.Id">
+                                                    @foreach (var subCategory in productCategories.Where(s => s.ParentId == mainCategory.Id))
+                                                    {
+                                                        <li><a href="#">@subCategory.Title</a></li>
+                                                    }
+                                                </ul>
+                                            }
+                                        </li>
+                                    }
+                                </ul>
+                            }
                         </div>
                         <div class="widget_list widget_filter">
                             <h2>فیلتر با قیمت</h2>
@@ -183,8 +194,8 @@
                                 <article class="single_product">
                                     <figure>
                                         <div class="product_thumb">
-                                            <a class="primary_img" href="product-details.html"><img src="@(SiteTools.ProductImage + product.ImageName)" alt=""></a>
-                                            <a class="secondary_img" href="product-details.html"><img src="@(SiteTools.ProductImage + product.ImageName)" alt=""></a>
+                                            <a class="primary_img" href="product-details.html"><img src="@(SiteTools.ProductImage + product.ImageName)" alt="@product.Title"></a>
+                                            <a class="secondary_img" href="product-details.html"><img src="@(SiteTools.ProductImage + product.ImageName)" alt="@product.Title"></a>
                                             <div class="label_product">
                                                 <span class="label_sale">فروش</span>
                                             </div>
