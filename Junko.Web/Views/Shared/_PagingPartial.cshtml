@@ -10,7 +10,7 @@
             }
             @for (int i = Model.StartPage; i <= Model.EndPage; i++)
             {
-                <li class="@(Model.CurrentPage == i ? "current" : "")" onclick="FillPageId(@i)">@i</li>
+                <li class="@(Model.CurrentPage == i ? "current" : "")"><a onclick="FillPageId(@i)">@i</a></li>
             }
             @if (Model.EndPage > Model.CurrentPage)
             {

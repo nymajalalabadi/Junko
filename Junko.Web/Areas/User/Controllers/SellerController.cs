@@ -28,7 +28,7 @@ namespace Junko.Web.Areas.User.Controllers
         {
             filter.UserId = User.GetUserId();
             filter.State = FilterSellerState.All;
-
+            filter.TakeEntity = 1;
             var model = await _sellerService.FilterSellers(filter);
 
             return View(model);

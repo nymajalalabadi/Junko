@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Junko.Domain.Entities.Common;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,20 @@ namespace Junko.Domain.ViewModels.Common
             return result;
         }
 
+        public string GetCurrentPagingStatus()
+        {
+            var startItem = 1;
+            var endItem = this.AllEntityCount;
+
+            if (EndPage > 1)
+            {
+                startItem = (CurrentPage - 1) * TakeEntity + 1;
+                endItem = CurrentPage * TakeEntity;
+            }
+
+            return $"نمایش {startItem}-{endItem} از {AllEntityCount}";
+        }
+
         public async Task SetPaging(IQueryable<T> query)
         {
             AllEntityCount = query.Count();
@@ -71,6 +86,7 @@ namespace Junko.Domain.ViewModels.Common
             }
         }
     }
+
 
     public class PagingViewModel
     {
