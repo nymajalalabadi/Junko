@@ -5575,10 +5575,10 @@ textarea:-ms-input-placeholder {
 	-o-transition: none;
 	transition: none;
 }
-.widget_list.widget_filter form {
+.widget_list.widget_filter {
 	padding-top: 10px;
 }
-.widget_list.widget_filter form input {
+.widget_list.widget_filter input {
 	background: none;
 	border: none;
 	font-size: 12px;
@@ -5587,7 +5587,7 @@ textarea:-ms-input-placeholder {
 	line-height: 30px;
 	width: 100%;
 }
-.widget_list.widget_filter form button {
+.widget_list.widget_filter button {
 	height: 30px;
 	line-height: 30px;
 	padding: 0 20px;
@@ -5603,7 +5603,7 @@ textarea:-ms-input-placeholder {
 	transition: 0.3s;
 	margin-top: 15px;
 }
-.widget_list.widget_filter form button:hover {
+.widget_list.widget_filter button:hover {
 	background: #0063d1;
 }
 @media only screen and (min-width: 768px) and (max-width: 991px) {

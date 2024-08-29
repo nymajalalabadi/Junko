@@ -592,28 +592,7 @@
 
 		});
 	});
-
-	/*---slider-range here---*/
-	$("#slider-range").slider({
-		range: true,
-		min: 0,
-		max: 5000000,
-		step: 10000,
-		values: [700000, 4000000],
-		slide: function (event, ui) {
-			var $value0 = ui.values[0].toLocaleString();
-			var $value1 = ui.values[1].toLocaleString();
-			$("#amount").val($value1 + " تومان - " + $value0 + " تومان");
-			$("#price-min").val(ui.values[0]);
-			$("#price-max").val(ui.values[1]);
-		}
-	});
-	var $value0 = $("#slider-range").slider("values", 0).toLocaleString();
-	var $value1 = $("#slider-range").slider("values", 1).toLocaleString();
-	$("#amount").val($value1 + " تومان - " + $value0 + " تومان");
-	$("#price-min").val($("#slider-range").slider("values", 0));
-	$("#price-max").val($("#slider-range").slider("values", 1));
-
+	
 	/*---elevateZoom---*/
 	$("#zoom1").elevateZoom({
 		gallery: 'gallery_01',

@@ -51,6 +51,21 @@ namespace Junko.Application.Services.Implementations
                 query = query.Where(s => s.SellerId == filter.SellerId.Value);
             }
 
+            #region price
+
+            var expensiveProduct = await query.OrderByDescending(s => s.Price).FirstOrDefaultAsync();
+            filter.FilterMaxPrice = expensiveProduct.Price;
+
+            if (filter.SelectedMaxPrice == 0)
+            {
+                filter.SelectedMaxPrice = expensiveProduct.Price;
+            }
+
+            query = query.Where(s => s.Price >= filter.SelectedMinPrice);
+            query = query.Where(s => s.Price <= filter.SelectedMaxPrice);
+
+            #endregion
+
             #endregion
 
             #region state
