@@ -651,7 +651,7 @@
 		$(this).toggleClass('active');
 		$('.categories_menu_toggle').slideToggle('medium');
 	});
-
+	
 	/*---widget sub categories---*/
 	/*$(".widget_sub_categories > a").on("click", function () {
 		$(this).toggleClass('active');
@@ -663,7 +663,7 @@
 		var categoryId = $(this).attr('category-dropdown-button');
 		$('[category-dropdown-list="' + categoryId + '"]').slideToggle('medium');
 	});
-
+	
 	/*---addClass/removeClass categories---*/
 	$("#cat_toggle.has-sub > a").on("click", function () {
 		$(this).removeAttr('href');
