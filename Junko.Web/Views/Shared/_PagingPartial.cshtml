@@ -10,11 +10,11 @@
             }
             @for (int i = Model.StartPage; i <= Model.EndPage; i++)
             {
-                <li class="@(Model.CurrentPage == i ? "current" : "")"><a onclick="FillPageId(@i)">@i</a></li>
+                <li class="@(Model.CurrentPage == i ? "current" : "")  cursor-pointer"><a onclick="FillPageId(@i)">@i</a></li>
             }
             @if (Model.EndPage > Model.CurrentPage)
             {
-                <li class="next"><a onclick="FillPageId(@(Model.CurrentPage + 1))">بعدی</a></li>
+                <li class="next  cursor-pointer"><a onclick="FillPageId(@(Model.CurrentPage + 1))">بعدی</a></li>
             }
         </ul>
     </div>

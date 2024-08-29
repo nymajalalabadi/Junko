@@ -36,16 +36,9 @@ namespace Junko.Domain.ViewModels.Common
 
         public List<T> Entities { get; set; }
 
-        public PagingViewModel GetPaging()
+        public int GetLastPage()
         {
-            var result = new PagingViewModel
-            {
-                CurrentPage = this.CurrentPage,
-                EndPage = this.EndPage,
-                StartPage = this.StartPage
-            };
-
-            return result;
+            return (int)Math.Ceiling(AllEntityCount / (double)TakeEntity);
         }
 
         public string GetCurrentPagingStatus()
@@ -56,10 +49,22 @@ namespace Junko.Domain.ViewModels.Common
             if (EndPage > 1)
             {
                 startItem = (CurrentPage - 1) * TakeEntity + 1;
-                endItem = CurrentPage * TakeEntity;
+                endItem = CurrentPage * TakeEntity > AllEntityCount ? AllEntityCount : CurrentPage * TakeEntity;
             }
 
             return $"نمایش {startItem}-{endItem} از {AllEntityCount}";
+        }
+
+        public PagingViewModel GetPaging()
+        {
+            var result = new PagingViewModel
+            {
+                CurrentPage = this.CurrentPage,
+                EndPage = this.EndPage,
+                StartPage = this.StartPage
+            };
+
+            return result;
         }
 
         public async Task SetPaging(IQueryable<T> query)

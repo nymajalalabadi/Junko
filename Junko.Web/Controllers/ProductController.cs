@@ -27,6 +27,11 @@ namespace Junko.Web.Controllers
 
             ViewBag.ProductCategories = await _productService.GetAllActiveProductCategories();
 
+            if (filter.CurrentPage > filter.GetLastPage() && filter.GetLastPage() != 0)
+            {
+                return NotFound();
+            }
+
             return View(products);
         }
 
