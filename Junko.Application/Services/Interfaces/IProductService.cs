@@ -30,6 +30,7 @@ namespace Junko.Application.Services.Interfaces
 
         Task<Product?> GetProductBySellerOwnerId(long productId, long userId);
 
+        Task<ProductDetailDTO?> GetProductDetailById(long productId);
         #endregion
 
         #region product gallery

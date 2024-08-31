@@ -387,6 +387,31 @@ namespace Junko.Application.Services.Implementations
             return await _productRepository.GetProductByUserId(productId, userId);
         }
 
+        public async Task<ProductDetailDTO?> GetProductDetailById(long productId)
+        {
+            var product = await _productRepository.GetProductForShow(productId);
+
+            if (product == null)
+            {
+                return null;
+            }
+
+            return new ProductDetailDTO()
+            {
+                Title = product.Title,
+                Description = product.Description,
+                ShortDescription = product.ShortDescription,
+                ImageName = product.ImageName,
+                Price = product.Price,
+                SellerId = product.SellerId,
+                Seller = product.Seller,
+                ProductColors = product.ProductColors.ToList(),
+                ProductSizes = product.ProductSizes.ToList(),
+                ProductGalleries = product.ProductGalleries.ToList(),
+                ProductCategories = product.ProductSelectedCategories.Select(s => s.ProductCategory).ToList()
+            };
+        }
+
         #endregion
 
         #region product gallery

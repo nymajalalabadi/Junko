@@ -1,4 +1,5 @@
-﻿@using Junko.Application.Statics
+﻿@using Junko.Application.Convertor
+@using Junko.Application.Statics
 @using Junko.Domain.Entities.Products
 @using Junko.Domain.ViewModels.Products
 @model Junko.Domain.ViewModels.Products.FilterProductDTO
@@ -105,8 +106,12 @@
                                     <article class="single_product">
                                         <figure>
                                             <div class="product_thumb">
-                                                <a class="primary_img" href="product-details.html"><img src="@(SiteTools.ProductImage + product.ImageName)" alt="@product.Title"></a>
-                                                <a class="secondary_img" href="product-details.html"><img src="@(SiteTools.ProductImage + product.ImageName)" alt="@product.Title"></a>
+                                                <a class="primary_img" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.Id" asp-route-title="@product.Title.FixTextForUrl()">
+                                                    <img src="@(SiteTools.ProductImage + product.ImageName)" alt="@product.Title">
+                                                </a>
+                                                <a class="secondary_img" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.Id" asp-route-title="@product.Title.FixTextForUrl()">
+                                                    <img src="@(SiteTools.ProductImage + product.ImageName)" alt="@product.Title">
+                                                </a>
                                                 <div class="label_product">
                                                     <span class="label_sale">فروش</span>
                                                 </div>
@@ -137,7 +142,9 @@
                                                         <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
                                                     </ul>
                                                 </div>
-                                                <h3 class="product_name grid_name"><a href="product-details.html">@product.Title</a></h3>
+                                                <h3 class="product_name grid_name">
+                                                    <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.Id" asp-route-title="@product.Title.FixTextForUrl()">@product.Title</a>
+                                                </h3>
                                             </div>
                                             <div class="product_content list_content">
                                                 <div class="left_caption">
@@ -145,7 +152,9 @@
                                                         @* <span class="old_price">86,000 تومان</span> *@
                                                         <span class="current_price">@product.Price.ToString("#,0") تومان</span>
                                                     </div>
-                                                    <h3 class="product_name"><a href="product-details.html">@product.Title</a></h3>
+                                                    <h3 class="product_name">
+                                                        <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.Id" asp-route-title="@product.Title.FixTextForUrl()">@product.Title</a>
+                                                    </h3>
                                                     <div class="product_ratings">
                                                         <ul>
                                                             <li><a href="#"><i class="ion-android-star-outline"></i></a></li>
@@ -203,7 +212,6 @@
 @section scripts
 {
     <script>
-        /*---slider-range here---*/
         $("#slider-range").slider({
             range: true,
             min: @Model.FilterMinPrice,

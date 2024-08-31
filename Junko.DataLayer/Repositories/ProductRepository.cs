@@ -44,6 +44,17 @@ namespace Junko.DataLayer.Repositories
             return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
         }
 
+        public async Task<Product?> GetProductForShow(long id)
+        {
+            return await _context.Products
+                .Include(p => p.Seller).ThenInclude(s => s.User)
+                .Include(p => p.ProductColors)
+                .Include(p => p.ProductSizes)
+                .Include(p => p.ProductGalleries)
+                .Include(p => p.ProductSelectedCategories).ThenInclude(s => s.ProductCategory)
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
         public async Task<Product?> GetProductByUserId(long productId, long userId)
         {
             return await _context.Products

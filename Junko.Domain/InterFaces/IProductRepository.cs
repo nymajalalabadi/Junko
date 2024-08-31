@@ -12,6 +12,8 @@ namespace Junko.Domain.InterFaces
 
         Task<Product?> GetProductById(long id);
 
+        Task<Product?> GetProductForShow(long id);
+
         Task<Product?> GetProductByUserId(long productId, long userId);
 
         Task<Product?> GetProductForEdit(long id);

@@ -37,8 +37,6 @@ namespace Junko.Domain.ViewModels.Products
 
         public FilterProductOrderBy FilterProductOrderBy { get; set; }
 
-        public List<long> SelectedProductCategories { get; set; }
-
         #endregion
     }
 
