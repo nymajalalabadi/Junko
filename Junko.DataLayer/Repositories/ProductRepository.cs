@@ -33,6 +33,8 @@ namespace Junko.DataLayer.Repositories
         {
             return _context.Products
                 .Include(p => p.Seller)
+                .Include(c => c.ProductSelectedCategories)
+                .ThenInclude(c => c.ProductCategory)
                 .Where(p => !p.IsDelete)
                 .AsQueryable();
         }

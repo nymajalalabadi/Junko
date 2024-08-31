@@ -17,6 +17,8 @@ namespace Junko.Domain.ViewModels.Products
 
         public string? ProductTitle { get; set; }
 
+        public string? FilterByCategory { get; set; }
+
         #region price
 
         public int FilterMinPrice { get; set; }

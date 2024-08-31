@@ -10,6 +10,7 @@ using Junko.Domain.InterFaces;
 using Junko.Domain.ViewModels.Products;
 using Junko.Domain.ViewModels.Store;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,11 @@ namespace Junko.Application.Services.Implementations
                 query = query.Where(s => EF.Functions.Like(s.Title, $"%{filter.ProductTitle}%"));
             }
 
+            if (!string.IsNullOrEmpty(filter.FilterByCategory))
+            {
+                query = query.Where(p => p.ProductSelectedCategories.Any(s => s.ProductCategory.UrlName == filter.FilterByCategory));
+            }
+
             if (filter.SellerId != null && filter.SellerId != 0)
             {
                 query = query.Where(s => s.SellerId == filter.SellerId.Value);
@@ -53,16 +59,19 @@ namespace Junko.Application.Services.Implementations
 
             #region price
 
-            var expensiveProduct = await query.OrderByDescending(s => s.Price).FirstOrDefaultAsync();
-            filter.FilterMaxPrice = expensiveProduct.Price;
-
-            if (filter.SelectedMaxPrice == 0)
+            if (!query.IsNullOrEmpty())
             {
-                filter.SelectedMaxPrice = expensiveProduct.Price;
-            }
+                var expensiveProduct = await query.OrderByDescending(s => s.Price).FirstOrDefaultAsync();
+                filter.FilterMaxPrice = expensiveProduct.Price;
 
-            query = query.Where(s => s.Price >= filter.SelectedMinPrice);
-            query = query.Where(s => s.Price <= filter.SelectedMaxPrice);
+                if (filter.SelectedMaxPrice == 0)
+                {
+                    filter.SelectedMaxPrice = expensiveProduct.Price;
+                }
+
+                query = query.Where(s => s.Price >= filter.SelectedMinPrice);
+                query = query.Where(s => s.Price <= filter.SelectedMaxPrice);
+            }
 
             #endregion
 

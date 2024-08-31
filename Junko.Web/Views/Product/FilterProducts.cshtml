@@ -40,6 +40,9 @@
                                 @if (productCategories != null && productCategories.Any())
                                 {
                                     <ul>
+                                        <li class="">
+                                            <a asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-Category="" >همه</a>
+                                        </li>
                                         @foreach (var mainCategory in productCategories.Where(s => s.ParentId == null))
                                         {
                                             <li class="widget_sub_categories">
@@ -49,7 +52,9 @@
                                                     <ul class="widget_dropdown_categories" category-dropdown-list="@mainCategory.Id">
                                                         @foreach (var subCategory in productCategories.Where(s => s.ParentId == mainCategory.Id))
                                                         {
-                                                            <li><a href="#">@subCategory.Title</a></li>
+                                                            <li>
+                                                                <a asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-FilterByCategory="@subCategory.UrlName">@subCategory.Title</a>
+                                                            </li>
                                                         }
                                                     </ul>
                                                 }
@@ -258,6 +263,14 @@
                                     </article>
                                 </div>
                             }
+                        }
+                        else
+                        {
+                            <div class="col-md-12">
+                                <div class="alert alert-warning">
+                                    <p>هیچ محصولی یافت نشد</p>
+                                </div>
+                            </div>
                         }
                     </div>
                     <div class="shop_toolbar t_bottom">
