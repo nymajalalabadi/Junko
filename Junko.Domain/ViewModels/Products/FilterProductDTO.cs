@@ -33,6 +33,8 @@ namespace Junko.Domain.ViewModels.Products
 
         public FilterProductState FilterProductState { get; set; }
 
+        public FilterProductOrderBy FilterProductOrderBy { get; set; }
+
         public List<long> SelectedProductCategories { get; set; }
 
         #endregion
@@ -52,6 +54,19 @@ namespace Junko.Domain.ViewModels.Products
         Active,
         [Display(Name = "غیر فعال")]
         NotActive
+    }
+
+
+    public enum FilterProductOrderBy
+    {
+        [Display(Name = "تاریخ ( نزولی )")]
+        CreateData_Des,
+        [Display(Name = "تاریخ ( صعودی )")]
+        CreateDate_Asc,
+        [Display(Name = "قیمت ( نزولی )")]
+        Price_Des,
+        [Display(Name = "قیمت ( صعودی )")]
+        Price_Asc,
     }
 
 }
