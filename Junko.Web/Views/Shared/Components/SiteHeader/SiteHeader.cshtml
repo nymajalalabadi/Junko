@@ -37,7 +37,7 @@
                         else
                         {
                             <ul>
-                                <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @user.GetUserShowName()، خوش آمدید  </a></li>
+                                <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @user.GetUserShowName()، خوش آمدید </a></li>
                                 <li><a asp-controller="Account" asp-action="LogOut"> خروج </a></li>
                             </ul>
                         }
@@ -144,73 +144,14 @@
                                     <li><a href="index-5.html">خانه 5</a></li>
                                 </ul>
                             </li>
-                            <li class="menu-item-has-children">
-                                <a href="#">فروشگاه</a>
-                                <ul class="sub-menu">
-                                    <li class="menu-item-has-children">
-                                        <a href="#">طرح های فروشگاه</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="shop.html">فروشگاه</a></li>
-                                            <li><a href="shop-fullwidth.html">تمام عرض</a></li>
-                                            <li><a href="shop-fullwidth-list.html">تمام عرض لیست</a></li>
-                                            <li><a href="shop-left-sidebar.html">نوار کناری چپ </a></li>
-                                            <li><a href="shop-left-sidebar-list.html"> نوار کناری چپ لیست</a></li>
-                                            <li><a href="shop-list.html">نمایش لیست</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children">
-                                        <a href="#">سایر صفحات</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="cart.html">سبد خرید</a></li>
-                                            <li><a href="wishlist.html">لیست علاقه‌مندی‌ها</a></li>
-                                            <li><a href="checkout.html">پرداخت</a></li>
-                                            <li><a href="my-account.html">حساب کاربری</a></li>
-                                            <li><a href="404.html">خطای 404</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="menu-item-has-children">
-                                        <a href="#">انواع محصول</a>
-                                        <ul class="sub-menu">
-                                            <li><a href="product-details.html">جزئیات محصول</a></li>
-                                            <li><a href="product-sidebar.html">محصول با نوار کناری</a></li>
-                                            <li><a href="product-grouped.html">محصول گروهبندی شده</a></li>
-                                            <li><a href="variable-product.html">محصول متغیر</a></li>
-                                            <li><a href="product-countdown.html">محصول شمارنده</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                            <li>
+                                <a asp-area="" asp-controller="Product" asp-action="FilterProducts">فروشگاه</a>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="#">بلاگ</a>
-                                <ul class="sub-menu">
-                                    <li><a href="blog.html">بلاگ</a></li>
-                                    <li><a href="blog-details.html">جزئیات مطلب بلاگ</a></li>
-                                    <li><a href="blog-fullwidth.html">بلاگ تمام عرض</a></li>
-                                    <li><a href="blog-sidebar.html">بلاگ نوار کناری راست</a></li>
-                                    <li><a href="blog-no-sidebar.html">بلاگ بدون نوار کناری</a></li>
-                                </ul>
-
+                                <a asp-controller="Home" asp-action="AboutUs">درباره ما</a>
                             </li>
                             <li class="menu-item-has-children">
-                                <a href="#">صفحات </a>
-                                <ul class="sub-menu">
-                                    <li><a href="about.html">درباره ما</a></li>
-                                    <li><a href="services.html">خدمات</a></li>
-                                    <li><a href="privacy-policy.html">سیاست حریم خصوصی</a></li>
-                                    <li><a href="faq.html">سوالات متداول</a></li>
-                                    <li><a href="contact.html">تماس</a></li>
-                                    <li><a href="login.html">ورود</a></li>
-                                    <li><a href="404.html">خطای 404</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children">
-                                <a href="my-account.html">حساب کاربری</a>
-                            </li>
-                            <li class="menu-item-has-children">
-                                <a asp-area="" asp-controller="home" asp-action="AboutUs">درباره ما</a>
-                            </li>
-                            <li class="menu-item-has-children">
-                                <a asp-area="" asp-controller="home" asp-action="ContactUs"> تماس با ما</a>
+                                <a asp-controller="Home" asp-action="ContactUs"> تماس با ما</a>
                             </li>
                         </ul>
                     </div>
@@ -255,7 +196,7 @@
                             else
                             {
                                 <ul>
-                                    <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard">  @user.GetUserShowName()، خوش آمدید  </a></li>
+                                    <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @user.GetUserShowName()، خوش آمدید </a></li>
                                     <li><a asp-controller="Account" asp-action="LogOut"> خروج </a></li>
                                 </ul>
                             }
@@ -378,144 +319,89 @@
                     <div class="col-lg-3 col-md-12">
                         <div class="categories_menu">
                             <div class="categories_title">
-                                <h2 class="categori_toggle">دسته‌بندی ها</h2>
+                                <h2 class="categori_toggle">دسته ‌بندی ها</h2>
                             </div>
                             <div class="categories_menu_toggle">
-                                @if (categories != null && categories.Any())
-                                {
-                                    <ul>
+                                <ul>
+                                    @if (categories != null && categories.Any())
+                                    {
                                         @foreach (var category in categories.Where(s => s.ParentId == null))
                                         {
-
-                                            <li class="menu_item_children">
-                                                <a href="#">@category.Title <i class="fa fa-angle-left"></i></a>
-                                                @if (categories.Any(s => s.ParentId == category.Id))
-                                                {
+                                            if (categories.Any(s => s.ParentId == category.Id))
+                                            {
+                                                <li class="menu_item_children">
+                                                    <a href="#">@category.Title <i class="fa fa-angle-left"></i></a>
                                                     <ul class="categories_mega_menu">
                                                         @foreach (var subCategory in categories.Where(s => s.ParentId == category.Id))
                                                         {
                                                             <li class="menu_item_children">
-                                                                <a href="#">@subCategory.Title</a>
+                                                                <a asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-FilterByCategory="@subCategory.UrlName">@subCategory.Title</a>
                                                                 @if (categories.Any(s => s.ParentId == subCategory.Id))
                                                                 {
                                                                     <ul class="categorie_sub_menu">
                                                                         @foreach (var secondSubCategory in categories.Where(s => s.ParentId == subCategory.Id))
                                                                         {
-                                                                            <li><a href="">@secondSubCategory.Title</a></li>
+                                                                            <li>
+                                                                                <a asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-FilterByCategory="@secondSubCategory.UrlName">@secondSubCategory.Title</a>
+                                                                            </li>
                                                                         }
                                                                     </ul>
                                                                 }
                                                             </li>
                                                         }
                                                     </ul>
-                                                }
-                                            </li>
+                                                </li>
+                                            }
                                         }
-                                    </ul>
-                                }
+                                    }
+                                </ul>
                             </div>
                         </div>
                     </div>
-                        <div class="col-lg-9 col-md-12">
-                            <div class="main_menu menu_position">
-                                <nav>
-                                    <ul>
-                                        <li>
-                                            <a class="active" href="index.html">خانه<i class="fa fa-angle-down"></i></a>
-                                            <ul class="sub_menu">
-                                                <li><a href="index.html">خانه فروشگاه 1</a></li>
-                                                <li><a href="index-2.html">خانه فروشگاه 2</a></li>
-                                                <li><a href="index-3.html">خانه فروشگاه 3</a></li>
-                                                <li><a href="index-4.html">خانه فروشگاه 4</a></li>
-                                                <li><a href="index-5.html">خانه فروشگاه 5</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="mega_items">
-                                            <a href="shop.html">فروشگاه<i class="fa fa-angle-down"></i></a>
-                                            <div class="mega_menu">
-                                                <ul class="mega_menu_inner">
-                                                    <li>
-                                                        <a href="#">طرح های فروشگاه</a>
-                                                        <ul>
-                                                            <li><a href="shop-fullwidth.html">تمام عرض</a></li>
-                                                            <li><a href="shop-fullwidth-list.html">تمام عرض لیست</a></li>
-                                                            <li><a href="shop-left-sidebar.html">نوار کناری چپ </a></li>
-                                                            <li><a href="shop-left-sidebar-list.html"> نوار کناری چپ لیست</a></li>
-                                                            <li><a href="shop-list.html">نمایش لیست</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">سایر صفحات</a>
-                                                        <ul>
-                                                            <li><a href="cart.html">سبد خرید</a></li>
-                                                            <li><a href="wishlist.html">لیست علاقه‌مندی‌ها</a></li>
-                                                            <li><a href="checkout.html">پرداخت</a></li>
-                                                            <li><a href="my-account.html">حساب کاربری</a></li>
-                                                            <li><a href="404.html">خطای 404</a></li>
-                                                        </ul>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">انواع محصول</a>
-                                                        <ul>
-                                                            <li><a href="product-details.html">جزئیات محصول</a></li>
-                                                            <li><a href="product-sidebar.html">محصول با نوار کناری</a></li>
-                                                            <li><a href="product-grouped.html">محصول گروهبندی شده</a></li>
-                                                            <li><a href="variable-product.html">محصول متغیر</a></li>
-                                                            <li><a href="product-countdown.html">محصول شمارنده</a></li>
+                    <div class="col-lg-9 col-md-12">
+                        <div class="main_menu menu_position">
+                            <nav>
+                                <ul>
+                                    <li>
+                                        <a class="active" href="/">خانه<i class="fa fa-angle-down"></i></a>
+                                    </li>
+                                    <li class="mega_items">
+                                        <a asp-area="" asp-controller="Product" asp-action="FilterProducts">محصولات</a>
 
-                                                        </ul>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">ابزارهای کامپیوتر</a>
-                                                        <ul>
-                                                            <li><a href="shop.html">کابل و اتصال دهنده ها</a></li>
-                                                            <li><a href="shop-list.html">تبلت های گرافیکی</a></li>
-                                                            <li><a href="shop-fullwidth.html">پرینتر ها، جوهر و تونر</a></li>
-                                                            <li><a href="shop-fullwidth-list.html">تبلت های دست دوم</a></li>
-                                                            <li><a href="shop-left-sidebar.html">درایو های نوری</a></li>
+                                    </li>
+                                    <li>
+                                        <a href="blog.html">بلاگ<i class="fa fa-angle-down"></i></a>
+                                        <ul class="sub_menu pages">
+                                            <li><a href="blog-details.html">جزئیات مطلب بلاگ</a></li>
+                                            <li><a href="blog-fullwidth.html">بلاگ تمام عرض</a></li>
+                                            <li><a href="blog-sidebar.html">بلاگ نوار کناری راست</a></li>
+                                            <li><a href="blog-no-sidebar.html">بلاگ بدون نوار کناری</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">صفحات <i class="fa fa-angle-down"></i></a>
+                                        <ul class="sub_menu pages">
+                                            <li><a asp-controller="Home" asp-action="AboutUs">درباره ما</a></li>
+                                            <li><a href="services.html">خدمات</a></li>
+                                            <li><a href="privacy-policy.html">سیاست حریم خصوصی</a></li>
+                                            <li><a href="faq.html">سوالات متداول</a></li>
+                                            <li><a href="contact.html">تماس</a></li>
+                                            <li><a href="login.html">ورود</a></li>
+                                            <li><a href="404.html">خطای 404</a></li>
+                                        </ul>
+                                    </li>
 
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <a href="blog.html">بلاگ<i class="fa fa-angle-down"></i></a>
-                                            <ul class="sub_menu pages">
-                                                <li><a href="blog-details.html">جزئیات مطلب بلاگ</a></li>
-                                                <li><a href="blog-fullwidth.html">بلاگ تمام عرض</a></li>
-                                                <li><a href="blog-sidebar.html">بلاگ نوار کناری راست</a></li>
-                                                <li><a href="blog-no-sidebar.html">بلاگ بدون نوار کناری</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">صفحات <i class="fa fa-angle-down"></i></a>
-                                            <ul class="sub_menu pages">
-                                                <li><a href="about.html">درباره ما</a></li>
-                                                <li><a href="services.html">خدمات</a></li>
-                                                <li><a href="privacy-policy.html">سیاست حریم خصوصی</a></li>
-                                                <li><a href="faq.html">سوالات متداول</a></li>
-                                                <li><a href="contact.html">تماس</a></li>
-                                                <li><a href="login.html">ورود</a></li>
-                                                <li><a href="404.html">خطای 404</a></li>
-                                            </ul>
-                                        </li>
-
-                                        <li class="menu-item-has-children">
-                                            <a asp-area="" asp-controller="home" asp-action="AboutUs">درباره ما</a>
-                                        </li>
-                                        <li class="menu-item-has-children">
-                                            <a asp-area="" asp-controller="home" asp-action="ContactUs"> تماس با ما</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
+                                    <li><a asp-controller="Home" asp-action="AboutUs">درباره ما</a></li>
+                                    <li><a asp-controller="Home" asp-action="ContactUs"> تماس با ما</a></li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--header bottom end-->
         </div>
+        <!--header bottom end-->
+    </div>
 </header>
 <!--header area end-->
 <!--sticky header area start-->
@@ -533,63 +419,10 @@
                         <nav>
                             <ul>
                                 <li>
-                                    <a class="active" href="index.html">خانه<i class="fa fa-angle-down"></i></a>
-                                    <ul class="sub_menu">
-                                        <li><a href="index.html">خانه فروشگاه 1</a></li>
-                                        <li><a href="index-2.html">خانه فروشگاه 2</a></li>
-                                        <li><a href="index-3.html">خانه فروشگاه 3</a></li>
-                                        <li><a href="index-4.html">خانه فروشگاه 4</a></li>
-                                        <li><a href="index-5.html">خانه فروشگاه 5</a></li>
-                                    </ul>
+                                    <a class="active" href="/">خانه</a>
                                 </li>
                                 <li class="mega_items">
-                                    <a href="shop.html">فروشگاه<i class="fa fa-angle-down"></i></a>
-                                    <div class="mega_menu">
-                                        <ul class="mega_menu_inner">
-                                            <li>
-                                                <a href="#">طرح های فروشگاه</a>
-                                                <ul>
-                                                    <li><a href="shop-fullwidth.html">تمام عرض</a></li>
-                                                    <li><a href="shop-fullwidth-list.html">تمام عرض لیست</a></li>
-                                                    <li><a href="shop-left-sidebar.html">نوار کناری چپ </a></li>
-                                                    <li><a href="shop-left-sidebar-list.html"> نوار کناری چپ لیست</a></li>
-                                                    <li><a href="shop-list.html">نمایش لیست</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="#">سایر صفحات</a>
-                                                <ul>
-                                                    <li><a href="cart.html">سبد خرید</a></li>
-                                                    <li><a href="wishlist.html">لیست علاقه‌مندی‌ها</a></li>
-                                                    <li><a href="checkout.html">پرداخت</a></li>
-                                                    <li><a href="my-account.html">حساب کاربری</a></li>
-                                                    <li><a href="404.html">خطای 404</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="#">انواع محصول</a>
-                                                <ul>
-                                                    <li><a href="product-details.html">جزئیات محصول</a></li>
-                                                    <li><a href="product-sidebar.html">محصول با نوار کناری</a></li>
-                                                    <li><a href="product-grouped.html">محصول گروهبندی شده</a></li>
-                                                    <li><a href="variable-product.html">محصول متغیر</a></li>
-                                                    <li><a href="product-countdown.html">محصول شمارنده</a></li>
-
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="#">ابزارهای کامپیوتر</a>
-                                                <ul>
-                                                    <li><a href="shop.html">کابل و اتصال دهنده ها</a></li>
-                                                    <li><a href="shop-list.html">تبلت های گرافیکی</a></li>
-                                                    <li><a href="shop-fullwidth.html">پرینتر ها، جوهر و تونر</a></li>
-                                                    <li><a href="shop-fullwidth-list.html">تبلت های دست دوم</a></li>
-                                                    <li><a href="shop-left-sidebar.html">درایو های نوری</a></li>
-
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <a asp-area="" asp-controller="Product" asp-action="FilterProducts">فروشگاه</a>
                                 </li>
                                 <li>
                                     <a href="blog.html">بلاگ<i class="fa fa-angle-down"></i></a>
@@ -613,8 +446,8 @@
                                     </ul>
                                 </li>
 
-                                <li><a asp-area="" asp-controller="home" asp-action="AboutUs">درباره ما</a></li>
-                                <li><a asp-area="" asp-controller="home" asp-action="ContactUs"> تماس با ما</a></li>
+                                <li><a asp-controller="Home" asp-action="AboutUs">درباره ما</a>></li>
+                                <li><a asp-controller="Home" asp-action="ContactUs"> تماس با ما</a></li>
                             </ul>
                         </nav>
                     </div>
