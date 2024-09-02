@@ -48,6 +48,7 @@
                                                 foreach (var color in Model.ProductColors)
                                                 {
                                                     <input type="hidden" value="@color.ColorName" name="ProductColors[@index].ColorName" color-name-hidden-input="@color.ColorName-@color.Price">
+                                                    <input type="hidden" value="@color.ColorCode" name="ProductColors[@index].ColorCode" color-code-hidden-input="@color.ColorName-@color.Price">
                                                     <input type="hidden" value="@color.Price" name="ProductColors[@index].Price" color-price-hidden-input="@color.ColorName-@color.Price">
                                                     index += 1;
                                                 }
@@ -155,7 +156,6 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="list_of_product_colors">
-
                                                         @if (Model.ProductColors != null && Model.ProductColors.Any())
                                                         {
                                                             foreach (var color in Model.ProductColors)

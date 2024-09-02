@@ -23,6 +23,7 @@ namespace Junko.Web.Controllers
         public async Task<IActionResult> FilterProducts(FilterProductDTO filter)
         {
             filter.TakeEntity = 2;
+            filter.FilterProductState = FilterProductState.Accepted;
             var products = await _productService.FilterProducts(filter);
 
             ViewBag.ProductCategories = await _productService.GetAllActiveProductCategories();

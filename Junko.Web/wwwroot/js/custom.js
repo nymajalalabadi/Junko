@@ -110,20 +110,21 @@ $('#add_color_button').on('click', function (e)
         if (isExistsSelectedColor.length === 0)
         {
             var colorNameNode =
-                `<input type="hidden" value="${colorName}"  name="ProductColors[${index}].ColorName" color-name-hidden-input="${colorName}-${colorPrice}">`;
+                `<input type="hidden" value="${colorName}" name="ProductColors[${index}].ColorName" color-name-hidden-input="${colorName}-${colorPrice}">`;
 
             var colorCodeNode =
-                `<input type="hidden" value="${colorCode}"  name="ProductColors[${index}].ColorCode" color-Code-hidden-input="${colorName}-${colorPrice}">`;
+                `<input type="hidden" value="${colorCode}"  name="ProductColors[${index}].ColorCode" color-code-hidden-input="${colorName}-${colorPrice}" >`;
+
 
             var colorPriceNode =
-                `<input type="hidden" value="${colorPrice}"  name="ProductColors[${index}].Price"color-price-hidden-input="${colorName}-${colorPrice}">`;
+                `<input type="hidden" value="${colorPrice}" name="ProductColors[${index}].Price" color-price-hidden-input="${colorName}-${colorPrice}">`;
 
             $('#create_product_form').append(colorNameNode);
             $('#create_product_form').append(colorCodeNode);
             $('#create_product_form').append(colorPriceNode);
 
             var colorTableNode =
-                `<tr color-table-item="${colorName}-${colorPrice}"> <td> ${colorName} </td>  <td> ${colorPrice} </td> <td> <div style="border-radius: 50%;width: 40px; height: 40px; background-color:${colorCode}"></div> </td>  <td> <a class="btn btn-danger text-white" onclick="removeProductColor('${colorName}-${colorPrice}')">حذف</a> </td>  </tr>`;
+                `<tr color-table-item="${colorName}-${colorPrice}"> <td> ${colorName} </td> <td> <div style="border-radius: 50%;width: 40px; height: 40px; background-color:${colorCode}"></div> </td>   <td> ${colorPrice} </td> <td> <a class="btn btn-danger text-white" onclick="removeProductColor('${colorName}-${colorPrice}')">حذف</a> </td>  </tr>`;
 
             $('#list_of_product_colors').append(colorTableNode);
 
@@ -146,8 +147,8 @@ $('#add_color_button').on('click', function (e)
 function removeProductColor(index)
 {
     $('[color-name-hidden-input="' + index + '"]').remove();
-    $('[color-code-hidden-input="' + index + '"]').remove();
     $('[color-price-hidden-input="' + index + '"]').remove();
+    $('[color-code-hidden-input="' + index + '"]').remove();
     $('[color-table-item="' + index + '"]').remove();
 
     reOrderProductColorHiddenInputs();
@@ -165,8 +166,11 @@ function reOrderProductColorHiddenInputs()
 
         var hiddenPrice = $('[color-price-hidden-input="' + colorPrice + '"]');
 
+        var hiddenCode = $('[color-code-hidden-input="' + hiddenPrice + '"]');
+
         $(hiddenColor).attr('name', 'ProductColors[' + index + '].ColorName')
         $(hiddenPrice).attr('name', 'ProductColors[' + index + '].Price');
+        $(hiddenCode).attr('name', 'ProductColors[' + index + '].ColorCode');
     });
 }
 
