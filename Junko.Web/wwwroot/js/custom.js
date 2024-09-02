@@ -250,3 +250,13 @@ function reOrderProductSizeHiddenInputs()
 }
 
 ///////create Product
+
+////product color
+
+function changeProductPriceBasedOnColor(priceOfColor, colorName)
+{
+    var basePrice = parseInt($('#ProductBasePrice').val(), 0);
+    $('.current_price').html((basePrice + priceOfColor) + ' تومان' + ' ( ' + colorName + ' )');
+}
+
+////product color

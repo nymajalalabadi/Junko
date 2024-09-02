@@ -74,7 +74,15 @@
 
                         </div>
                         <div class="price_box">
-                            <span class="current_price">@Model.Price.ToString("#,0 تومان")</span>
+                            @if (Model.ProductColors != null && Model.ProductColors.Any())
+                            {
+                                var firstColor = Model.ProductColors.FirstOrDefault();
+                                <span class="current_price">@((Model.Price + firstColor!.Price)) @(firstColor.ColorName)</span>
+                            }
+                            else
+                            {
+                                <span class="current_price"> @Model.Price.ToString("#,0 تومان") </span>
+                            }
                             @* <span class="old_price">80,000 تومان</span> *@
 
                         </div>
@@ -83,6 +91,7 @@
                                 @Model.ShortDescription
                             </p>
                         </div>
+                        <input type="hidden" name="product_price" value="@Model.Price" id="ProductBasePrice" />
                         @if (Model.ProductColors != null && Model.ProductColors.Any())
                         {
                             <div class="product_variant color">
@@ -92,7 +101,7 @@
                                     @foreach (var color in Model.ProductColors)
                                     {
                                         <li style="background: @color.ColorCode">
-                                            <a href="#"></a>
+                                            <a onclick="changeProductPriceBasedOnColor(@color.Price, '@color.ColorName')"></a>
                                         </li>
                                     }
                                 </ul>
