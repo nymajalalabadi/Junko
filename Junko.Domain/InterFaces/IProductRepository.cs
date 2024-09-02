@@ -66,6 +66,15 @@ namespace Junko.Domain.InterFaces
 
         #endregion
 
+        #region Product Feature
+
+        Task AddRangeProductFeatures(List<ProductFeature> productFeatures);
+
+        void RemoveRangeProductFeatures(List<ProductFeature> productFeatures);
+
+        Task<List<ProductFeature>> GetProductFeaturesByProductId(long productId);
+
+        #endregion
 
         Task SaveChanges();
 

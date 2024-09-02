@@ -203,6 +203,30 @@ namespace Junko.DataLayer.Repositories
 
         #endregion
 
+        #region Product Feature
+
+        public async Task AddRangeProductFeatures(List<ProductFeature> productFeatures)
+        {
+            foreach (var feature in productFeatures)
+            {
+                await _context.ProductFeatures.AddAsync(feature);
+            }
+        }
+
+        public void RemoveRangeProductFeatures(List<ProductFeature> productFeatures)
+        {
+            foreach(var feature in productFeatures)
+            {
+                _context.ProductFeatures.Remove(feature);
+            }
+        }
+
+        public async Task<List<ProductFeature>> GetProductFeaturesByProductId(long productId)
+        {
+            return await _context.ProductFeatures.Where(f => f.ProductId.Equals(productId)).ToListAsync();
+        }
+
+        #endregion
 
         public async Task SaveChanges()
         {

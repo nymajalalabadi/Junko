@@ -34,6 +34,8 @@ namespace Junko.Domain.ViewModels.Products
 
         public List<CreateProductSizeDTO> ProductSizes { get; set; }
 
+        public List<CreateProductFeatureDTO> ProductFeatures { get; set; }
+
         public List<long> SelectedCategories { get; set; }
     }
 

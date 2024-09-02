@@ -43,6 +43,8 @@ namespace Junko.Domain.ViewModels.Products
 
         public List<ProductSize> ProductSizes { get; set; }
 
+        public List<ProductFeature> ProductFeatures { get; set; }
+
         public List<ProductCategory> ProductCategories { get; set; }
     }
 

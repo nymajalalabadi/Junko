@@ -31,6 +31,7 @@ namespace Junko.Application.Services.Interfaces
         Task<Product?> GetProductBySellerOwnerId(long productId, long userId);
 
         Task<ProductDetailDTO?> GetProductDetailById(long productId);
+
         #endregion
 
         #region product gallery
@@ -52,6 +53,14 @@ namespace Junko.Application.Services.Interfaces
         Task<List<ProductCategory>> GetAllProductCategoriesByParentId(long parentId);
 
         Task<List<ProductCategory>> GetAllActiveProductCategories();
+
+        #endregion
+
+        #region product feature
+
+        Task CreateProductFeatures(List<CreateProductFeatureDTO> features);
+
+        Task RemoveAllProductFeatures(long productId);
 
         #endregion
 
