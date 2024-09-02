@@ -83,30 +83,34 @@
                                 @Model.ShortDescription
                             </p>
                         </div>
-                        <div class="product_variant color">
-                            <h3>گزینه های در دسترس</h3>
-                            <label>رنگ</label>
-                            <ul>
-                                <li class="color1">
-                                    <a href="#"></a>
-                                </li>
-                                <li class="color2">
-                                    <a href="#"></a>
-                                </li>
-                                <li class="color3">
-                                    <a href="#"></a>
-                                </li>
-                                <li class="color4">
-                                    <a href="#"></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="product_variant quantity">
-                            <label>تعداد</label>
-                            <input min="1" max="100" value="1" type="number">
-                            <button class="button" type="submit">افزودن به سبد</button>
-
-                        </div>
+                        @if (Model.ProductColors != null && Model.ProductColors.Any())
+                        {
+                            <div class="product_variant color">
+                                <h3>گزینه های در دسترس</h3>
+                                <label>رنگ</label>
+                                <ul>
+                                    @foreach (var color in Model.ProductColors)
+                                    {
+                                        <li style="background: @color.ColorCode">
+                                            <a href="#"></a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                        @if (Model.ProductSizes != null && Model.ProductSizes.Any())
+                        {
+                            <div class="product_variant quantity">
+                                <label>سایز :</label>
+                                <select >
+                                <option> لطفا سایز خور را انتخاب کنید </option>
+                                @foreach (var size in Model.ProductSizes)
+                                {
+                                    <option value="@size.Size">@size.Size</option>
+                                }
+                                </select>
+                            </div>
+                        }
                         <div class=" product_d_action">
                             <ul>
                                 <li><a href="#" title="افزودن به علاقه‌مندی‌ها">+ افزودن به علاقه‌مندی‌ها</a></li>
