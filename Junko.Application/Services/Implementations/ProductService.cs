@@ -182,6 +182,7 @@ namespace Junko.Application.Services.Implementations
                     productSelectedColors.Add(new ProductColor()
                     {
                         ColorName = color.ColorName,
+                        ColorCode = color.ColorCode,
                         Price = color.Price,
                         ProductId = newProduct.Id
                     });
@@ -275,6 +276,7 @@ namespace Junko.Application.Services.Implementations
                 {
                     Price = c.Price,
                     ColorName = c.ColorName,
+                    ColorCode = c.ColorCode,
                 }).ToList(),
                 ProductSizes = product.ProductSizes.Select(s => new CreateProductSizeDTO()
                 {
@@ -348,6 +350,7 @@ namespace Junko.Application.Services.Implementations
                 productSelectedColors.Add(new ProductColor()
                 {
                     ColorName = color.ColorName,
+                    ColorCode = color.ColorCode,
                     Price = color.Price,
                     ProductId = currentProduct.Id
                 });

@@ -135,6 +135,9 @@
                                             <label>رنگ محصول</label>
                                             <input type="text" placeholder="رنگ محصول" id="product_color_name_input">
 
+                                            <label>رنگ کد محصول</label>
+                                            <input type="color" placeholder="رنگ کد محصول" id="product_color_code_input">
+
                                             <label>قیمت مضاف رنگ محصول</label>
                                             <input type="number" placeholder="قیمت مضاف رنگ محصول" id="product_color_price_input">
 
@@ -146,6 +149,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>نام رنگ</th>
+                                                            <th>کد رنگ</th>
                                                             <th>قیمت</th>
                                                             <th>دستورات</th>
                                                         </tr>
@@ -160,6 +164,9 @@
                                                                     <td>
                                                                         @color.ColorName 
                                                                     </td>
+                                                                    <td>
+                                                                        <div style="border-radius: 50%;width: 40px; height: 40px; background-color:@color.ColorCode"></div>
+                                                                    </td>
                                                                     <td> 
                                                                         @color.Price 
                                                                     </td>
@@ -169,7 +176,6 @@
                                                                 </tr>
                                                             }
                                                         }
-
                                                     </tbody>
                                                 </table>
                                             </div>

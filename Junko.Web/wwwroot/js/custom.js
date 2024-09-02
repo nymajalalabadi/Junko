@@ -97,9 +97,10 @@ $('#add_color_button').on('click', function (e)
     e.preventDefault();
 
     var colorName = $('#product_color_name_input').val();
+    var colorCode = $('#product_color_code_input').val();
     var colorPrice = $('#product_color_price_input').val();
 
-    if (colorName !== '' && colorPrice !== '')
+    if (colorName !== '' && colorPrice !== '' && colorCode !== '')
     {
         var currentColorsCount = $('#list_of_product_colors tr');
         var index = currentColorsCount.length;
@@ -111,19 +112,23 @@ $('#add_color_button').on('click', function (e)
             var colorNameNode =
                 `<input type="hidden" value="${colorName}"  name="ProductColors[${index}].ColorName" color-name-hidden-input="${colorName}-${colorPrice}">`;
 
+            var colorCodeNode =
+                `<input type="hidden" value="${colorCode}"  name="ProductColors[${index}].ColorCode" color-Code-hidden-input="${colorName}-${colorPrice}">`;
+
             var colorPriceNode =
                 `<input type="hidden" value="${colorPrice}"  name="ProductColors[${index}].Price"color-price-hidden-input="${colorName}-${colorPrice}">`;
 
             $('#create_product_form').append(colorNameNode);
+            $('#create_product_form').append(colorCodeNode);
             $('#create_product_form').append(colorPriceNode);
 
             var colorTableNode =
-                `<tr color-table-item="${colorName}-${colorPrice}"> <td> ${colorName} </td>  <td> ${colorPrice} </td>  <td> 
-            <a class="btn btn-danger text-white" onclick="removeProductColor('${colorName}-${colorPrice}')">حذف</a> </td>  </tr>`;
+                `<tr color-table-item="${colorName}-${colorPrice}"> <td> ${colorName} </td>  <td> ${colorPrice} </td> <td> <div style="border-radius: 50%;width: 40px; height: 40px; background-color:${colorCode}"></div> </td>  <td> <a class="btn btn-danger text-white" onclick="removeProductColor('${colorName}-${colorPrice}')">حذف</a> </td>  </tr>`;
 
             $('#list_of_product_colors').append(colorTableNode);
 
             $('#product_color_name_input').val('');
+            $('#product_color_code_input').val('');
             $('#product_color_price_input').val('');
         }
         else
@@ -141,6 +146,7 @@ $('#add_color_button').on('click', function (e)
 function removeProductColor(index)
 {
     $('[color-name-hidden-input="' + index + '"]').remove();
+    $('[color-code-hidden-input="' + index + '"]').remove();
     $('[color-price-hidden-input="' + index + '"]').remove();
     $('[color-table-item="' + index + '"]').remove();
 
