@@ -65,6 +65,17 @@
                                                 }
                                             }
 
+                                            @if (Model.ProductFeatures != null && Model.ProductFeatures.Any())
+                                            {
+                                                var index = 0;
+                                                foreach (var feature in Model.ProductFeatures)
+                                                {
+                                                    <input type="hidden" value="@feature.FeatureTitle" name="ProductFeatures[@index].FeatureTitle" feature-title-hidden-input="@feature.FeatureTitle-@feature.FeatureValue">
+                                                    <input type="hidden" value="@feature.FeatureValue" name="ProductFeatures[@index].FeatureValue" feature-value-hidden-input="@feature.FeatureTitle-@feature.FeatureValue">
+                                                    index += 1;
+                                                }
+                                            }
+
                                             <label>نام محصول</label>
                                             <input asp-for="Title">
                                             <span class="text-danger" asp-validation-for="Title"></span>
@@ -212,6 +223,50 @@
                                                                     </td>
                                                                     <td>
                                                                         <a class="btn btn-danger text-white" onclick="removeProductSize('@size.Size-@size.Count')">حذف</a>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <hr />
+
+                                            <label>ویژگی محصول</label>
+                                            <input type="text" placeholder="ویژگی محصول" id="product_feature_title_input">
+
+                                            <label> مقدار ویژگی محصول</label>
+                                            <input type="text" placeholder="مقدار ویژگی محصول" id="product_feature_value_input">
+
+                                            <button class="btn btn-success" id="add_feature_button">افزودن ویژگی</button>
+
+                                            <br />
+                                            <br />
+
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>نام ویژگی</th>
+                                                            <th>مقدار ویژگی</th>
+                                                            <th>دستورات</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="list_of_product_features">
+                                                        @if (Model.ProductFeatures != null && Model.ProductFeatures.Any())
+                                                        {
+                                                            foreach (var feature in Model.ProductFeatures)
+                                                            {
+                                                                <tr feature-table-item="@feature.FeatureTitle-@feature.FeatureValue">
+                                                                    <td>
+                                                                        @feature.FeatureTitle
+                                                                    </td>
+                                                                    <td>
+                                                                        @feature.FeatureValue
+                                                                    </td>
+                                                                    <td>
+                                                                        <a class="btn btn-danger text-white" onclick="removeProductFeature('@feature.FeatureValue-@feature.FeatureTitle')">حذف</a>
                                                                     </td>
                                                                 </tr>
                                                             }
