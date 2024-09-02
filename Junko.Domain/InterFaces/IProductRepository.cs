@@ -72,6 +72,8 @@ namespace Junko.Domain.InterFaces
 
         void RemoveRangeProductFeatures(List<ProductFeature> productFeatures);
 
+        Task RemoveAllProductSelectedFeatures(long productId);
+
         Task<List<ProductFeature>> GetProductFeaturesByProductId(long productId);
 
         #endregion

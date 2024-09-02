@@ -212,6 +212,25 @@ namespace Junko.Application.Services.Implementations
 
                 #endregion
 
+                #region create product feature
+
+                var productFeatures = new List<ProductFeature>();
+
+                foreach (var feature in product.ProductFeatures)
+                {
+                    productFeatures.Add(new ProductFeature()
+                    {
+                        FeatureTitle = feature.FeatureTitle,
+                        FeatureValue = feature.FeatureValue,
+                        ProductId = newProduct.Id
+                    });
+                }
+
+                await _productRepository.AddRangeProductFeatures(productFeatures);
+                await _productRepository.SaveChanges();
+
+                #endregion
+
                 return CreateProductResult.Success;
             }
 
@@ -282,6 +301,11 @@ namespace Junko.Application.Services.Implementations
                 {
                     Size = s.Size,
                     Count = s.Count
+                }).ToList(),
+                ProductFeatures = product.ProductFeatures.Select(s => new CreateProductFeatureDTO()
+                {
+                    FeatureTitle = s.FeatureTitle,
+                    FeatureValue = s.FeatureValue
                 }).ToList(),
                 SelectedCategories = product.ProductSelectedCategories.Where(s => s.ProductId == product.Id)
                 .Select(c => c.ProductCategoryId).ToList(),
@@ -378,6 +402,27 @@ namespace Junko.Application.Services.Implementations
             }
 
             await _productRepository.AddRangeProductSizes(productSelectedSizes);
+            await _productRepository.SaveChanges();
+
+            #endregion
+
+            #region feature product
+
+            await _productRepository.RemoveAllProductSelectedFeatures(currentProduct.Id);
+
+            var productSelectedFeatures = new List<ProductFeature>();
+
+            foreach (var feature in product.ProductFeatures)
+            {
+                productSelectedFeatures.Add(new ProductFeature()
+                {
+                    FeatureTitle = feature.FeatureTitle,
+                    FeatureValue = feature.FeatureValue,
+                    ProductId = currentProduct.Id
+                });
+            }
+
+            await _productRepository.AddRangeProductFeatures(productSelectedFeatures);
             await _productRepository.SaveChanges();
 
             #endregion

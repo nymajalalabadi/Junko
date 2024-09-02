@@ -68,6 +68,7 @@ namespace Junko.DataLayer.Repositories
                 .Include (p => p.Seller)
                 .Include (p => p.ProductColors)
                 .Include (p => p.ProductSizes)
+                .Include (p => p.ProductFeatures)
                 .Include(p => p.ProductSelectedCategories).ThenInclude(p => p.ProductCategory)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
@@ -218,6 +219,17 @@ namespace Junko.DataLayer.Repositories
             foreach(var feature in productFeatures)
             {
                 _context.ProductFeatures.Remove(feature);
+            }
+        }
+
+        public async Task RemoveAllProductSelectedFeatures(long productId)
+        {
+            var productSelectedFeatures = await _context.ProductFeatures.AsQueryable()
+                .Where(s => s.ProductId == productId).ToListAsync();
+
+            foreach (var productFeature in productSelectedFeatures)
+            {
+                _context.ProductFeatures.Remove(productFeature);
             }
         }
 

@@ -279,7 +279,7 @@ $('#add_feature_button').on('click', function (e)
                 `<tr feature-table-item="$${featureTitle}-${featureValue}"> <td> ${featureTitle} </td> <td> ${featureValue}  </td> <td>
             <a class="btn btn-danger text-white" onclick="removeProductFeature('${featureTitle}-${featureValue}')">حذف</a> </td>  </tr>`;
 
-            $('#list_of_product_features').append(sizeTableNode);
+            $('#list_of_product_features').append(featureTableNode);
 
 
             $('#product_feature_title_input').val('');
