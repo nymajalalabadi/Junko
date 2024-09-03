@@ -51,6 +51,7 @@ namespace Junko.DataLayer.Repositories
                 .Include(p => p.ProductColors)
                 .Include(p => p.ProductSizes)
                 .Include(p => p.ProductGalleries)
+                .Include(p => p.ProductFeatures)
                 .Include(p => p.ProductSelectedCategories).ThenInclude(s => s.ProductCategory)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }

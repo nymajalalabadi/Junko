@@ -456,6 +456,7 @@ namespace Junko.Application.Services.Implementations
                 ProductColors = product.ProductColors.ToList(),
                 ProductSizes = product.ProductSizes.ToList(),
                 ProductGalleries = product.ProductGalleries.ToList(),
+                ProductFeatures = product.ProductFeatures.ToList(),
                 ProductCategories = product.ProductSelectedCategories.Select(s => s.ProductCategory).ToList()
             };
         }
