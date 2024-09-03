@@ -50,6 +50,8 @@ namespace Junko.Web.Controllers
                 return NotFound();
             }
 
+            ViewData["RelatedProducts"] = await _productService.GetRelatedProducts(product.productId, product.SelectedCategorieIds);
+
             return View(product);
         }
 

@@ -11,6 +11,8 @@ namespace Junko.Domain.ViewModels.Products
 {
     public class ProductDetailDTO
     {
+        public long productId { get; set; }
+
         public long SellerId { get; set; }
 
         [Display(Name = "نام محصول")]
@@ -36,6 +38,8 @@ namespace Junko.Domain.ViewModels.Products
         public string Description { get; set; }
 
         public Seller Seller { get; set; }
+
+        public List<long> SelectedCategorieIds { get; set; }
 
         public List<ProductGallery> ProductGalleries { get; set; }
 

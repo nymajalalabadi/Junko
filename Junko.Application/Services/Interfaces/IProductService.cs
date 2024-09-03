@@ -32,6 +32,8 @@ namespace Junko.Application.Services.Interfaces
 
         Task<ProductDetailDTO?> GetProductDetailById(long productId);
 
+        Task<List<Product>> GetRelatedProducts(long productId, List<long> ProductCategoryId);
+
         #endregion
 
         #region product gallery

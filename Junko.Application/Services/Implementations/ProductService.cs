@@ -446,6 +446,7 @@ namespace Junko.Application.Services.Implementations
 
             return new ProductDetailDTO()
             {
+                productId = product.Id,
                 Title = product.Title,
                 Description = product.Description,
                 ShortDescription = product.ShortDescription,
@@ -453,12 +454,18 @@ namespace Junko.Application.Services.Implementations
                 Price = product.Price,
                 SellerId = product.SellerId,
                 Seller = product.Seller,
+                SelectedCategorieIds = product.ProductSelectedCategories.Select(s => s.ProductCategoryId).ToList(),
                 ProductColors = product.ProductColors.ToList(),
                 ProductSizes = product.ProductSizes.ToList(),
                 ProductGalleries = product.ProductGalleries.ToList(),
                 ProductFeatures = product.ProductFeatures.ToList(),
                 ProductCategories = product.ProductSelectedCategories.Select(s => s.ProductCategory).ToList()
             };
+        }
+
+        public async Task<List<Product>> GetRelatedProducts(long productId, List<long> ProductCategoryId)
+        {
+            return await _productRepository.GetRelatedProducts(productId, ProductCategoryId);
         }
 
         #endregion

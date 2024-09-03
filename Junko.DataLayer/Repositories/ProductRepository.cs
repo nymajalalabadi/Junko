@@ -74,6 +74,15 @@ namespace Junko.DataLayer.Repositories
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
+        public async Task<List<Product>> GetRelatedProducts(long productId, List<long> ProductCategoryId)
+        {
+            return await _context.Products.AsQueryable()
+                .Include(p => p.ProductSelectedCategories)
+                .Where(p => p.ProductSelectedCategories.Any(s => ProductCategoryId.Contains(s.ProductCategoryId)) 
+                && p.Id != productId && p.ProductAcceptanceState == ProductAcceptanceState.Accepted)
+                .ToListAsync();
+        }
+
         public void UpdateProduct(Product product)
         {
             _context.Products.Update(product);

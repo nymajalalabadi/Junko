@@ -18,6 +18,8 @@ namespace Junko.Domain.InterFaces
 
         Task<Product?> GetProductForEdit(long id);
 
+        Task<List<Product>> GetRelatedProducts(long productId , List<long> ProductCategoryId);
+
         void UpdateProduct(Product product);    
 
         Task AddProduct(Product product);
