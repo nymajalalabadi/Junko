@@ -56,14 +56,6 @@ namespace Junko.Application.Services.Interfaces
 
         #endregion
 
-        #region product feature
-
-        Task CreateProductFeatures(List<CreateProductFeatureDTO> features);
-
-        Task RemoveAllProductFeatures(long productId);
-
-        #endregion
-
         #endregion
     }
 }

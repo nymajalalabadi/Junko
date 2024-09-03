@@ -215,14 +215,6 @@ namespace Junko.DataLayer.Repositories
             }
         }
 
-        public void RemoveRangeProductFeatures(List<ProductFeature> productFeatures)
-        {
-            foreach(var feature in productFeatures)
-            {
-                _context.ProductFeatures.Remove(feature);
-            }
-        }
-
         public async Task RemoveAllProductSelectedFeatures(long productId)
         {
             var productSelectedFeatures = await _context.ProductFeatures.AsQueryable()

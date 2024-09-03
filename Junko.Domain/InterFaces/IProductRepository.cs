@@ -70,8 +70,6 @@ namespace Junko.Domain.InterFaces
 
         Task AddRangeProductFeatures(List<ProductFeature> productFeatures);
 
-        void RemoveRangeProductFeatures(List<ProductFeature> productFeatures);
-
         Task RemoveAllProductSelectedFeatures(long productId);
 
         Task<List<ProductFeature>> GetProductFeaturesByProductId(long productId);

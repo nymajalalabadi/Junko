@@ -576,38 +576,6 @@ namespace Junko.Application.Services.Implementations
 
         #endregion
 
-        #region product feature
-
-        public async Task CreateProductFeatures(List<CreateProductFeatureDTO> features)
-        {
-            var newFeatures = new List<ProductFeature>();
-
-            if (features.Any() && features != null)
-            {
-                foreach (var feature in features)
-                {
-                    newFeatures.Add(new ProductFeature()
-                    {
-                        FeatureValue = feature.FeatureValue,
-                        FeatureTitle = feature.FeatureTitle,
-                    });
-                }
-
-                await _productRepository.AddRangeProductFeatures(newFeatures);
-                await _productRepository.SaveChanges();
-            }
-
-        }
-
-        public async Task RemoveAllProductFeatures(long productId)
-        {
-            var productFeatures = await _productRepository.GetProductFeaturesByProductId(productId);
-
-            _productRepository.RemoveRangeProductFeatures(productFeatures);
-        }
-
-        #endregion
-
         #endregion
     }
 }
