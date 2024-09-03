@@ -234,16 +234,13 @@
                                             <hr />
 
                                             <label>ویژگی محصول</label>
-                                            <input type="text" placeholder="ویژگی محصول" id="product_feature_title_input">
-
+                                            <input type="text" placeholder="ویژگی محصول" id="product_feature_input">
                                             <label> مقدار ویژگی محصول</label>
                                             <input type="text" placeholder="مقدار ویژگی محصول" id="product_feature_value_input">
 
                                             <button class="btn btn-success" id="add_feature_button">افزودن ویژگی</button>
-
                                             <br />
                                             <br />
-
                                             <div class="table-responsive">
                                                 <table class="table">
                                                     <thead>
@@ -259,14 +256,10 @@
                                                             foreach (var feature in Model.ProductFeatures)
                                                             {
                                                                 <tr feature-table-item="@feature.FeatureTitle-@feature.FeatureValue">
+                                                                    <td> @feature.FeatureTitle </td>
+                                                                    <td> @feature.FeatureValue </td>
                                                                     <td>
-                                                                        @feature.FeatureTitle
-                                                                    </td>
-                                                                    <td>
-                                                                        @feature.FeatureValue
-                                                                    </td>
-                                                                    <td>
-                                                                        <a class="btn btn-danger text-white" onclick="removeProductFeature('@feature.FeatureValue-@feature.FeatureTitle')">حذف</a>
+                                                                        <a class="btn btn-danger text-white" onclick="removeProductFeature('@feature.FeatureTitle-@feature.FeatureValue')">حذف</a>
                                                                     </td>
                                                                 </tr>
                                                             }

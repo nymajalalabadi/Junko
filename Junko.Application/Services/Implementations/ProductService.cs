@@ -589,7 +589,6 @@ namespace Junko.Application.Services.Implementations
                     {
                         FeatureValue = feature.FeatureValue,
                         FeatureTitle = feature.FeatureTitle,
-                        ProductId = feature.ProductId,
                     });
                 }
 

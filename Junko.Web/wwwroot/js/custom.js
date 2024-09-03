@@ -81,34 +81,29 @@ $("[main_category_checkbox]").on('change', function (e) {
 
     var selectedCategoryId = $(this).attr('main_category_checkbox');
 
-    if (isChecked)
-    {
+    if (isChecked) {
         $('#sub_categories_' + selectedCategoryId).slideDown(300);
     }
-    else
-    {
+    else {
         $('#sub_categories_' + selectedCategoryId).slideUp(300);
         $('[parent-category-id="' + selectedCategoryId + '"]').prop('checked', false);
     }
 });
 
-$('#add_color_button').on('click', function (e)
-{
+$('#add_color_button').on('click', function (e) {
     e.preventDefault();
 
     var colorName = $('#product_color_name_input').val();
     var colorCode = $('#product_color_code_input').val();
     var colorPrice = $('#product_color_price_input').val();
 
-    if (colorName !== '' && colorPrice !== '' && colorCode !== '')
-    {
+    if (colorName !== '' && colorPrice !== '' && colorCode !== '') {
         var currentColorsCount = $('#list_of_product_colors tr');
         var index = currentColorsCount.length;
 
         var isExistsSelectedColor = $('[color-name-hidden-input][value="' + colorName + '"]');
 
-        if (isExistsSelectedColor.length === 0)
-        {
+        if (isExistsSelectedColor.length === 0) {
             var colorNameNode =
                 `<input type="hidden" value="${colorName}" name="ProductColors[${index}].ColorName" color-name-hidden-input="${colorName}-${colorPrice}">`;
 
@@ -132,20 +127,17 @@ $('#add_color_button').on('click', function (e)
             $('#product_color_code_input').val('');
             $('#product_color_price_input').val('');
         }
-        else
-        {
+        else {
             ShowMessage('اخطار', 'رنگ وارد شده تکراری می باشد', 'warning');
             $('#product_color_name_input').val('').focus();
         }
     }
-    else
-    {
+    else {
         ShowMessage('اخطار', 'لطفا نام رنگ و قیمت آن را به درستی وارد نمایید', 'warning');
     }
 });
 
-function removeProductColor(index)
-{
+function removeProductColor(index) {
     $('[color-name-hidden-input="' + index + '"]').remove();
     $('[color-price-hidden-input="' + index + '"]').remove();
     $('[color-code-hidden-input="' + index + '"]').remove();
@@ -154,12 +146,10 @@ function removeProductColor(index)
     reOrderProductColorHiddenInputs();
 }
 
-function reOrderProductColorHiddenInputs()
-{
+function reOrderProductColorHiddenInputs() {
     var hiddenColors = $('[color-name-hidden-input]');
 
-    $.each(hiddenColors, function (index, value)
-    {
+    $.each(hiddenColors, function (index, value) {
         var hiddenColor = $(value);
 
         var colorPrice = $(value).attr('color-name-hidden-input');
@@ -174,8 +164,7 @@ function reOrderProductColorHiddenInputs()
     });
 }
 
-$('#add_size_button').on('click', function (e)
-{
+$('#add_size_button').on('click', function (e) {
     e.preventDefault();
 
     var sizeName = $('#product_size_name_input').val();
@@ -184,12 +173,11 @@ $('#add_size_button').on('click', function (e)
     if (sizeName !== '' && countName !== '')
     {
         var currentSizesCount = $('#list_of_product_sizes tr');
-        var index = currentSizesCount.length; 
+        var index = currentSizesCount.length;
 
         var isExistsSelectedSize = $('[size-name-hidden-input][value="' + sizeName + '"]');
 
-        if (isExistsSelectedSize.length === 0)
-        {
+        if (isExistsSelectedSize.length === 0) {
             var sizeNameNode =
                 `<input type="hidden" value="${sizeName}" name="ProductSizes[${index}].Size" 
             size-name-hidden-input="${sizeName}-${countName}">`;
@@ -202,7 +190,7 @@ $('#add_size_button').on('click', function (e)
             $('#create_product_form').append(countNameNode);
 
             var sizeTableNode =
-                `<tr size-table-item="$${sizeName}-${countName}"> <td> ${sizeName} </td> <td> ${countName}  </td> <td> 
+                `<tr size-table-item="${sizeName}-${countName}"> <td> ${sizeName} </td> <td> ${countName}  </td> <td> 
             <a class="btn btn-danger text-white" onclick="removeProductSize('${sizeName}-${countName}')">حذف</a> </td>  </tr>`;
 
             $('#list_of_product_sizes').append(sizeTableNode);
@@ -211,20 +199,17 @@ $('#add_size_button').on('click', function (e)
             $('#product_size_name_input').val('');
             $('#product_count_name_input').val('');
         }
-        else
-        {
+        else {
             ShowMessage('اخطار', 'سایز وارد شده تکراری می باشد', 'warning');
             $('#product_size_name_input').val('').focus();
         }
     }
-    else
-    {
+    else {
         ShowMessage('اخطار', 'لطفا سایز را به درستی وارد نمایید', 'warning');
     }
 });
 
-function removeProductSize(index)
-{
+function removeProductSize(index) {
     $('[size-name-hidden-input="' + index + '"]').remove();
     $('[count-name-hidden-input="' + index + '"]').remove();
     $('[size-table-item="' + index + '"]').remove();
@@ -232,12 +217,10 @@ function removeProductSize(index)
     reOrderProductSizeHiddenInputs();
 }
 
-function reOrderProductSizeHiddenInputs()
-{
+function reOrderProductSizeHiddenInputs() {
     var hiddenSizes = $('[size-name-hidden-input]');
 
-    $.each(hiddenSizes, function (index, value)
-    {
+    $.each(hiddenSizes, function (index, value) {
         var hiddenSize = $(value);
 
         var sizeCount = $(value).attr('size-name-hidden-input');
@@ -249,84 +232,12 @@ function reOrderProductSizeHiddenInputs()
     });
 }
 
-$('#add_feature_button').on('click', function (e)
-{
-    e.preventDefault();
-
-    var featureTitle = $('#product_feature_title_input').val();
-    var featureValue = $('#product_feature_value_input').val();
-
-    if (featureTitle !== '' && featureValue !== '') {
-        var currentFeaturesCount = $('#list_of_product_features tr');
-        var currentFeaturesCount = currentFeaturesCount.length;
-
-        var isExistsSelectedFeature = $('[feature-title-hidden-input][value="' + featureTitle + '"]');
-
-        if (isExistsSelectedFeature.length === 0) {
-
-            var featureTitleNode =
-                `<input type="hidden" value="${featureTitle}" name="ProductFeatures[${index}].FeatureTitle" 
-            feature-title-hidden-input="${featureTitle}-${featureValue}">`;
-
-            var featureValueNode =
-                `<input type="hidden" value="${featureValue}" name="ProductFeatures[${index}].FeatureValue" 
-            feature-value-hidden-input="${featureTitle}-${featureValue}">`;
-
-            $('#create_product_form').append(featureTitleNode);
-            $('#create_product_form').append(featureValueNode);
-
-            var featureTableNode =
-                `<tr feature-table-item="$${featureTitle}-${featureValue}"> <td> ${featureTitle} </td> <td> ${featureValue}  </td> <td>
-            <a class="btn btn-danger text-white" onclick="removeProductFeature('${featureTitle}-${featureValue}')">حذف</a> </td>  </tr>`;
-
-            $('#list_of_product_features').append(featureTableNode);
-
-
-            $('#product_feature_title_input').val('');
-            $('#product_feature_value_input').val('');
-        }
-        else {
-            ShowMessage('اخطار', 'ویژگی وارد شده تکراری می باشد', 'warning');
-            $('#product_feature_value_input').val('').focus();
-        }
-    }
-    else {
-        ShowMessage('اخطار', 'لطفا سایز را به درستی وارد نمایید', 'warning');
-    }
-});
-
-function removeProductFeature(index)
-{
-    $('[product_feature_title_input="' + index + '"]').remove();
-    $('[product_feature_value_input="' + index + '"]').remove();
-    $('[feature-table-item="' + index + '"]').remove();
-
-    reOrderProductFeatureHiddenInputs();
-}
-
-function reOrderProductFeatureHiddenInputs()
-{
-    var hiddenFeatures = $('[feature-title-hidden-input]');
-
-    $.each(hiddenFeatures, function (index, value)
-    {
-        var hiddenFeature = $(value);
-
-        var titleValue = $(value).attr('feature-title-hidden-input');
-
-        var hiddenValue = $('feature-value-hidden-input="' + titleValue + '"]');
-
-        $(hiddenFeature).attr('name', 'ProductFeatures[' + index + '].FeatureTitle')
-        $(hiddenValue).attr('name', 'ProductFeatures[' + index + '].FeatureValue');
-    });
-}
 
 ///////create Product
 
 ////product color
 
-function changeProductPriceBasedOnColor(priceOfColor, colorName)
-{
+function changeProductPriceBasedOnColor(priceOfColor, colorName) {
     var basePrice = parseInt($('#ProductBasePrice').val(), 0);
     $('.current_price').html((basePrice + priceOfColor) + ' تومان' + ' ( ' + colorName + ' )');
 }

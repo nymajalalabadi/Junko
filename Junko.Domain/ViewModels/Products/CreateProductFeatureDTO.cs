@@ -9,8 +9,6 @@ namespace Junko.Domain.ViewModels.Products
 {
     public class CreateProductFeatureDTO
     {
-        public long ProductId { get; set; }
-
         [Display(Name = "عنوان ویژگی")]
         [Required(ErrorMessage = "لطفا {0} را وارد نمایید")]
         [MaxLength(300, ErrorMessage = "{0} نمیتواند بیشتر از {1} کاراکتر باشد")]
