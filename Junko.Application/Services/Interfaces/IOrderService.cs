@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Junko.Domain.Entities.ProductOrder;
+using Junko.Domain.ViewModels.Orders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,20 @@ namespace Junko.Application.Services.Interfaces
     public interface IOrderService
     {
         #region Methods
+
+        #region order
+
+        Task<long> AddOrderForUser(long userId);
+
+        Task<Order?> GetUserLatestOpenOrder(long userId);
+
+        #endregion
+
+        #region order Details
+
+        Task AddProductToOpenOrder(long userId, AddProductToOrderDTO order);
+
+        #endregion
 
         #endregion
     }
