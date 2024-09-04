@@ -66,7 +66,7 @@ namespace Junko.Application.Services.Implementations
 
         public async Task AddProductToOpenOrder(long userId, AddProductToOrderDTO order)
         {
-            var openOrder = await GetUserLatestOpenOrder(userId);
+            var openOrder = await _orderRepository.GetUserLatestOpenOrder(userId);
 
             var openOrderDetails = await _orderRepository.GetOpenOrderDetail(order.ProductId, order.ProductColorId, order.ProductSizeId);
 
