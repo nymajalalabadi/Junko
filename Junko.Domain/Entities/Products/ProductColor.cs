@@ -1,4 +1,5 @@
 ﻿using Junko.Domain.Entities.Common;
+using Junko.Domain.Entities.ProductOrder;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -32,7 +33,9 @@ namespace Junko.Domain.Entities.Products
         #region relations
 
         public Product Product { get; set; }
-        
+
+        public ICollection<OrderDetail> OrderDetails { get; set; }
+
         #endregion
     }
 

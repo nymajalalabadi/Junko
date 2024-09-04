@@ -4,6 +4,7 @@ using Junko.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Junko.DataLayer.Migrations
 {
     [DbContext(typeof(JunkoDbContext))]
-    partial class JunkoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240904135127_AddOrderTbl")]
+    partial class AddOrderTbl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -307,10 +310,6 @@ namespace Junko.DataLayer.Migrations
 
                     b.Property<long?>("ProductSizeId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -748,7 +747,7 @@ namespace Junko.DataLayer.Migrations
                             From = "nymasteam@gmail.com",
                             IsDefault = true,
                             IsDelete = false,
-                            LastUpdateDate = new DateTime(2024, 9, 4, 17, 23, 53, 965, DateTimeKind.Local).AddTicks(3332),
+                            LastUpdateDate = new DateTime(2024, 9, 4, 17, 21, 23, 752, DateTimeKind.Local).AddTicks(28),
                             Password = "fuqijttnofjradmh",
                             Port = 587,
                             SMTP = "smtp.gmail.com"

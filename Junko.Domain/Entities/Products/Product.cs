@@ -1,4 +1,5 @@
 ﻿using Junko.Domain.Entities.Common;
+using Junko.Domain.Entities.ProductOrder;
 using Junko.Domain.Entities.Store;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,8 @@ namespace Junko.Domain.Entities.Products
         public ICollection<ProductGallery> ProductGalleries { get; set; }
 
         public ICollection<ProductFeature> ProductFeatures { get; set; }
+
+        public ICollection<OrderDetail> OrderDetails { get; set; }
 
         #endregion
     }
