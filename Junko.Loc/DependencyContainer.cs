@@ -31,6 +31,8 @@ namespace Junko.Loc
 
             services.AddScoped<IProductService, ProductService>();
 
+            services.AddScoped<IOrderService, OrderService>();
+
             #endregion
 
             #region repository
@@ -44,6 +46,8 @@ namespace Junko.Loc
             services.AddScoped<ISellerRepository, SellerRepository>();
 
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddScoped<IOrderRepository, OrderRepository>();
             
             #endregion
         }
