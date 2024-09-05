@@ -243,3 +243,14 @@ function changeProductPriceBasedOnColor(priceOfColor, colorName) {
 }
 
 ////product color
+
+
+
+/////Order
+
+function onSuccessAddProductToOrder(res)
+{
+
+}
+
+/////Order
