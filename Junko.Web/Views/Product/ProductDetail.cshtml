@@ -1,6 +1,7 @@
 ﻿@using Junko.Application.Convertor
 @using Junko.Application.Statics
 @using Junko.Domain.Entities.Products
+@using Junko.Domain.ViewModels.Orders
 @using Junko.Domain.ViewModels.Products
 @model ProductDetailDTO
 
@@ -28,6 +29,9 @@
 <!--product details start-->
 <div class="product_details mt-60 mb-60">
     <div class="container">
+        <div class="row">
+            <partial name="_AddProductToCartPartial" model="@(new AddProductToOrderDTO{Count = 1, ProductId = Model.productId})" />
+        </div>
         <div class="row">
             <div class="col-lg-6 col-md-6">
                 <div class="product-details-tab">
@@ -104,7 +108,7 @@
                                     @foreach (var color in Model.ProductColors)
                                     {
                                         <li style="background: @color.ColorCode">
-                                            <a onclick="changeProductPriceBasedOnColor(@color.Price, '@color.ColorName')"></a>
+                                            <a onclick="changeProductPriceBasedOnColor(@color.Id,@color.Price, '@color.ColorName')"></a>
                                         </li>
                                     }
                                 </ul>
@@ -112,15 +116,17 @@
                         }
                         @if (Model.ProductSizes != null && Model.ProductSizes.Any())
                         {
-                            <div class="product_variant quantity">
-                                <label>سایز :</label>
-                                <select >
-                                <option> لطفا سایز خور را انتخاب کنید </option>
-                                @foreach (var size in Model.ProductSizes)
-                                {
-                                    <option value="@size.Size">@size.Size</option>
-                                }
-                                </select>
+                            <div class="product_variant color">
+                                <h3>گزینه های در دسترس</h3>
+                                <label>سایز</label>
+                                <ul>
+                                    @foreach (var size in Model.ProductSizes)
+                                    {
+                                        <li>
+                                            <a onclick="changeProductSize(@size.Id)"><h4>@size.Size</h4></a>
+                                        </li>
+                                    }
+                                </ul>
                             </div>
                         }
                         <div class="product_variant quantity">
@@ -591,3 +597,32 @@
     </div>
 </section>
 <!--product area end-->
+
+@section scripts
+{
+    <partial name="_JqueryValidators" />
+
+    @if (Model.ProductColors != null && Model.ProductColors.Any())
+    {
+        var firstColor = Model.ProductColors.FirstOrDefault();
+
+        <script>
+            $(document).ready(function () 
+            {
+                changeProductPriceBasedOnColor(@firstColor!.Id, @firstColor.Price, '@firstColor.ColorName');
+            });
+        </script>
+    }
+
+    @if (Model.ProductSizes != null && Model.ProductSizes.Any())
+    {
+        var firstSize = Model.ProductSizes.FirstOrDefault();
+
+        <script>
+            $(document).ready(function () 
+            {
+                changeProductSize(@firstSize!.Id);
+            });
+        </script>
+    }
+}
