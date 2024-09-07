@@ -87,7 +87,7 @@
                         {
                             var firstColor = Model.ProductColors.FirstOrDefault();
 
-                            <span class="current_price">@((Model.Price + firstColor!.Price)) @(firstColor.ColorName)</span>
+                            <span class="current_price">@((Model.Price + firstColor!.Price)?.ToString("#,0")) @(firstColor.ColorName)</span>
                         }
                         else
                         {

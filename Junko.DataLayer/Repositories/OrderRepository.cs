@@ -35,7 +35,9 @@ namespace Junko.DataLayer.Repositories
         public async Task<Order?> GetUserLatestOpenOrder(long userId)
         {
             return await _context.Orders
-                .Include(o => o.OrderDetails)
+                .Include(o => o.OrderDetails).ThenInclude(d => d.ProductColor)
+                .Include(o => o.OrderDetails).ThenInclude(d => d.ProductSize)
+                .Include(o => o.OrderDetails).ThenInclude(d => d.Product)
                 .FirstOrDefaultAsync(o => o.UserId == userId && !o.IsPaid);
         }
 

@@ -1,4 +1,5 @@
-﻿using Junko.Application.Services.Implementations;
+﻿using Junko.Application.Extensions;
+using Junko.Application.Services.Implementations;
 using Junko.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -91,5 +92,27 @@ namespace Junko.Web.ViewComponents
     }
 
     #endregion
+
+    #region user order
+
+    public class UserOrderViewComponent : ViewComponent
+    {
+        private readonly IOrderService _orderService;
+
+        public UserOrderViewComponent(IOrderService orderService)
+        {
+            _orderService = orderService;
+        }
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var openOrder = await _orderService.GetUserLatestOpenOrder(User.GetUserId());
+
+            return View("UserOrder", openOrder);
+        }
+    }
+
+    #endregion
+
 
 }
