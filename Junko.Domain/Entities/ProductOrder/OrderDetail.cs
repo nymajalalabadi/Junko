@@ -22,11 +22,11 @@ namespace Junko.Domain.Entities.ProductOrder
 
         public int Count { get; set; }
 
-        public int ProductPrice { get; set; }
+        public int? ProductPrice { get; set; }
 
-        public int ProductColorPrice { get; set; }
+        public int? ProductColorPrice { get; set; }
 
-        public string Size { get; set; }
+        public string? Size { get; set; }
 
         #endregion
 

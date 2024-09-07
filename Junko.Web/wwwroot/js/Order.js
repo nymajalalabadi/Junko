@@ -1,7 +1,20 @@
-﻿
+﻿function open_waiting(selector = 'body') {
+    $(selector).waitMe({
+        effect: 'facebook',
+        text: 'لطفا صبر کنید ...',
+        bg: 'rgba(255,255,255,0.7)',
+        color: '#000'
+    });
+}
+
+function close_waiting(selector = 'body') {
+    $(selector).waitMe('hide');
+}
 $('#submitOrderForm').on('click', function ()
 {
     $('#addProductToOrderForm').submit();
+
+    open_waiting();
 });
 
 function changeProductPriceBasedOnColor(colorId, priceOfColor, colorName)
@@ -23,6 +36,10 @@ function onSuccessAddProductToOrder(res)
     {
         ShowMessage('اعلان', res.message, 'warning');
     }
+
+    setTimeout(function () {
+        close_waiting();
+    }, 3000);
 }
 
 function changeProductSize(sizeId)
@@ -36,4 +53,3 @@ $('#number_of_products_in_basket').on('change', function (e)
 
     $('#add_product_to_order_Count').val(numberOfProducts);
 });
-
