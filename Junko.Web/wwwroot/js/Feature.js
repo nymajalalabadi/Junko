@@ -62,3 +62,4 @@ function reOrderProductFeatureHiddenInputs() {
         $(featureValue).attr('name', 'ProductFeatures[' + index + '].FeatureValue');
     });
 }
+

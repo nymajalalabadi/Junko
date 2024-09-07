@@ -20,13 +20,11 @@ namespace Junko.Domain.Entities.ProductOrder
         public bool IsPaid { get; set; }
 
         [Display(Name = "کد پیگیری")]
-        [Required(ErrorMessage = "لطفا {0} را وارد نمایید")]
         [MaxLength(300, ErrorMessage = "{0} نمیتواند بیشتر از {1} کاراکتر باشد")]
-        public string TracingCode { get; set; }
+        public string? TracingCode { get; set; }
 
         [Display(Name = "توضیحات")]
-        [Required(ErrorMessage = "لطفا {0} را وارد نمایید")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         #endregion
 

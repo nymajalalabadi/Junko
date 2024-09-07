@@ -17,8 +17,12 @@
             <div class="col-12">
                 <div class="breadcrumb_content">
                     <ul>
-                        <li><a href="/">خانه</a></li>
-                        <li>جزئیات محصول</li>
+                        <li>
+                            <a href="/">خانه</a>
+                        </li>
+                        <li>
+                            <a href="/">جزئیات محصول</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -65,85 +69,83 @@
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="product_d_right">
-                    <form action="#">
+                    <h1>@Model.Title</h1>
 
-                        <h1>@Model.Title</h1>
+                    <div class=" product_ratting">
+                        <ul>
+                            <li><span><i class="fa fa-star"></i></span></li>
+                            <li><span><i class="fa fa-star"></i></span></li>
+                            <li><span><i class="fa fa-star"></i></span></li>
+                            <li><span><i class="fa fa-star"></i></span></li>
+                            <li><span><i class="fa fa-star"></i></span></li>
+                            <li class="review"><a href="#"> (امتیاز مشتریان) </a></li>
+                        </ul>
 
-                        <div class=" product_ratting">
-                            <ul>
-                                <li><span><i class="fa fa-star"></i></span></li>
-                                <li><span><i class="fa fa-star"></i></span></li>
-                                <li><span><i class="fa fa-star"></i></span></li>
-                                <li><span><i class="fa fa-star"></i></span></li>
-                                <li><span><i class="fa fa-star"></i></span></li>
-                                <li class="review"><a href="#"> (امتیاز مشتریان) </a></li>
-                            </ul>
-
-                        </div>
-                        <div class="price_box">
-                            @if (Model.ProductColors != null && Model.ProductColors.Any())
-                            {
-                                var firstColor = Model.ProductColors.FirstOrDefault();
-                                <span class="current_price">@((Model.Price + firstColor!.Price)) @(firstColor.ColorName)</span>
-                            }
-                            else
-                            {
-                                <span class="current_price"> @Model.Price.ToString("#,0 تومان") </span>
-                            }
-                            @* <span class="old_price">80,000 تومان</span> *@
-
-                        </div>
-                        <div class="product_desc">
-                            <p>
-                                @Model.ShortDescription
-                            </p>
-                        </div>
-                        <input type="hidden" name="product_price" value="@Model.Price" id="ProductBasePrice" />
+                    </div>
+                    <div class="price_box">
                         @if (Model.ProductColors != null && Model.ProductColors.Any())
                         {
-                            <div class="product_variant color">
-                                <h3>گزینه های در دسترس</h3>
-                                <label>رنگ</label>
-                                <ul>
-                                    @foreach (var color in Model.ProductColors)
-                                    {
-                                        <li style="background: @color.ColorCode">
-                                            <a onclick="changeProductPriceBasedOnColor(@color.Id,@color.Price, '@color.ColorName')"></a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
+                            var firstColor = Model.ProductColors.FirstOrDefault();
+
+                            <span class="current_price">@((Model.Price + firstColor!.Price)) @(firstColor.ColorName)</span>
                         }
-                        @if (Model.ProductSizes != null && Model.ProductSizes.Any())
+                        else
                         {
-                            <div class="product_variant color">
-                                <h3>گزینه های در دسترس</h3>
-                                <label>سایز</label>
-                                <ul>
-                                    @foreach (var size in Model.ProductSizes)
-                                    {
-                                        <li>
-                                            <a onclick="changeProductSize(@size.Id)"><h4>@size.Size</h4></a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
+                            <span class="current_price"> @Model.Price.ToString("#,0 تومان") </span>
                         }
-                        <div class="product_variant quantity">
-                            <label>تعداد</label>
-                            <input min="1" max="100" value="1" type="number" id="number_of_products_in_basket">
-                            <button class="button" type="submit" id="submitOrderForm">افزودن به سبد</button>
-                        </div>
-                        <div class=" product_d_action">
+                        @* <span class="old_price">80,000 تومان</span> *@
+
+                    </div>
+                    <div class="product_desc">
+                        <p>
+                            @Model.ShortDescription
+                        </p>
+                    </div>
+                    <input type="hidden" name="product_price" value="@Model.Price" id="ProductBasePrice" />
+                    @if (Model.ProductColors != null && Model.ProductColors.Any())
+                    {
+                        <div class="product_variant color">
+                            <h3>گزینه های در دسترس</h3>
+                            <label>رنگ</label>
                             <ul>
-                                <li><a href="#" title="افزودن به علاقه‌مندی‌ها">+ افزودن به علاقه‌مندی‌ها</a></li>
-                                <li><a href="#" title="مقایسه">+ مقایسه</a></li>
+                                @foreach (var color in Model.ProductColors)
+                                {
+                                    <li style="background: @color.ColorCode">
+                                        <a onclick="changeProductPriceBasedOnColor(@color.Id,@color.Price, '@color.ColorName')"></a>
+                                    </li>
+                                }
                             </ul>
                         </div>
-                        <div class="product_meta">
-                            <span>دسته: <a href="#">پوشاک</a></span>
+                    }
+                    @if (Model.ProductSizes != null && Model.ProductSizes.Any())
+                    {
+                        <div class="product_variant color">
+                            <h3>گزینه های در دسترس</h3>
+                            <label>سایز</label>
+                            <ul>
+                                @foreach (var size in Model.ProductSizes)
+                                {
+                                    <li>
+                                        <a onclick="changeProductSize(@size.Id)"><h4>@size.Size</h4></a>
+                                    </li>
+                                }
+                            </ul>
                         </div>
-                    </form>
+                    }
+                    <div class="product_variant quantity">
+                        <label>تعداد</label>
+                        <input min="1" max="100" value="1" type="number" id="number_of_products_in_basket">
+                        <button class="button" type="submit" id="submitOrderForm">افزودن به سبد</button>
+                    </div>
+                    <div class=" product_d_action">
+                        <ul>
+                            <li><a href="#" title="افزودن به علاقه‌مندی‌ها">+ افزودن به علاقه‌مندی‌ها</a></li>
+                            <li><a href="#" title="مقایسه">+ مقایسه</a></li>
+                        </ul>
+                    </div>
+                    <div class="product_meta">
+                        <span>دسته: <a href="#">پوشاک</a></span>
+                    </div>
                     <div class="priduct_social">
                         <ul>
                             <li><a class="facebook" href="#" title="فیسبوک"><i class="fa fa-facebook"></i> لایک</a></li>
@@ -625,4 +627,5 @@
             });
         </script>
     }
+
 }

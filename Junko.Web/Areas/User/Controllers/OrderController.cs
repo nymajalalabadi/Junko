@@ -2,6 +2,7 @@
 using Junko.Application.Services.Interfaces;
 using Junko.Domain.ViewModels.Orders;
 using Junko.Web.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Junko.Web.Areas.User.Controllers
@@ -24,14 +25,33 @@ namespace Junko.Web.Areas.User.Controllers
 
         #region add product to open order
 
+        [AllowAnonymous]
         [HttpPost("add-product-to-order")]
         public async Task<IActionResult> AddProductToOrder(AddProductToOrderDTO order)
         {
             if (ModelState.IsValid)
             {
-                await _orderService.AddProductToOpenOrder(User.GetUserId(), order);
 
-                return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "محصول مورد نظر با موفقیت ثبت شد", null);
+                if (User.Identity!.IsAuthenticated)
+                {
+                    if (await _orderService.CheckCountPrdocut(order.ProductId, order.Count))
+                    {
+                        await _orderService.AddProductToOpenOrder(User.GetUserId(), order);
+
+                        return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "محصول مورد نظر با موفقیت ثبت شد", null);
+                    }
+                    else
+                    {
+                        return JsonResponseStatus.SendStatus(JsonResponseStatusType.Danger,
+                         "تعداد محصولی که شما انتخاب کرده اید در فروشگاه موجود نیست", null);
+                    }
+                }
+                else
+                {
+                    return JsonResponseStatus.SendStatus(JsonResponseStatusType.Danger,
+                         " برای ثبت محصول ابتدا لاگین کنید", null);
+                }
+
             }
 
             return JsonResponseStatus.SendStatus(JsonResponseStatusType.Danger, "در ثبت اطلاعات خطایی رخ داد", null);

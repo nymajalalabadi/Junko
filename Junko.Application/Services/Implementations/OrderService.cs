@@ -15,10 +15,12 @@ namespace Junko.Application.Services.Implementations
         #region consractor
 
         private readonly IOrderRepository _orderRepository;
+        private readonly IProductRepository _productRepository;
 
-        public OrderService(IOrderRepository orderRepository)
+        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository)
         {
             _orderRepository = orderRepository;
+            _productRepository = productRepository;
         }
 
         #endregion
@@ -60,13 +62,25 @@ namespace Junko.Application.Services.Implementations
             return userOpenOrder;
         }
 
+        public async Task<bool> CheckCountPrdocut(long ProductId, int count)
+        {
+            var product = await _productRepository.GetProductForOrder(ProductId);
+
+            if (product!.ProductSizes.Count >= count)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region order Details
 
         public async Task AddProductToOpenOrder(long userId, AddProductToOrderDTO order)
         {
-            var openOrder = await _orderRepository.GetUserLatestOpenOrder(userId);
+            var openOrder = await GetUserLatestOpenOrder(userId);
 
             var openOrderDetails = await _orderRepository.GetOpenOrderDetail(order.ProductId, order.ProductColorId, order.ProductSizeId);
 

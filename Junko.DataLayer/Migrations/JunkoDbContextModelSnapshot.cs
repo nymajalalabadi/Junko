@@ -240,7 +240,6 @@ namespace Junko.DataLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDelete")
@@ -256,7 +255,6 @@ namespace Junko.DataLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("TracingCode")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
@@ -748,7 +746,7 @@ namespace Junko.DataLayer.Migrations
                             From = "nymasteam@gmail.com",
                             IsDefault = true,
                             IsDelete = false,
-                            LastUpdateDate = new DateTime(2024, 9, 4, 17, 23, 53, 965, DateTimeKind.Local).AddTicks(3332),
+                            LastUpdateDate = new DateTime(2024, 9, 7, 18, 35, 17, 584, DateTimeKind.Local).AddTicks(8526),
                             Password = "fuqijttnofjradmh",
                             Port = 587,
                             SMTP = "smtp.gmail.com"

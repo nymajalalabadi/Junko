@@ -18,6 +18,8 @@ namespace Junko.Application.Services.Interfaces
 
         Task<Order?> GetUserLatestOpenOrder(long userId);
 
+        Task<bool> CheckCountPrdocut(long ProductId, int count);
+
         #endregion
 
         #region order Details
