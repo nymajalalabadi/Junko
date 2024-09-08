@@ -9,7 +9,7 @@
     {
         foreach (var detail in Model.OrderDetails)
         {
-            totalPrice += detail.Count * (detail.Product.Price + detail.ProductColor.Price ?? 0);
+            totalPrice += detail.Count * (detail.Product.Price + detail.ProductColor?.Price ?? 0);
         }
     }
 }
@@ -38,10 +38,10 @@
                             </div>
                             <div class="cart_info">
                                 <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@detail.ProductId" asp-route-title="@detail.Product.Title">
-                                    @detail.Product.Title - @detail.ProductColor!.ColorName - @detail.ProductSize.Size
-                                </a>
-                                <p><span>سایز : @detail.ProductSize.Size</span></p>
-                                <p>تعداد: @detail.Count × <span> @((detail.Product.Price + detail.ProductColor.Price)?.ToString("#,0")) تومان </span></p>
+                                    @detail.Product.Title - @(detail.ProductColor?.ColorName ?? "بی رنگ")  - @(detail.ProductSize?.Size ?? "بی سایز")
+                                </a> 
+                                <p><span>سایز : @(detail.ProductSize?.Size ?? "بی سایز")</span></p>
+                                <p>تعداد: @detail.Count × <span> @((detail.Product.Price + detail.ProductColor?.Price ?? ((detail.Count * detail.Product.Price))).ToString("#,0")) تومان </span></p>
                             </div>
                             <div class="cart_remove">
                                 <a href="#"><i class="ion-android-close"></i></a>
@@ -64,7 +64,6 @@
                     <a href="checkout.html">پرداخت</a>
                 </div>
             </div>
-
         </div>
         <!--mini cart end-->
     </div>

@@ -30,11 +30,11 @@ namespace Junko.Domain.ViewModels.Products
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public IFormFile AvatarImage { get; set; }
 
-        public List<CreateProductColorDTO> ProductColors { get; set; }
+        public List<CreateProductColorDTO>? ProductColors { get; set; }
 
-        public List<CreateProductSizeDTO> ProductSizes { get; set; }
+        public List<CreateProductSizeDTO>? ProductSizes { get; set; }
 
-        public List<CreateProductFeatureDTO> ProductFeatures { get; set; }
+        public List<CreateProductFeatureDTO>? ProductFeatures { get; set; }
 
         public List<long> SelectedCategories { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using Junko.DataLayer.Context;
 using Junko.Domain.Entities.ProductOrder;
+using Junko.Domain.Entities.Products;
 using Junko.Domain.InterFaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -55,10 +56,21 @@ namespace Junko.DataLayer.Repositories
 
         #region order Details
 
-        public async Task<OrderDetail?> GetOpenOrderDetail(long productId, long productColorId, long ProductSizeId)
+        public async Task<OrderDetail?> GetOpenOrderDetail(long productId)
+        {
+            return await _context.OrderDetails.SingleOrDefaultAsync(d => d.ProductId == productId);
+        }
+
+        public async Task<OrderDetail?> GetOpenOrderDetail(long productId, long ProductSizeId)
+        {
+            return await _context.OrderDetails.SingleOrDefaultAsync(d => d.ProductId == productId &&
+            d.ProductSizeId == ProductSizeId);
+        }
+
+        public async Task<OrderDetail?> GetOpenOrderDetail(long productId, long ProductSizeId ,long productColorId)
         {
             return await _context.OrderDetails.SingleOrDefaultAsync(d => d.ProductId == productId && 
-            d.ProductColorId == productColorId && d.ProductSizeId == ProductSizeId);
+            d.ProductSizeId == ProductSizeId && d.ProductColorId == productColorId);
         }
 
         public async Task<OrderDetail?> GetOrderDetailById(long id)

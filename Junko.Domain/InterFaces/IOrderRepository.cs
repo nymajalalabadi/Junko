@@ -25,7 +25,11 @@ namespace Junko.Domain.InterFaces
 
         #region order Details
 
-        Task<OrderDetail?> GetOpenOrderDetail(long productId, long productColorId, long ProductSizeId);
+        Task<OrderDetail?> GetOpenOrderDetail(long productId);
+
+        Task<OrderDetail?> GetOpenOrderDetail(long productId, long ProductSizeId);
+
+        Task<OrderDetail?> GetOpenOrderDetail(long productId, long ProductSizeId, long productColorId);
 
         Task<OrderDetail?> GetOrderDetailById(long id);
 

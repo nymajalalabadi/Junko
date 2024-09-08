@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Junko.Application.Services.Implementations
 {
-    public class OrderService: IOrderService
+    public class OrderService : IOrderService
     {
         #region consractor
 
@@ -66,12 +66,15 @@ namespace Junko.Application.Services.Implementations
         {
             var product = await _productRepository.GetProductForOrder(ProductId);
 
-            if (product!.ProductSizes.Count >= count)
+            if (product.ProductSizes.Any())
             {
-                return true;
+                if (product!.ProductSizes.Count >= count)
+                {
+                    return true;
+                }
+                return false;
             }
-
-            return false;
+            return true;
         }
 
         #endregion
@@ -82,28 +85,85 @@ namespace Junko.Application.Services.Implementations
         {
             var openOrder = await GetUserLatestOpenOrder(userId);
 
-            var openOrderDetails = await _orderRepository.GetOpenOrderDetail(order.ProductId, order.ProductColorId, order.ProductSizeId);
-
-            if (openOrderDetails == null)
+            if (order.ProductSizeId == null && order.ProductColorId == null)
             {
-                var orderDetail = new OrderDetail
+                var openOrderDetails = await _orderRepository.GetOpenOrderDetail(order.ProductId);
+
+                if (openOrderDetails == null)
                 {
-                    OrderId = openOrder!.Id,
-                    ProductId = order.ProductId,
-                    ProductColorId = order.ProductColorId,
-                    ProductSizeId = order.ProductSizeId,
-                    Count = order.Count
-                };
+                    var orderDetail = new OrderDetail
+                    {
+                        OrderId = openOrder!.Id,
+                        ProductId = order.ProductId,
+                        ProductColorId = order.ProductColorId,
+                        ProductSizeId = order.ProductSizeId,
+                        Count = order.Count
+                    };
 
-                await _orderRepository.AddOrderDetails(orderDetail);
-                await _orderRepository.SaveChanges();
+                    await _orderRepository.AddOrderDetails(orderDetail);
+                    await _orderRepository.SaveChanges();
+                }
+                else
+                {
+                    openOrderDetails.Count += order.Count;
+
+                    _orderRepository.UpdateOrderDetails(openOrderDetails);
+                    await _orderRepository.SaveChanges();
+                }
             }
-            else
+
+            if (order.ProductSizeId != null && order.ProductColorId == null)
             {
-                openOrderDetails.Count += order.Count;
-                
-                _orderRepository.UpdateOrderDetails(openOrderDetails);
-                await _orderRepository.SaveChanges();
+                var openOrderDetails = await _orderRepository.GetOpenOrderDetail(order.ProductId, order.ProductSizeId ?? 0);
+
+                if (openOrderDetails == null)
+                {
+                    var orderDetail = new OrderDetail
+                    {
+                        OrderId = openOrder!.Id,
+                        ProductId = order.ProductId,
+                        ProductColorId = order.ProductColorId,
+                        ProductSizeId = order.ProductSizeId,
+                        Count = order.Count
+                    };
+
+                    await _orderRepository.AddOrderDetails(orderDetail);
+                    await _orderRepository.SaveChanges();
+                }
+                else
+                {
+                    openOrderDetails.Count += order.Count;
+
+                    _orderRepository.UpdateOrderDetails(openOrderDetails);
+                    await _orderRepository.SaveChanges();
+                }
+            }
+
+            if (order.ProductSizeId != null && order.ProductColorId != null)
+            {
+                var openOrderDetails = await _orderRepository.GetOpenOrderDetail(order.ProductId, order.ProductSizeId ?? 0, order.ProductColorId ?? 0);
+
+                if (openOrderDetails == null)
+                {
+                    var orderDetail = new OrderDetail
+                    {
+                        OrderId = openOrder!.Id,
+                        ProductId = order.ProductId,
+                        ProductColorId = order.ProductColorId,
+                        ProductSizeId = order.ProductSizeId,
+                        Count = order.Count
+                    };
+
+                    await _orderRepository.AddOrderDetails(orderDetail);
+                    await _orderRepository.SaveChanges();
+                }
+                else
+                {
+                    openOrderDetails.Count += order.Count;
+
+                    _orderRepository.UpdateOrderDetails(openOrderDetails);
+                    await _orderRepository.SaveChanges();
+                }
             }
         }
 

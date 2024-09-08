@@ -36,6 +36,7 @@
                                             <th class="product_remove">حذف</th>
                                             <th class="product_thumb">تصویر</th>
                                             <th class="product_name">محصول</th>
+                                            <th class="product_name">سایز</th>
                                             <th class="product-price">قیمت</th>
                                             <th class="product_quantity">تعداد</th>
                                             <th class="product_total">جمع کل</th>
@@ -56,15 +57,18 @@
                                                 <td class="product_name">
                                                     <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@detail.ProductId" asp-route-title="@detail.Product.Title">@detail.Product.Title</a>
                                                 </td>
+                                                <td class="product_name">
+                                                    <p>@(detail.ProductSize?.Size ?? "بی سایز")</p>
+                                                </td>
                                                 <td class="product-price">
-                                                    @((detail.Product.Price + detail.ProductColor.Price)?.ToString("#,0")) تومان
+                                                    @((detail.Product.Price + detail.ProductColor?.Price ?? detail.Product.Price).ToString("#,0")) تومان
                                                 </td>
                                                 <td class="product_quantity">
                                                     <label>تعداد</label>
                                                     <input min="1" value="@detail.Count" type="number">
                                                 </td>
                                                 <td class="product_total">
-                                                    @(detail.Count * (detail.Product.Price + detail.ProductColor.Price ?? 0)) تومان
+                                                    @((detail.Count * (detail.Product.Price + detail.ProductColor?.Price) ?? (detail.Count * detail.Product.Price)).ToString("#,0")) تومان
                                                 </td>
                                             </tr>
                                         }
@@ -97,7 +101,7 @@
                             <div class="coupon_inner">
                                 <div class="cart_subtotal">
                                     <p>جمع اجزا</p>
-                                    <p class="cart_amount">@Model.OrderDetails?.Sum(s => s.Count * s.Product.Price + s.ProductColor.Price)?.ToString("#,0") تومان</p>
+                                    <p class="cart_amount">@Model.OrderDetails?.Sum(s => s.Count * (s.Product.Price + s.ProductColor?.Price) ?? (s.Count * s.Product.Price)).ToString("#,0") تومان</p>
                                 </div>
                                 <div class="cart_subtotal ">
                                     <p>تخفیف</p>
@@ -105,7 +109,7 @@
                                 </div>
                                 <div class="cart_subtotal has-border">
                                     <p>جمع کل</p>
-                                    <p class="cart_amount">@Model.OrderDetails?.Sum(s => s.Count * s.Product.Price + s.ProductColor.Price)?.ToString("#,0") تومان</p>
+                                    <p class="cart_amount">@Model.OrderDetails?.Sum(s => s.Count * (s.Product.Price + s.ProductColor?.Price) ?? (s.Count * s.Product.Price)).ToString("#,0") تومان</p>
                                 </div>
                                 <div class="checkout_btn">
                                     <a href="#">پرداخت</a>

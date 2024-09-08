@@ -175,59 +175,68 @@ namespace Junko.Application.Services.Implementations
 
                 #region create product colors
 
-                var productSelectedColors = new List<ProductColor>();
-
-                foreach (var color in product.ProductColors)
+                if (product.ProductColors != null)
                 {
-                    productSelectedColors.Add(new ProductColor()
-                    {
-                        ColorName = color.ColorName,
-                        ColorCode = color.ColorCode,
-                        Price = color.Price,
-                        ProductId = newProduct.Id
-                    });
-                };
+                    var productSelectedColors = new List<ProductColor>();
 
-                await _productRepository.AddRangeProductColors(productSelectedColors);
-                await _productRepository.SaveChanges();
+                    foreach (var color in product.ProductColors)
+                    {
+                        productSelectedColors.Add(new ProductColor()
+                        {
+                            ColorName = color.ColorName,
+                            ColorCode = color.ColorCode,
+                            Price = color.Price,
+                            ProductId = newProduct.Id
+                        });
+                    };
+
+                    await _productRepository.AddRangeProductColors(productSelectedColors);
+                    await _productRepository.SaveChanges();
+                }
 
                 #endregion
 
                 #region create product sizes
 
-                var productSelectedSizes = new List<ProductSize>();
-
-                foreach (var size in product.ProductSizes)
+                if (product.ProductSizes != null)
                 {
-                    productSelectedSizes.Add(new ProductSize()
-                    {
-                        Size = size.Size,
-                        Count = size.Count,
-                        ProductId = newProduct.Id
-                    });
-                }
+                    var productSelectedSizes = new List<ProductSize>();
 
-                await _productRepository.AddRangeProductSizes(productSelectedSizes);
-                await _productRepository.SaveChanges();
+                    foreach (var size in product.ProductSizes)
+                    {
+                        productSelectedSizes.Add(new ProductSize()
+                        {
+                            Size = size.Size,
+                            Count = size.Count ?? 0,
+                            ProductId = newProduct.Id
+                        });
+                    }
+
+                    await _productRepository.AddRangeProductSizes(productSelectedSizes);
+                    await _productRepository.SaveChanges();
+                }
 
                 #endregion
 
                 #region create product feature
 
-                var productFeatures = new List<ProductFeature>();
-
-                foreach (var feature in product.ProductFeatures)
+                if (product.ProductFeatures != null)
                 {
-                    productFeatures.Add(new ProductFeature()
-                    {
-                        FeatureTitle = feature.FeatureTitle,
-                        FeatureValue = feature.FeatureValue,
-                        ProductId = newProduct.Id
-                    });
-                }
+                    var productFeatures = new List<ProductFeature>();
 
-                await _productRepository.AddRangeProductFeatures(productFeatures);
-                await _productRepository.SaveChanges();
+                    foreach (var feature in product.ProductFeatures)
+                    {
+                        productFeatures.Add(new ProductFeature()
+                        {
+                            FeatureTitle = feature.FeatureTitle,
+                            FeatureValue = feature.FeatureValue,
+                            ProductId = newProduct.Id
+                        });
+                    }
+
+                    await _productRepository.AddRangeProductFeatures(productFeatures);
+                    await _productRepository.SaveChanges();
+                }
 
                 #endregion
 
@@ -365,65 +374,74 @@ namespace Junko.Application.Services.Implementations
 
             #region color product
 
-            await _productRepository.RemoveAllProductSelectedColors(currentProduct.Id);
-
-            var productSelectedColors = new List<ProductColor>();
-
-            foreach (var color in product.ProductColors)
+            if (product.ProductColors != null)
             {
-                productSelectedColors.Add(new ProductColor()
-                {
-                    ColorName = color.ColorName,
-                    ColorCode = color.ColorCode,
-                    Price = color.Price,
-                    ProductId = currentProduct.Id
-                });
-            }
+                await _productRepository.RemoveAllProductSelectedColors(currentProduct.Id);
 
-            await _productRepository.AddRangeProductColors(productSelectedColors);
-            await _productRepository.SaveChanges();
+                var productSelectedColors = new List<ProductColor>();
+
+                foreach (var color in product.ProductColors)
+                {
+                    productSelectedColors.Add(new ProductColor()
+                    {
+                        ColorName = color.ColorName,
+                        ColorCode = color.ColorCode,
+                        Price = color.Price,
+                        ProductId = currentProduct.Id
+                    });
+                }
+
+                await _productRepository.AddRangeProductColors(productSelectedColors);
+                await _productRepository.SaveChanges();
+            }
 
             #endregion
 
             #region size product
 
-            await _productRepository.RemoveAllProductSelectedSizes(currentProduct.Id);
-
-            var productSelectedSizes = new List<ProductSize>();
-
-            foreach (var size in product.ProductSizes)
+            if (product.ProductSizes != null)
             {
-                productSelectedSizes.Add(new ProductSize()
-                {
-                    Size = size.Size,
-                    Count = size.Count,
-                    ProductId = currentProduct.Id
-                });
-            }
+                await _productRepository.RemoveAllProductSelectedSizes(currentProduct.Id);
 
-            await _productRepository.AddRangeProductSizes(productSelectedSizes);
-            await _productRepository.SaveChanges();
+                var productSelectedSizes = new List<ProductSize>();
+
+                foreach (var size in product.ProductSizes)
+                {
+                    productSelectedSizes.Add(new ProductSize()
+                    {
+                        Size = size.Size,
+                        Count = size.Count ?? 0,
+                        ProductId = currentProduct.Id
+                    });
+                }
+
+                await _productRepository.AddRangeProductSizes(productSelectedSizes);
+                await _productRepository.SaveChanges();
+            }
 
             #endregion
 
             #region feature product
 
-            await _productRepository.RemoveAllProductSelectedFeatures(currentProduct.Id);
-
-            var productSelectedFeatures = new List<ProductFeature>();
-
-            foreach (var feature in product.ProductFeatures)
+            if (product.ProductFeatures != null)
             {
-                productSelectedFeatures.Add(new ProductFeature()
-                {
-                    FeatureTitle = feature.FeatureTitle,
-                    FeatureValue = feature.FeatureValue,
-                    ProductId = currentProduct.Id
-                });
-            }
+                await _productRepository.RemoveAllProductSelectedFeatures(currentProduct.Id);
 
-            await _productRepository.AddRangeProductFeatures(productSelectedFeatures);
-            await _productRepository.SaveChanges();
+                var productSelectedFeatures = new List<ProductFeature>();
+
+                foreach (var feature in product.ProductFeatures)
+                {
+                    productSelectedFeatures.Add(new ProductFeature()
+                    {
+                        FeatureTitle = feature.FeatureTitle,
+                        FeatureValue = feature.FeatureValue,
+                        ProductId = currentProduct.Id
+                    });
+                }
+
+                await _productRepository.AddRangeProductFeatures(productSelectedFeatures);
+                await _productRepository.SaveChanges();
+            }
 
             #endregion
 
