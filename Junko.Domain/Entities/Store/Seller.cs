@@ -1,6 +1,7 @@
 ﻿using Junko.Domain.Entities.Account;
 using Junko.Domain.Entities.Common;
 using Junko.Domain.Entities.Products;
+using Junko.Domain.Entities.Wallet;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -53,6 +54,8 @@ namespace Junko.Domain.Entities.Store
         public User User { get; set; }
 
         public ICollection<Product> Products { get; set; }
+
+        public ICollection<SellerWallet> SellerWallets { get; set; }
 
         #endregion
     }

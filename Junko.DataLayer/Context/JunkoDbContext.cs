@@ -6,6 +6,7 @@ using Junko.Domain.Entities.Products;
 using Junko.Domain.Entities.Site;
 using Junko.Domain.Entities.SiteSetting;
 using Junko.Domain.Entities.Store;
+using Junko.Domain.Entities.Wallet;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,8 @@ namespace Junko.DataLayer.Context
         public DbSet<Order> Orders { get; set; }
 
         public DbSet<OrderDetail> OrderDetails { get; set; }
+
+        public DbSet<SellerWallet> SellerWallets { get; set; }
 
         #endregion
 
