@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Junko.Domain.Entities.Wallet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Junko.Domain.InterFaces
     {
         #region Methods
 
-
+        Task<IQueryable<SellerWallet>> GetAllSellerWallets();
 
         #endregion
     }

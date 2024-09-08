@@ -1,4 +1,5 @@
 ﻿using Junko.DataLayer.Context;
+using Junko.Domain.Entities.Wallet;
 using Junko.Domain.InterFaces;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,10 @@ namespace Junko.DataLayer.Repositories
 
         #region Methods
 
-
+        public async Task<IQueryable<SellerWallet>> GetAllSellerWallets()
+        {
+            return _context.SellerWallets.Where(w => !w.IsDelete).AsQueryable();
+        }
 
         #endregion
     }
