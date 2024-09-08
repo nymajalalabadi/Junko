@@ -33,6 +33,8 @@ namespace Junko.Loc
 
             services.AddScoped<IOrderService, OrderService>();
 
+            services.AddScoped<IWalletService, WalletService>();
+
             #endregion
 
             #region repository
@@ -48,6 +50,8 @@ namespace Junko.Loc
             services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddScoped<IOrderRepository, OrderRepository>();
+
+            services.AddScoped<IWalletRepository, WalletRepository>();
             
             #endregion
         }
