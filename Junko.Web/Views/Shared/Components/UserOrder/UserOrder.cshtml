@@ -41,7 +41,7 @@
                                     @detail.Product.Title - @detail.ProductColor!.ColorName - @detail.ProductSize.Size
                                 </a>
                                 <p><span>سایز : @detail.ProductSize.Size</span></p>
-                                <p>تعداد: @detail.Count × <span> @((detail.Product.Price + detail.ProductColor?.Price)?.ToString("#,0")) تومان </span></p>
+                                <p>تعداد: @detail.Count × <span> @((detail.Product.Price + detail.ProductColor.Price)?.ToString("#,0")) تومان </span></p>
                             </div>
                             <div class="cart_remove">
                                 <a href="#"><i class="ion-android-close"></i></a>

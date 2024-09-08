@@ -59,5 +59,18 @@ namespace Junko.Web.Areas.User.Controllers
 
         #endregion
 
+
+        #region open order
+
+        [HttpGet("open-order")]
+        public async Task<IActionResult> UserOpenOrder()
+        {
+            var openOrder = await _orderService.GetUserLatestOpenOrder(User.GetUserId());
+
+            return View(openOrder);
+        }
+
+        #endregion
+
     }
 }
