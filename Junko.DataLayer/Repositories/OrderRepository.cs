@@ -51,6 +51,10 @@ namespace Junko.DataLayer.Repositories
         {
             await _context.Orders.AddAsync(order);
         }
+        public void UpdateOrder(Order order)
+        {
+            _context.Orders.Update(order);
+        }
 
         #endregion
 

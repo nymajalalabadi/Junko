@@ -29,6 +29,16 @@ namespace Junko.DataLayer.Repositories
             return _context.SellerWallets.Where(w => !w.IsDelete).AsQueryable();
         }
 
+        public async Task AddWallet(SellerWallet wallet)
+        {
+            await _context.SellerWallets.AddAsync(wallet);
+        }
+
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
+        }
+
         #endregion
     }
 }

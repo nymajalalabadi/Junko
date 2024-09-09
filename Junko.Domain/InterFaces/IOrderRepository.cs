@@ -21,6 +21,8 @@ namespace Junko.Domain.InterFaces
 
         Task AddOrder(Order order);
 
+        void UpdateOrder(Order order);
+
         #endregion
 
         #region order Details

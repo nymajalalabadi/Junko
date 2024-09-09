@@ -111,7 +111,7 @@
                                 @foreach (var color in Model.ProductColors)
                                 {
                                     <li style="background: @color.ColorCode">
-                                        <a onclick="changeProductPriceBasedOnColor(@color.Id,@color.Price, '@color.ColorName')"></a>
+                                        <a onclick="changeProductPriceBasedOnColor(@color.Id, @color.Price, '@color.ColorName')"></a>
                                     </li>
                                 }
                             </ul>

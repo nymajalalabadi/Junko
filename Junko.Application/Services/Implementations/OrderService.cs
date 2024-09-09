@@ -1,5 +1,6 @@
 ﻿using Junko.Application.Services.Interfaces;
 using Junko.Domain.Entities.ProductOrder;
+using Junko.Domain.Entities.Wallet;
 using Junko.Domain.InterFaces;
 using Junko.Domain.ViewModels.Orders;
 using System;
@@ -16,11 +17,14 @@ namespace Junko.Application.Services.Implementations
 
         private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IWalletRepository _walletRepository;
 
-        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository)
+        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository,
+            IWalletRepository walletRepository)
         {
             _orderRepository = orderRepository;
             _productRepository = productRepository;
+            _walletRepository = walletRepository;
         }
 
         #endregion
@@ -94,6 +98,44 @@ namespace Junko.Application.Services.Implementations
             return totalPrice;
         }
 
+        public async Task PayOrderProductPriceToSeller(long userId)
+        {
+            var openOrder = await GetUserLatestOpenOrder(userId);
+
+            foreach (var detail in openOrder!.OrderDetails)
+            {
+                var productPrice = detail.Product.Price;
+                var productColorPrice = detail.ProductColor?.Price ?? 0;
+                var productSize = detail.ProductSize?.Size ?? "بی سایز";
+                var discount = 0;
+                var totalPrice = detail.Count * (productPrice + productColorPrice) - discount;
+
+                var sellerWallet = new SellerWallet()
+                {
+                    SellerId = detail.Product.SellerId,
+                    Price = (int)Math.Ceiling(totalPrice * detail.Product.SiteProfit / (double)100),
+                    TransactionType = TransactionType.Deposit,
+                    Description = $"پرداخت مبلغ {totalPrice} تومان جهت فروش {detail.Product.Title} به تعداد {detail.Count} عدد با سهم تهیین شده ی {100 - detail.Product.SiteProfit} درصد"
+                };
+
+                await _walletRepository.AddWallet(sellerWallet);
+                await _walletRepository.SaveChanges();
+
+                detail.ProductPrice = totalPrice;
+                detail.ProductColorPrice = productColorPrice;
+                detail.Size = productSize;
+
+                _orderRepository.UpdateOrderDetails(detail);
+                await _orderRepository.SaveChanges();
+            }
+
+            openOrder.IsPaid = true;
+            // todo: set description and tracing code in order
+
+            _orderRepository.UpdateOrder(openOrder);
+            await _orderRepository.SaveChanges();
+        }
+
         #endregion
 
         #region order Details
@@ -112,8 +154,6 @@ namespace Junko.Application.Services.Implementations
                     {
                         OrderId = openOrder!.Id,
                         ProductId = order.ProductId,
-                        ProductColorId = order.ProductColorId,
-                        ProductSizeId = order.ProductSizeId,
                         Count = order.Count
                     };
 
@@ -139,7 +179,6 @@ namespace Junko.Application.Services.Implementations
                     {
                         OrderId = openOrder!.Id,
                         ProductId = order.ProductId,
-                        ProductColorId = order.ProductColorId,
                         ProductSizeId = order.ProductSizeId,
                         Count = order.Count
                     };

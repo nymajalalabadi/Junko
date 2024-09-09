@@ -22,6 +22,8 @@ namespace Junko.Application.Services.Interfaces
 
         Task<int> GetTotalOrderPriceForPayment(long userId);
 
+        Task PayOrderProductPriceToSeller(long userId);
+
         #endregion
 
         #region order Details

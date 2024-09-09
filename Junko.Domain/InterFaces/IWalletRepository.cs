@@ -13,6 +13,10 @@ namespace Junko.Domain.InterFaces
 
         Task<IQueryable<SellerWallet>> GetAllSellerWallets();
 
+        Task AddWallet(SellerWallet wallet);
+
+        Task SaveChanges();
+
         #endregion
     }
 }
