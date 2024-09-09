@@ -148,6 +148,7 @@ namespace Junko.Application.Services.Implementations
                     IsActive = product.IsActive,
                     SellerId = sellerId,
                     ImageName = imageName,
+                    SiteProfit = 5,
                     ProductAcceptanceState = ProductAcceptanceState.UnderProgress
                 };
 

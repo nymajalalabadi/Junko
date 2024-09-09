@@ -62,6 +62,11 @@ namespace Junko.Web.Areas.User.Controllers
                         TempData[InfoMessage] = "در حال حاضر نمیتوانید درخواست جدیدی ثبت کنید";
                         break;
 
+                    case RequestSellerResult.HasSeller:
+                        TempData[WarningMessage] = "برای شما از قبل یک فروشگاه ثبت شده است";
+                        TempData[InfoMessage] = "در حال حاضر نمیتوانید درخواست جدیدی ثبت کنید";
+                        break;
+
                     case RequestSellerResult.Success:
                         TempData[SuccessMessage] = "درخواست شما با موفقیت ثبت شد";
                         TempData[InfoMessage] = "فرایند تایید اطلاعات شما در حال پیگیری می باشد";

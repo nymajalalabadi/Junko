@@ -29,7 +29,8 @@ namespace Junko.Domain.ViewModels.Store
     {
         Success,
         HasUnderProgressRequest,
-        HasNotPermission
+        HasNotPermission,
+        HasSeller
     }
 
 }

@@ -115,6 +115,13 @@ namespace Junko.Application.Services.Implementations
                 return RequestSellerResult.HasUnderProgressRequest;
             }
 
+            var userHasSeller = await _sellerRepository.HasUserAnySeller(userId);
+
+            if (userHasSeller)
+            {
+                return RequestSellerResult.HasSeller;
+            }
+
             var newSeller = new Seller
             {
                 UserId = userId,

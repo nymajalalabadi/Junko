@@ -107,6 +107,7 @@ namespace Junko.Application.Services.Implementations
                 var productPrice = detail.Product.Price;
                 var productColorPrice = detail.ProductColor?.Price ?? 0;
                 var productSize = detail.ProductSize?.Size ?? "بی سایز";
+                var productCountSize = detail.ProductSize != null ? detail.Count : 0;
                 var discount = 0;
                 var totalPrice = detail.Count * (productPrice + productColorPrice) - discount;
 
@@ -124,6 +125,7 @@ namespace Junko.Application.Services.Implementations
                 detail.ProductPrice = totalPrice;
                 detail.ProductColorPrice = productColorPrice;
                 detail.Size = productSize;
+                detail.ProductSize!.Count -= productCountSize;
 
                 _orderRepository.UpdateOrderDetails(detail);
                 await _orderRepository.SaveChanges();
