@@ -45,6 +45,9 @@ namespace Junko.Domain.Entities.Products
         [Display(Name = "فعال / غیرفعال")]
         public bool IsActive { get; set; }
 
+        [Display(Name = "درصد سایت")]
+        public int SiteProfit { get; set; }
+
         [Display(Name = "وضعیت")]
         public ProductAcceptanceState ProductAcceptanceState { get; set; }
 

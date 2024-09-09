@@ -20,6 +20,8 @@ namespace Junko.Application.Services.Interfaces
 
         Task<bool> CheckCountPrdocut(long ProductId, int count);
 
+        Task<int> GetTotalOrderPriceForPayment(long userId);
+
         #endregion
 
         #region order Details

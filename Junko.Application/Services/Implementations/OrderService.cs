@@ -66,15 +66,32 @@ namespace Junko.Application.Services.Implementations
         {
             var product = await _productRepository.GetProductForOrder(ProductId);
 
-            if (product.ProductSizes.Any())
+            if (product!.ProductSizes.Any())
             {
-                if (product!.ProductSizes.Count >= count)
+                if (product.ProductSizes.Count >= count)
                 {
                     return true;
                 }
                 return false;
             }
             return true;
+        }
+
+        public async Task<int> GetTotalOrderPriceForPayment(long userId)
+        {
+            var userOpenOrder = await GetUserLatestOpenOrder(userId);
+
+            int totalPrice = 0;
+
+            foreach (var detail in userOpenOrder!.OrderDetails)
+            {
+                var oneProductPrice = detail.ProductColor != null ? detail.Product.Price + detail.ProductColor.Price 
+                    : detail.Product.Price;
+
+                totalPrice += detail.Count * oneProductPrice ?? detail.Count * detail.Product.Price;
+            }
+
+            return totalPrice;
         }
 
         #endregion
