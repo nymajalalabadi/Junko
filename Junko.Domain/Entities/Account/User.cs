@@ -1,5 +1,6 @@
 ﻿using Junko.Domain.Entities.Common;
 using Junko.Domain.Entities.Contacts;
+using Junko.Domain.Entities.Discount;
 using Junko.Domain.Entities.ProductOrder;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,8 @@ namespace Junko.Domain.Entities.Account
         public ICollection<TicketMessage> TicketMessages { get; set; }
 
         public ICollection<Order> Orders { get; set; }
+
+        public ICollection<ProductDiscountUse> productDiscountUses { get; set; }
 
         #endregion
     }

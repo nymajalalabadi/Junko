@@ -1,4 +1,5 @@
 ﻿using Junko.Domain.Entities.Common;
+using Junko.Domain.Entities.Discount;
 using Junko.Domain.Entities.ProductOrder;
 using Junko.Domain.Entities.Store;
 using System;
@@ -68,6 +69,8 @@ namespace Junko.Domain.Entities.Products
         public ICollection<ProductFeature> ProductFeatures { get; set; }
 
         public ICollection<OrderDetail> OrderDetails { get; set; }
+
+        public ICollection<ProductDiscount> ProductDiscounts { get; set; }
 
         #endregion
     }

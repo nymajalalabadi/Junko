@@ -1,6 +1,7 @@
 ﻿using Azure;
 using Junko.Domain.Entities.Account;
 using Junko.Domain.Entities.Contacts;
+using Junko.Domain.Entities.Discount;
 using Junko.Domain.Entities.ProductOrder;
 using Junko.Domain.Entities.Products;
 using Junko.Domain.Entities.Site;
@@ -59,6 +60,10 @@ namespace Junko.DataLayer.Context
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
         public DbSet<SellerWallet> SellerWallets { get; set; }
+
+        public DbSet<ProductDiscount> ProductDiscounts { get; set; }
+
+        public DbSet<ProductDiscountUse> productDiscountUses { get; set; }
 
         #endregion
 
