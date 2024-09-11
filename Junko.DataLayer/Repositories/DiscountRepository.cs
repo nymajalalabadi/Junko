@@ -1,5 +1,7 @@
 ﻿using Junko.DataLayer.Context;
+using Junko.Domain.Entities.Discount;
 using Junko.Domain.InterFaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +25,35 @@ namespace Junko.DataLayer.Repositories
 
         #region Methods
 
+        #region Product Discoun
 
+        public async Task<IQueryable<ProductDiscount>> GetAllProductDiscounts()
+        {
+            return _context.ProductDiscounts
+                .Include(d => d.Product)
+                .Where(d => !d.IsDelete).AsQueryable();
+        }
+
+        public async Task AddProductDiscount(ProductDiscount productDiscount)
+        {
+            await _context.ProductDiscounts.AddAsync(productDiscount);
+        }
+
+        #endregion
+
+        #region Product Discoun Use
+
+        public async Task AddDiscountProductUse(ProductDiscountUse productDiscountUse)
+        {
+            await _context.productDiscountUses.AddAsync(productDiscountUse);
+        }
+
+        #endregion
+
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
+        }
 
         #endregion
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Junko.Domain.ViewModels.Discount;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,13 @@ namespace Junko.Application.Services.Interfaces
     {
         #region Methods
 
+        #region product discount
 
+        Task<FilterProductDiscountDTO> FilterProductDiscount(FilterProductDiscountDTO filter);
+
+        Task<CreateDiscountResult> CreateProductDiscount(CreateProductDiscountDto discount, long sellerId);
+
+        #endregion
 
         #endregion
     }
