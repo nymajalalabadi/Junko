@@ -46,7 +46,7 @@ namespace Junko.DataLayer.Repositories
         public async Task<bool> HasUserAnySeller(long userId)
         {
             return await _context.Sellers.AsQueryable()
-                .AnyAsync(s => s.UserId == userId);
+                .AnyAsync(s => s.UserId == userId && s.StoreAcceptanceState == StoreAcceptanceState.Accepted);
         }
 
         public async Task<Seller?> GetLastActiveSellerByUserId(long userId)
