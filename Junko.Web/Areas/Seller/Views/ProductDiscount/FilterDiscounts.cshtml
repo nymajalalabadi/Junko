@@ -46,6 +46,7 @@
                                                     <th>شناسه</th>
                                                     <th>مقدار</th>
                                                     <th>تعداد</th>
+                                                    <th>تاریخ ایجاد</th>
                                                     <th>تاریخ انقضا</th>
                                                     <th>دستورات</th>
                                                 </tr>
@@ -57,6 +58,7 @@
                                                         <td>@discount.Id</td>
                                                         <td>@discount.Percentage %</td>
                                                         <td>@discount.DiscountNumber</td>
+                                                        <td>@discount.CreateDate.ToShamsiDate()</td>
                                                         <td>@discount.ExpireDate.ToShamsiDate()</td>
                                                         <td></td>
                                                     </tr>
