@@ -91,6 +91,14 @@ namespace Junko.DataLayer.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Product>> FilterProductsForSellerByProductName(long sellerId, string productName)
+        {
+            return await _context.Products
+                .Where(p => p.SellerId == sellerId && EF.Functions.Like(p.Title, $"%{productName}%") && !p.IsDelete 
+                && p.IsActive)
+                .ToListAsync();
+        }
+
         public void UpdateProduct(Product product)
         {
             _context.Products.Update(product);

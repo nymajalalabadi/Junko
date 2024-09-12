@@ -1,4 +1,5 @@
 ﻿using Junko.Application.Extensions;
+using Junko.Application.Services.Implementations;
 using Junko.Application.Services.Interfaces;
 using Junko.Domain.ViewModels.Discount;
 using Microsoft.AspNetCore.Mvc;
@@ -11,11 +12,13 @@ namespace Junko.Web.Areas.Seller.Controllers
 
         private readonly IDiscountService _discountService;
         private readonly ISellerService _sellerService;
+        private readonly IProductService _productService;
 
-        public ProductDiscountController(IDiscountService discountService, ISellerService sellerService)
+        public ProductDiscountController(IDiscountService discountService, ISellerService sellerService, IProductService productService)
         {
             _discountService = discountService;
             _sellerService = sellerService;
+            _productService = productService;
         }
 
         #endregion
@@ -79,6 +82,18 @@ namespace Junko.Web.Areas.Seller.Controllers
 
         #endregion
 
+        #region get products json for Auto complete
 
+        [HttpGet("products-autocomplete")]
+        public async Task<IActionResult> GetSellerProductsJson(string productName)
+        {
+            var seller = await _sellerService.GetLastActiveSellerByUserId(User.GetUserId());
+
+            var data = await _productService.FilterProductsForSellerByProductName(seller!.Id, productName);
+
+            return new JsonResult(data);
+        }
+
+        #endregion
     }
 }

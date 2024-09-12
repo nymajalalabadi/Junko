@@ -22,6 +22,8 @@ namespace Junko.Domain.InterFaces
 
         Task<List<Product>> GetRelatedProducts(long productId , List<long> ProductCategoryId);
 
+        Task<List<Product>> FilterProductsForSellerByProductName(long sellerId, string productName);
+
         void UpdateProduct(Product product);    
 
         Task AddProduct(Product product);

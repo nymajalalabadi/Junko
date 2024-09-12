@@ -487,6 +487,11 @@ namespace Junko.Application.Services.Implementations
             return await _productRepository.GetRelatedProducts(productId, ProductCategoryId);
         }
 
+        public async Task<List<Product>> FilterProductsForSellerByProductName(long sellerId, string productName)
+        {
+            return await _productRepository.FilterProductsForSellerByProductName(sellerId, productName);
+        }
+
         #endregion
 
         #region product gallery

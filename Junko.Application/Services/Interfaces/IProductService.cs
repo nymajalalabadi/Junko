@@ -34,6 +34,8 @@ namespace Junko.Application.Services.Interfaces
 
         Task<List<Product>> GetRelatedProducts(long productId, List<long> ProductCategoryId);
 
+        Task<List<Product>> FilterProductsForSellerByProductName(long sellerId, string productName);
+
         #endregion
 
         #region product gallery
