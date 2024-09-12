@@ -1,4 +1,5 @@
 ﻿using Junko.Domain.Entities.Products;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Junko.Domain.InterFaces
 {
@@ -22,7 +23,7 @@ namespace Junko.Domain.InterFaces
 
         Task<List<Product>> GetRelatedProducts(long productId , List<long> ProductCategoryId);
 
-        Task<List<Product>> FilterProductsForSellerByProductName(long sellerId, string productName);
+        Task<List<SelectListItem>> FilterProductsForSellerByProductName(long sellerId);
 
         void UpdateProduct(Product product);    
 

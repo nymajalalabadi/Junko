@@ -1,8 +1,10 @@
 ﻿using Junko.Application.Extensions;
-using Junko.Application.Services.Implementations;
 using Junko.Application.Services.Interfaces;
+using Junko.Domain.Entities.Store;
 using Junko.Domain.ViewModels.Discount;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Junko.Web.Areas.Seller.Controllers
 {
@@ -48,8 +50,13 @@ namespace Junko.Web.Areas.Seller.Controllers
         #region create discount
 
         [HttpGet("create-discount")]
-        public IActionResult CreateDiscount()
+        public async Task<IActionResult> CreateDiscount()
         {
+            var seller = await _sellerService.GetLastActiveSellerByUserId(User.GetUserId());
+            var products = await _productService.FilterProductsForSellerByProductName(seller!.Id);
+
+            ViewData["products"] = new SelectList(products, "Value", "Text");
+
             return View();
         }
 
@@ -78,20 +85,6 @@ namespace Junko.Web.Areas.Seller.Controllers
                 }
             }
             return View(discount);
-        }
-
-        #endregion
-
-        #region get products json for Auto complete
-
-        [HttpGet("products-autocomplete")]
-        public async Task<IActionResult> GetSellerProductsJson(string productName)
-        {
-            var seller = await _sellerService.GetLastActiveSellerByUserId(User.GetUserId());
-
-            var data = await _productService.FilterProductsForSellerByProductName(seller!.Id, productName);
-
-            return new JsonResult(data);
         }
 
         #endregion

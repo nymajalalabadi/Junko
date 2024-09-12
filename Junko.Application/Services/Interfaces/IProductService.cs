@@ -2,6 +2,7 @@
 using Junko.Domain.ViewModels.Products;
 using Junko.Domain.ViewModels.Store;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace Junko.Application.Services.Interfaces
 
         Task<List<Product>> GetRelatedProducts(long productId, List<long> ProductCategoryId);
 
-        Task<List<Product>> FilterProductsForSellerByProductName(long sellerId, string productName);
+        Task<List<SelectListItem>> FilterProductsForSellerByProductName(long sellerId);
 
         #endregion
 

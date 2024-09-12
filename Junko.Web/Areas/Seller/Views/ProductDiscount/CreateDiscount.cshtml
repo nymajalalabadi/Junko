@@ -1,4 +1,5 @@
-﻿@using Junko.Domain.ViewModels.Discount
+﻿@using Junko.Domain.Entities.Products
+@using Junko.Domain.ViewModels.Discount
 @model CreateProductDiscountDto
 @{
     ViewData["Title"] = "ثبت تخفیف جدید";
@@ -6,8 +7,6 @@
 
 @section styles
 {
-    <link rel="stylesheet" href="/lib/EasyAutocomplete/easy-autocomplete.min.css" />
-    <link rel="stylesheet" href="/lib/EasyAutocomplete/easy-autocomplete.themes.min.css" />
     <link rel="stylesheet" href="/lib/date-picker/kamadatepicker.min.css" />
 }
 
@@ -42,26 +41,22 @@
                                 <div class="login_form_container">
                                     <div class="account_login_form">
                                         <form asp-area="Seller" asp-controller="ProductDiscount" asp-action="CreateDiscount">
-                                            <input type="hidden" asp-for="ProductId" />
                                             <label>محصول مورد نظر</label>
-                                            <input type="text" id="ProductName">
+                                            <select class="form-control" asp-for="ProductId" asp-items="@(ViewData["products"] as SelectList)">
+                                            </select>
                                             <br />
-
                                             <label>تاریخ انقضا</label>
                                             <input asp-for="ExpireDate" style="width: 100%">
                                             <span class="text-danger" asp-validation-for="ExpireDate"></span>
                                             <br />
-
                                             <label>تعداد تخفیف</label>
                                             <input asp-for="DiscountNumber">
                                             <span class="text-danger" asp-validation-for="DiscountNumber"></span>
                                             <br />
-
                                             <label>درصد تخفیف</label>
                                             <input asp-for="Percentage">
                                             <span class="text-danger" asp-validation-for="Percentage"></span>
                                             <br />
-
                                             <div class="save_button primary_btn default_button">
                                                 <button type="submit">ذخیره</button>
                                             </div>
@@ -79,11 +74,8 @@
 
 @section scripts
 {
-    <script src="/lib/date-picker/kamadatepicker.min.js"></script>
-
     <partial name="_JqueryValidators" />
-
-    <script src="/lib/EasyAutocomplete/jquery.easy-autocomplete.min.js"></script>
+    <script src="/lib/date-picker/kamadatepicker.min.js"></script>
 
     <script>
         var customOptions = {
@@ -101,27 +93,5 @@
             , gotoToday: true
         }
         kamaDatepicker('ExpireDate', customOptions);
-
-        var options = {
-            url: function (phrase) {
-                return "/seller/products-autocomplete?productName=" + phrase;
-            },
-            getValue: function (element) {
-                return element.title;
-            },
-            list: {
-                match: {
-                    enabled: true
-                },
-                onSelectItemEvent: function () {
-                    var value = $("#ProductName").getSelectedItemData().id;
-
-                    $("#ProductId").val(value).trigger("change");
-                }
-            },
-            theme: "square"
-        };
-
-        $("#ProductName").easyAutocomplete(options);
     </script>
 }

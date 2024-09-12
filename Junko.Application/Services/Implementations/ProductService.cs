@@ -9,6 +9,7 @@ using Junko.Domain.Entities.Store;
 using Junko.Domain.InterFaces;
 using Junko.Domain.ViewModels.Products;
 using Junko.Domain.ViewModels.Store;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -487,9 +488,9 @@ namespace Junko.Application.Services.Implementations
             return await _productRepository.GetRelatedProducts(productId, ProductCategoryId);
         }
 
-        public async Task<List<Product>> FilterProductsForSellerByProductName(long sellerId, string productName)
+        public async Task<List<SelectListItem>> FilterProductsForSellerByProductName(long sellerId)
         {
-            return await _productRepository.FilterProductsForSellerByProductName(sellerId, productName);
+            return await _productRepository.FilterProductsForSellerByProductName(sellerId);
         }
 
         #endregion

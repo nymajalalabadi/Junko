@@ -2,6 +2,7 @@
 using Junko.Domain.Entities.Account;
 using Junko.Domain.Entities.Products;
 using Junko.Domain.InterFaces;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -91,11 +92,15 @@ namespace Junko.DataLayer.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<Product>> FilterProductsForSellerByProductName(long sellerId, string productName)
+        public async Task<List<SelectListItem>> FilterProductsForSellerByProductName(long sellerId)
         {
             return await _context.Products
-                .Where(p => p.SellerId == sellerId && EF.Functions.Like(p.Title, $"%{productName}%") && !p.IsDelete 
-                && p.IsActive)
+                .Where(p => p.SellerId == sellerId && !p.IsDelete && p.IsActive)
+                .Select(p => new SelectListItem()
+                {
+                    Text = p.Title,
+                    Value = p.Id.ToString()
+                })
                 .ToListAsync();
         }
 
