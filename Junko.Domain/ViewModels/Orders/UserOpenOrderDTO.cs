@@ -16,7 +16,7 @@ namespace Junko.Domain.ViewModels.Orders
 
         public int GetTotalPrice()
         {
-            return Details.Sum(s => (s.ProductPrice + s.ProductColorPrice) * s.Count);
+            return Details.Sum(s => s.Count * (s.ProductPrice + s.ProductColorPrice));
         }
 
         public int GetTotalDiscounts()

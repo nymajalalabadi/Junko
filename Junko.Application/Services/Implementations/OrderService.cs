@@ -231,7 +231,7 @@ namespace Junko.Application.Services.Implementations
 
             return new UserOpenOrderDTO
             {
-                UserId = userId,
+                UserId = userOpenOrder.UserId,
                 Description = userOpenOrder.Description,
                 Details = userOpenOrder.OrderDetails
                     .Where(s => !s.IsDelete)

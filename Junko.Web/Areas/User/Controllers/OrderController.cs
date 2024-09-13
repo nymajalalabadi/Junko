@@ -31,7 +31,6 @@ namespace Junko.Web.Areas.User.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 if (User.Identity!.IsAuthenticated)
                 {
                     if (await _orderService.CheckCountPrdocut(order.ProductId, order.Count))
