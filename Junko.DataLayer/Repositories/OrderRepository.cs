@@ -38,7 +38,7 @@ namespace Junko.DataLayer.Repositories
             return await _context.Orders
                 .Include(o => o.OrderDetails).ThenInclude(d => d.ProductColor)
                 .Include(o => o.OrderDetails).ThenInclude(d => d.ProductSize)
-                .Include(o => o.OrderDetails).ThenInclude(d => d.Product)
+                .Include(o => o.OrderDetails).ThenInclude(d => d.Product).ThenInclude(d => d.ProductDiscounts)
                 .FirstOrDefaultAsync(o => o.UserId == userId && !o.IsPaid);
         }
 

@@ -225,6 +225,36 @@ namespace Junko.Application.Services.Implementations
             }
         }
 
+        public async Task<UserOpenOrderDTO> GetUserOpenOrderDetail(long userId)
+        {
+            var userOpenOrder = await GetUserLatestOpenOrder(userId);
+
+            return new UserOpenOrderDTO
+            {
+                UserId = userId,
+                Description = userOpenOrder.Description,
+                Details = userOpenOrder.OrderDetails
+                    .Where(s => !s.IsDelete)
+                    .Select(s => new UserOpenOrderDetailItemDTO
+                    {
+                        DetailId = s.Id,
+                        ProductId = s.ProductId,
+                        Count = s.Count,
+                        ProductPrice = s.Product.Price,
+                        ProductTitle = s.Product.Title,
+                        ProductImageName = s.Product.ImageName,
+                        ProductColorId = s.ProductColorId,
+                        ProductSizeId = s.ProductSizeId,
+                        ProductColorPrice = s.ProductColor?.Price ?? 0,
+                        ColorName = s.ProductColor?.ColorName ?? "بی رنگ",
+                        size = s.ProductSize?.Size ?? "بی سایز",
+                        DiscountPercentage = s.Product.ProductDiscounts
+                        .OrderByDescending(a => a.CreateDate)
+                        .FirstOrDefault(a => a.ExpireDate > DateTime.Now)?.Percentage
+                    }).ToList()
+            };
+        }
+
         #endregion
 
         #endregion

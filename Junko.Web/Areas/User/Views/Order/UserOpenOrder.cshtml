@@ -1,6 +1,7 @@
 ﻿@using Junko.Domain.Entities.ProductOrder
 @using Junko.Application.Statics
-@model Order
+@using Junko.Domain.ViewModels.Orders
+@model UserOpenOrderDTO
 
 @{
     ViewData["Title"] = "سبد خرید";
@@ -28,7 +29,7 @@
                 <div class="col-12">
                     <div class="table_desc">
                         <div class="cart_page table-responsive">
-                            @if (Model.OrderDetails != null && Model.OrderDetails.Any())
+                            @if (Model.Details != null && Model.Details.Any())
                             {
                                 <table>
                                     <thead>
@@ -39,37 +40,39 @@
                                             <th class="product_name">سایز</th>
                                             <th class="product-price">قیمت</th>
                                             <th class="product_quantity">تعداد</th>
+                                            <th class="product-price">تخفیف</th>
                                             <th class="product_total">جمع کل</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var detail in Model.OrderDetails)
+                                        @foreach (var detail in Model.Details)
                                         {
                                             <tr>
                                                 <td class="product_remove">
                                                     <a href="#"><i class="fa fa-trash-o"></i></a>
                                                 </td>
                                                 <td class="product_thumb">
-                                                    <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@detail.ProductId" asp-route-title="@detail.Product.Title">
-                                                        <img src="@(SiteTools.ProductThumbImage + detail.Product.ImageName)" alt="@detail.Product.Title">
+                                                    <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@detail.ProductId" asp-route-title="@detail.ProductTitle">
+                                                        <img src="@(SiteTools.ProductThumbImage + detail.ProductImageName)" alt="@detail.ProductTitle">
                                                     </a>
                                                 </td>
                                                 <td class="product_name">
-                                                    <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@detail.ProductId" asp-route-title="@detail.Product.Title">@detail.Product.Title</a>
+                                                    <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@detail.ProductId" asp-route-title="@detail.ProductTitle">@detail.ProductTitle</a>
                                                 </td>
                                                 <td class="product_name">
-                                                    <p>@(detail.ProductSize?.Size ?? "بی سایز")</p>
+                                                    <p>@(detail.size)</p>
                                                 </td>
                                                 <td class="product-price">
-                                                    @((detail.Product.Price + detail.ProductColor?.Price ?? detail.Product.Price).ToString("#,0")) تومان
+                                                    @((detail.ProductPrice + detail.ProductColorPrice).ToString("#,0")) تومان
                                                 </td>
                                                 <td class="product_quantity">
                                                     <label>تعداد</label>
                                                     <input min="1" value="@detail.Count" type="number">
                                                 </td>
-                                                <td class="product_total">
-                                                    @((detail.Count * (detail.Product.Price + detail.ProductColor?.Price) ?? (detail.Count * detail.Product.Price)).ToString("#,0")) تومان
+                                                <td class="product-price">
+                                                    @detail.GetOrderDetailWithDiscountPrice()
                                                 </td>
+                                                <td class="product_total">@detail.GetTotalAmountByDiscount().ToString("#,0") تومان</td>
                                             </tr>
                                         }
                                     </tbody>
@@ -101,15 +104,15 @@
                             <div class="coupon_inner">
                                 <div class="cart_subtotal">
                                     <p>جمع اجزا</p>
-                                    <p class="cart_amount">@Model.OrderDetails?.Sum(s => s.Count * (s.Product.Price + s.ProductColor?.Price) ?? (s.Count * s.Product.Price)).ToString("#,0") تومان</p>
+                                    <p class="cart_amount">@Model.GetTotalPrice().ToString("#,0") تومان</p>
                                 </div>
                                 <div class="cart_subtotal ">
                                     <p>تخفیف</p>
-                                    <p class="cart_amount">0 تومان</p>
+                                    <p class="cart_amount">@Model.GetTotalDiscounts().ToString("#,0") تومان</p>
                                 </div>
                                 <div class="cart_subtotal has-border">
                                     <p>جمع کل</p>
-                                    <p class="cart_amount">@Model.OrderDetails?.Sum(s => s.Count * (s.Product.Price + s.ProductColor?.Price) ?? (s.Count * s.Product.Price)).ToString("#,0") تومان</p>
+                                    <p class="cart_amount">@((Model.GetTotalPrice() - Model.GetTotalDiscounts()).ToString("#,0")) تومان</p>
                                 </div>
                                 <div class="checkout_btn">
                                     <a href="#">پرداخت</a>

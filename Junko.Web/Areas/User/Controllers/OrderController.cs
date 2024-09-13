@@ -65,7 +65,7 @@ namespace Junko.Web.Areas.User.Controllers
         [HttpGet("open-order")]
         public async Task<IActionResult> UserOpenOrder()
         {
-            var openOrder = await _orderService.GetUserLatestOpenOrder(User.GetUserId());
+            var openOrder = await _orderService.GetUserOpenOrderDetail(User.GetUserId());
 
             return View(openOrder);
         }

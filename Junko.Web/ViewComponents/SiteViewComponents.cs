@@ -106,7 +106,7 @@ namespace Junko.Web.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var openOrder = await _orderService.GetUserLatestOpenOrder(User.GetUserId());
+            var openOrder = await _orderService.GetUserOpenOrderDetail(User.GetUserId());
 
             return View("UserOrder", openOrder);
         }
