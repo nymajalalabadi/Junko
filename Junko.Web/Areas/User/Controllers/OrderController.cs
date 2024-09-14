@@ -76,8 +76,6 @@ namespace Junko.Web.Areas.User.Controllers
         [HttpGet("change-detail-count/{detailId}/{count}")]
         public async Task<IActionResult> ChangeDetailCount(long detailId, int count)
         {
-            await Task.Delay(2000);
-
             var result = await _orderService.ChangeOrderDetailCount(detailId, User.GetUserId(), count);
             var openOrder = await _orderService.GetUserOpenOrderDetail(User.GetUserId());
 

@@ -63,19 +63,19 @@ namespace Junko.DataLayer.Repositories
 
         public async Task<OrderDetail?> GetOpenOrderDetail(long productId)
         {
-            return await _context.OrderDetails.SingleOrDefaultAsync(d => d.ProductId == productId);
+            return await _context.OrderDetails.SingleOrDefaultAsync(d => d.ProductId == productId && !d.IsDelete);
         }
 
         public async Task<OrderDetail?> GetOpenOrderDetail(long productId, long ProductSizeId)
         {
             return await _context.OrderDetails.SingleOrDefaultAsync(d => d.ProductId == productId &&
-            d.ProductSizeId == ProductSizeId);
+            d.ProductSizeId == ProductSizeId && !d.IsDelete);
         }
 
         public async Task<OrderDetail?> GetOpenOrderDetail(long productId, long ProductSizeId ,long productColorId)
         {
             return await _context.OrderDetails.SingleOrDefaultAsync(d => d.ProductId == productId && 
-            d.ProductSizeId == ProductSizeId && d.ProductColorId == productColorId);
+            d.ProductSizeId == ProductSizeId && d.ProductColorId == productColorId && !d.IsDelete);
         }
 
         public async Task<OrderDetail?> GetOrderDetailById(long id)
