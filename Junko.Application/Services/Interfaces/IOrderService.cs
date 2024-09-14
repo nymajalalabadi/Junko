@@ -34,6 +34,8 @@ namespace Junko.Application.Services.Interfaces
 
         Task<bool> RemoveOrderDetail(long detailId, long userId);
 
+        Task<bool> ChangeOrderDetailCount(long detailId, long userId, int count);
+
         #endregion
 
         #endregion

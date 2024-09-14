@@ -22,7 +22,7 @@
     </div>
 </div>
 
-<div class="shopping_cart_area mt-60">
+<div class="shopping_cart_area mt-60" id="user-open-order-wrapper">
     <div class="container">
         <form action="#">
             <div class="row">
@@ -67,7 +67,7 @@
                                                 </td>
                                                 <td class="product_quantity">
                                                     <label>تعداد</label>
-                                                    <input min="1" value="@detail.Count" type="number">
+                                                    <input onchange="changeOpenOrderDetailCount(event,@detail.DetailId)" value="@detail.Count" type="number">
                                                 </td>
                                                 <td class="product-price">
                                                     @detail.GetOrderDetailWithDiscountPrice()

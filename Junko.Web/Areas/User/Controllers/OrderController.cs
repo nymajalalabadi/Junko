@@ -71,6 +71,31 @@ namespace Junko.Web.Areas.User.Controllers
 
         #endregion
 
+        #region open order partial
+
+        [HttpGet("change-detail-count/{detailId}/{count}")]
+        public async Task<IActionResult> ChangeDetailCount(long detailId, int count)
+        {
+            await Task.Delay(2000);
+
+            var result = await _orderService.ChangeOrderDetailCount(detailId, User.GetUserId(), count);
+            var openOrder = await _orderService.GetUserOpenOrderDetail(User.GetUserId());
+
+            if (result)
+            {
+                TempData[SuccessMessage] = "تعداد محصول مورد نظر افزایش پیدا کرد";
+                return PartialView(openOrder);
+            }
+
+
+            TempData[SuccessMessage] = "تعداد محصول مورد نظر موجود نمی باشد";
+
+            return PartialView(openOrder);
+        }
+
+        #endregion
+
+
         #region remove product from order
 
         [HttpGet("remove-order-item/{detailId}")]

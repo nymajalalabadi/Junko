@@ -1,4 +1,17 @@
-﻿$('#submitOrderForm').on('click', function () {
+﻿function open_waiting(selector = 'body') {
+    $(selector).waitMe({
+        effect: 'facebook',
+        text: 'لطفا صبر کنید ...',
+        bg: 'rgba(255,255,255,0.7)',
+        color: '#000'
+    });
+}
+
+function close_waiting(selector = 'body') {
+    $(selector).waitMe('hide');
+}
+
+$('#submitOrderForm').on('click', function () {
     $('#addProductToOrderForm').submit();
 });
 
@@ -34,5 +47,15 @@ function removeProductFromOrder(detailId)
     $.get('/user/remove-order-item/' + detailId).then(res =>
     {
         location.reload();
+    });
+}
+
+function changeOpenOrderDetailCount(event, detailId)
+{
+    open_waiting();
+    $.get('/user/change-detail-count/' + detailId + '/' + event.target.value).then(res =>
+    {
+        $('#user-open-order-wrapper').html(res);
+        close_waiting();
     });
 }

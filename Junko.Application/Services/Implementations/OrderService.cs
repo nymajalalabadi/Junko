@@ -1,5 +1,6 @@
 ﻿using Junko.Application.Services.Interfaces;
 using Junko.Domain.Entities.ProductOrder;
+using Junko.Domain.Entities.Products;
 using Junko.Domain.Entities.Wallet;
 using Junko.Domain.InterFaces;
 using Junko.Domain.ViewModels.Orders;
@@ -270,6 +271,41 @@ namespace Junko.Application.Services.Implementations
             await _orderRepository.SaveChanges();
 
             return true;
+        }
+
+        public async Task<bool> ChangeOrderDetailCount(long detailId, long userId, int count)
+        {
+            var orderDetail = await _orderRepository.GetOrderDetailById(detailId);
+
+            var product = await _productRepository.GetProductForOrder(orderDetail!.ProductId);
+
+            if (orderDetail != null)
+            {
+                if (count > 0)
+                {
+                    if (product!.ProductSizes.Any())
+                    {
+                        if (product.ProductSizes.Count >= count)
+                        {
+                            orderDetail.Count = count;
+                            _orderRepository.UpdateOrderDetails(orderDetail);
+                            await _orderRepository.SaveChanges();
+
+                            return true;
+                        }
+                        return false;
+                    }
+                    return false;
+                }
+                else
+                {
+                    _orderRepository.DeleteOrderDetail(orderDetail);
+                    await _orderRepository.SaveChanges();
+
+                    return true;
+                }
+            }
+            return false;
         }
 
         #endregion

@@ -80,7 +80,9 @@ namespace Junko.DataLayer.Repositories
 
         public async Task<OrderDetail?> GetOrderDetailById(long id)
         {
-            return await _context.OrderDetails.FirstOrDefaultAsync(d => d.Id == id);
+            return await _context.OrderDetails
+                .Include(d => d.Product)
+                .FirstOrDefaultAsync(d => d.Id == id);
         }
 
         public async Task AddOrderDetails(OrderDetail orderDetail)
