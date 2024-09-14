@@ -39,7 +39,8 @@ namespace Junko.DataLayer.Repositories
                 .Include(o => o.OrderDetails).ThenInclude(d => d.ProductColor)
                 .Include(o => o.OrderDetails).ThenInclude(d => d.ProductSize)
                 .Include(o => o.OrderDetails).ThenInclude(d => d.Product).ThenInclude(d => d.ProductDiscounts)
-                .FirstOrDefaultAsync(o => o.UserId == userId && !o.IsPaid);
+                .Where(o => !o.IsDelete && !o.IsPaid)
+                .FirstOrDefaultAsync(o => o.UserId == userId);
         }
 
         public async Task<Order?> GetOrderById(long id)
@@ -89,6 +90,12 @@ namespace Junko.DataLayer.Repositories
 
         public void UpdateOrderDetails(OrderDetail orderDetail)
         {
+            _context.OrderDetails.Update(orderDetail);
+        }
+
+        public void DeleteOrderDetail(OrderDetail orderDetail)
+        {
+            orderDetail.IsDelete = true;
             _context.OrderDetails.Update(orderDetail);
         }
 

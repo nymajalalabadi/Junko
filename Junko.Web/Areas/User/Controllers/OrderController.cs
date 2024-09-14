@@ -71,5 +71,25 @@ namespace Junko.Web.Areas.User.Controllers
 
         #endregion
 
+        #region remove product from order
+
+        [HttpGet("remove-order-item/{detailId}")]
+        public async Task<IActionResult> RemoveProductFromOrder(long detailId)
+        {
+            var result = await _orderService.RemoveOrderDetail(detailId, User.GetUserId());
+
+            if (result)
+            {
+                TempData[SuccessMessage] = "محصول مورد نظر با موفقیت از سبد خرید حذف شد";
+                return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "محصول مورد نظر با موفقیت از سبد خرید حذف شد", null);
+            }
+
+            TempData[ErrorMessage] = "محصول مورد نظر در سبد خرید شما یافت نشد";
+            return JsonResponseStatus.SendStatus(JsonResponseStatusType.Danger, "محصول مورد نظر در سبد خرید شما یافت نشد", null);
+        }
+
+        #endregion
+
+
     }
 }

@@ -32,6 +32,8 @@ namespace Junko.Application.Services.Interfaces
 
         Task<UserOpenOrderDTO> GetUserOpenOrderDetail(long userId);
 
+        Task<bool> RemoveOrderDetail(long detailId, long userId);
+
         #endregion
 
         #endregion

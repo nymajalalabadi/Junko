@@ -255,6 +255,23 @@ namespace Junko.Application.Services.Implementations
             };
         }
 
+        public async Task<bool> RemoveOrderDetail(long detailId, long userId)
+        {
+            var openOrder = await GetUserLatestOpenOrder(userId);
+
+            var orderDetail = openOrder!.OrderDetails.SingleOrDefault(s => s.Id == detailId);
+
+            if (orderDetail == null)
+            {
+                return false;
+            }
+
+            _orderRepository.DeleteOrderDetail(orderDetail);
+            await _orderRepository.SaveChanges();
+
+            return true;
+        }
+
         #endregion
 
         #endregion

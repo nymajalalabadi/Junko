@@ -28,3 +28,11 @@ $('#number_of_products_in_basket').on('change', function (e) {
 
     $('#add_product_to_order_Count').val(numberOfProducts);
 });
+
+function removeProductFromOrder(detailId)
+{
+    $.get('/user/remove-order-item/' + detailId).then(res =>
+    {
+        location.reload();
+    });
+}

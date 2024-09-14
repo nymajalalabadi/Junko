@@ -39,6 +39,8 @@ namespace Junko.Domain.InterFaces
 
         void UpdateOrderDetails(OrderDetail orderDetail);
 
+        void DeleteOrderDetail(OrderDetail orderDetail);
+
         #endregion
 
         Task SaveChanges();
