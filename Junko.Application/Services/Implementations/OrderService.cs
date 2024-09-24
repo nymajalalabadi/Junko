@@ -1,14 +1,8 @@
 ﻿using Junko.Application.Services.Interfaces;
 using Junko.Domain.Entities.ProductOrder;
-using Junko.Domain.Entities.Products;
 using Junko.Domain.Entities.Wallet;
 using Junko.Domain.InterFaces;
 using Junko.Domain.ViewModels.Orders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Junko.Application.Services.Implementations
 {
@@ -64,7 +58,12 @@ namespace Junko.Application.Services.Implementations
 
             var userOpenOrder = await _orderRepository.GetUserLatestOpenOrder(userId);
 
-            return userOpenOrder;
+            if (userOpenOrder != null)
+            {
+                return userOpenOrder;
+            }
+
+            return null;
         }
 
         public async Task<bool> CheckCountPrdocut(long ProductId, int count)
@@ -90,7 +89,7 @@ namespace Junko.Application.Services.Implementations
 
             foreach (var detail in userOpenOrder!.OrderDetails)
             {
-                var oneProductPrice = detail.ProductColor != null ? detail.Product.Price + detail.ProductColor.Price 
+                var oneProductPrice = detail.ProductColor != null ? detail.Product.Price + detail.ProductColor.Price
                     : detail.Product.Price;
 
                 totalPrice += detail.Count * oneProductPrice ?? detail.Count * detail.Product.Price;
@@ -235,24 +234,24 @@ namespace Junko.Application.Services.Implementations
                 UserId = userOpenOrder.UserId,
                 Description = userOpenOrder.Description,
                 Details = userOpenOrder.OrderDetails
-                    .Where(s => !s.IsDelete)
-                    .Select(s => new UserOpenOrderDetailItemDTO
-                    {
-                        DetailId = s.Id,
-                        ProductId = s.ProductId,
-                        Count = s.Count,
-                        ProductPrice = s.Product.Price,
-                        ProductTitle = s.Product.Title,
-                        ProductImageName = s.Product.ImageName,
-                        ProductColorId = s.ProductColorId,
-                        ProductSizeId = s.ProductSizeId,
-                        ProductColorPrice = s.ProductColor?.Price ?? 0,
-                        ColorName = s.ProductColor?.ColorName ?? "بی رنگ",
-                        size = s.ProductSize?.Size ?? "بی سایز",
-                        DiscountPercentage = s.Product.ProductDiscounts
-                        .OrderByDescending(a => a.CreateDate)
-                        .FirstOrDefault(a => a.ExpireDate > DateTime.Now)?.Percentage
-                    }).ToList()
+                .Where(s => !s.IsDelete)
+                .Select(s => new UserOpenOrderDetailItemDTO
+                {
+                    DetailId = s.Id,
+                    ProductId = s.ProductId,
+                    Count = s.Count,
+                    ProductPrice = s.Product.Price,
+                    ProductTitle = s.Product.Title,
+                    ProductImageName = s.Product.ImageName,
+                    ProductColorId = s.ProductColorId,
+                    ProductSizeId = s.ProductSizeId,
+                    ProductColorPrice = s.ProductColor?.Price ?? 0,
+                    ColorName = s.ProductColor?.ColorName ?? "بی رنگ",
+                    size = s.ProductSize?.Size ?? "بی سایز",
+                    DiscountPercentage = s.Product.ProductDiscounts
+                    .OrderByDescending(a => a.CreateDate)
+                    .FirstOrDefault(a => a.ExpireDate > DateTime.Now)?.Percentage
+                }).ToList()
             };
         }
 

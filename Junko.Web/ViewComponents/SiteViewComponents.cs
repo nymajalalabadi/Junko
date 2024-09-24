@@ -28,11 +28,11 @@ namespace Junko.Web.ViewComponents
         {
             ViewBag.siteSetting = await _settingService.GetDefaultSiteSetting();
 
-            ViewBag.user = await _userService.GetUserByEmail(User.Identity.Name);
+            ViewBag.user = await _userService.GetUserByEmail(User.Identity!.Name!);
 
             if (User.Identity.IsAuthenticated)
             {
-                ViewBag.user = await _userService.GetUserByEmail(User.Identity.Name);
+                ViewBag.user = await _userService.GetUserByEmail(User.Identity!.Name!);
             }
 
             ViewBag.ProductCategories = await _productService.GetAllActiveProductCategories();
@@ -106,9 +106,14 @@ namespace Junko.Web.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var openOrder = await _orderService.GetUserOpenOrderDetail(User.GetUserId());
+            if (User.Identity!.IsAuthenticated!)
+            {
+                var openOrder = await _orderService.GetUserOpenOrderDetail(User.GetUserId());
 
-            return View("UserOrder", openOrder);
+                return View("UserOrder", openOrder);
+            }
+             
+            return View("UserOrder");
         }
     }
 

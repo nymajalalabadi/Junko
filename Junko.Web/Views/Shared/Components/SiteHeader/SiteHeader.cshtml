@@ -24,21 +24,21 @@
                         <a href="javascript:void(0)"><i class="ion-android-close"></i></a>
                     </div>
                     <div class="support_info">
-                        <p>تلفن تماس: <a class="ltr-text" href="tel:+989123456789">@siteSetting.Mobile</a></p>
+                        <p>تلفن تماس: <a class="ltr-text" href="tel:+989123456789">@siteSetting!.Mobile</a></p>
                     </div>
                     <div class="top_right text-right">
-                        @if (!User.Identity.IsAuthenticated)
+                        @if (User.Identity!.IsAuthenticated)
                         {
                             <ul>
-                                <li><a asp-controller="Account" asp-action="Register"> ثبت نام </a></li>
-                                <li><a asp-controller="Account" asp-action="Login"> ورود </a></li>
+                                <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @user!.GetUserShowName()، خوش آمدید </a></li>
+                                <li><a asp-controller="Account" asp-action="LogOut"> خروج </a></li>
                             </ul>
                         }
                         else
                         {
                             <ul>
-                                <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @user.GetUserShowName()، خوش آمدید </a></li>
-                                <li><a asp-controller="Account" asp-action="LogOut"> خروج </a></li>
+                                <li><a asp-controller="Account" asp-action="Register"> ثبت نام </a></li>
+                                <li><a asp-controller="Account" asp-action="Login"> ورود </a></li>
                             </ul>
                         }
                     </div>
@@ -71,7 +71,10 @@
                         </form>
                     </div>
 
-                    @await Component.InvokeAsync("UserOrder")
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @await Component.InvokeAsync("UserOrder")
+                    }
                     <div id="menu" class="text-left ">
                         <ul class="offcanvas_main_menu">
                             <li class="menu-item-has-children active">
@@ -126,18 +129,18 @@
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="top_right text-right">
-                            @if (!User.Identity.IsAuthenticated)
+                            @if (User.Identity.IsAuthenticated)
                             {
                                 <ul>
-                                    <li><a asp-controller="Account" asp-action="Register"> ثبت نام </a></li>
-                                    <li><a asp-controller="Account" asp-action="Login"> ورود </a></li>
+                                    <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @user!.GetUserShowName()، خوش آمدید </a></li>
+                                    <li><a asp-controller="Account" asp-action="LogOut"> خروج </a></li>
                                 </ul>
                             }
                             else
                             {
                                 <ul>
-                                    <li><a asp-area="User" asp-controller="Home" asp-action="Dashboard"> @user.GetUserShowName()، خوش آمدید </a></li>
-                                    <li><a asp-controller="Account" asp-action="LogOut"> خروج </a></li>
+                                    <li><a asp-controller="Account" asp-action="Register"> ثبت نام </a></li>
+                                    <li><a asp-controller="Account" asp-action="Login"> ورود </a></li>
                                 </ul>
                             }
                         </div>
@@ -185,7 +188,10 @@
                                     </div>
                                 </form>
                             </div>
-                            @await Component.InvokeAsync("UserOrder")
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                @await Component.InvokeAsync("UserOrder")
+                            }
                         </div>
                     </div>
                 </div>
@@ -270,7 +276,6 @@
                                             <li><a href="404.html">خطای 404</a></li>
                                         </ul>
                                     </li>
-
                                     <li><a asp-controller="Home" asp-action="AboutUs">درباره ما</a></li>
                                     <li><a asp-controller="Home" asp-action="ContactUs"> تماس با ما</a></li>
                                 </ul>
@@ -331,7 +336,10 @@
                             </ul>
                         </nav>
                     </div>
-                    @await Component.InvokeAsync("UserOrder")
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @await Component.InvokeAsync("UserOrder")
+                    }
                 </div>
             </div>
         </div>
